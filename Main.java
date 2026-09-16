@@ -1,23 +1,16 @@
 import java.util.Scanner;
-import java .util.ArrayList;
-import java.util.List;;
 
 public class Main {
     public static void main(String[] args) {
-        
-        // initial setup
         Scanner scanner = new Scanner(System.in);
-        boolean loop = true;
-        List<Cliente> clientes = new ArrayList<>();
-        List<Produto> produtos = new ArrayList<>();
-        List<Entrega> entregas = new ArrayList<>();
-
+        Sistema sistema = new Sistema(scanner);
+        
         int opcao = 0;
         System.out.println("=== BEM-VINDO AO SISTEMA ===");
 
         do {
             System.out.println("O que você deseja fazer?");
-            System.out.print("1. Cadastrar Cliente.");
+            System.out.println("1. Cadastrar Cliente.");
             System.out.println("2. Cadastrar Produto.");
             System.out.println("3. Criar nova entrega.");
             System.out.println("4. Listar relatório / Resumo.");
@@ -30,14 +23,19 @@ public class Main {
             switch (opcao) {
                 
                 case 1:
-                    // client register
-
-
+                    sistema.cadastrarCliente(); //
+                    break;
+                
+                case 2:
+                   sistema.cadastrarProduto();
+                   break;
+                case 3:
+                    sistema.cadastrarEntrega();
+                    break;
             }
             
         } while (opcao != 0);
         scanner.close();
-
 
     }
 }
