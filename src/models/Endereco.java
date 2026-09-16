@@ -1,3 +1,4 @@
+package src.models;
 public class Endereco {
     private String logradouro;
     private String numero;

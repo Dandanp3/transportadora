@@ -1,4 +1,11 @@
+package src.service;
 import java.util.Scanner;
+
+import src.models.Cliente;
+import src.models.Endereco;
+import src.models.Entrega;
+import src.models.Produto;
+
 import java.util.ArrayList;
 import java.util.List;
 
