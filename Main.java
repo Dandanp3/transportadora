@@ -25,13 +25,16 @@ public class Main {
                 case 1:
                     sistema.cadastrarCliente(); //
                     break;
-                
                 case 2:
                    sistema.cadastrarProduto();
                    break;
                 case 3:
                     sistema.cadastrarEntrega();
                     break;
+                case 4:
+                    sistema.listarRelatorio();
+                    break;
+
             }
             
         } while (opcao != 0);

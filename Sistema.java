@@ -13,6 +13,7 @@ public class Sistema {
         this.scanner = scanner;
     }
     
+    // CADASTRO DE CLIENTE
     public void cadastrarCliente() {
         // cliente cadastro
         System.out.println("=== Cadastro de Cliente ===\n");
@@ -49,6 +50,7 @@ public class Sistema {
 
     }
 
+    // CADASTRO DE PRODUTO
     public void cadastrarProduto() {
         System.out.println("=== Cadastro de Produto ===\n");
         System.out.print("Nome do item: ");
@@ -66,6 +68,7 @@ public class Sistema {
 
     }
 
+    // CADASTRO DE ENTREGA
     public void cadastrarEntrega() {
         // segurança para caso nao tenha clientes.
         if (clientes.isEmpty() || produtos.isEmpty()) {
@@ -108,6 +111,41 @@ public class Sistema {
 
         Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
         entregas.add(novaEntrega);
+        System.out.println("Entrega cadastrada\n");
+    }
+
+
+    // RELATÓRIO
+    public void listarRelatorio() {
+        System.out.println("\nRelatório geral de Entregas.");
+
+        // trava de segurança
+        if (entregas.isEmpty()) {
+            System.out.println("Nenhuma entrega cadastrada.");
+            return;
+        }
+
+        // passa por todas as entregadas ja cadastradas
+        for (int i = 0; i < entregas.size(); i++) {
+            Entrega entregaAtual = entregas.get(i);
+
+            System.out.println("\n--- Pedido #" + (i+1) + "---");
+            System.out.println("Cliente: "+ entregaAtual.getCliente().getNome());
+            System.out.println("CPF: "+ entregaAtual.getCliente().getCPF());
+
+            // metodo de endereço
+            System.out.println("Destino: "+ entregaAtual.getCliente().getEndereco().obterEnderecoCompleto());
+
+            System.out.println("Status de envio: "+ entregaAtual.getStatus());
+            System.out.println("Frete: R$"+ entregaAtual.getValorFrete());
+
+            // mini loop para varios itens da mesma pessoa
+            System.out.println("Itens do pacote:");
+            for (int j = 0; j< entregaAtual.getProdutos().size(); j++) {
+                Produto p = entregaAtual.getProdutos().get(j);
+                System.out.println("  - " + p.getNome() + " (Peso: " + p.getPeso() + "kg | Preço: R$" + p.getPreco() + ")");
+            }
+        }
     }
 
 
