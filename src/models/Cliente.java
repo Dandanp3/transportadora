@@ -3,15 +3,16 @@ public class Cliente {
     private String nome;
     private String cpf;
     private String telefone;
-    private Endereco endereco; // classe
+    private Endereco endereco; 
 
-    // construtor para o main
     public Cliente(String nome, String cpf, String telefone, Endereco endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.endereco = endereco;
     }
+
+    public Cliente() {}
 
     //getters e setters 
     public String getNome() { return nome; }

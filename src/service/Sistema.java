@@ -15,7 +15,6 @@ public class Sistema {
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
 
-    // Construtor
     public Sistema(Scanner scanner) {
         this.scanner = scanner;
     }
@@ -133,6 +132,7 @@ public class Sistema {
         }
 
         // passa por todas as entregadas ja cadastradas
+        
         for (int i = 0; i < entregas.size(); i++) {
             Entrega entregaAtual = entregas.get(i);
 
@@ -148,8 +148,7 @@ public class Sistema {
 
             // mini loop para varios itens da mesma pessoa
             System.out.println("Itens do pacote:");
-            for (int j = 0; j< entregaAtual.getProdutos().size(); j++) {
-                Produto p = entregaAtual.getProdutos().get(j);
+            for (Produto p : entregaAtual.getProdutos()) {
                 System.out.println("  - " + p.getNome() + " (Peso: " + p.getPeso() + "kg | Preço: R$" + p.getPreco() + ")");
             }
         }

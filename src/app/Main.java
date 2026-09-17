@@ -12,7 +12,7 @@ public class Main {
         System.out.println("=== BEM-VINDO AO SISTEMA ===");
 
         do {
-            System.out.println("O que você deseja fazer?");
+            System.out.println("\nO que você deseja fazer?");
             System.out.println("1. Cadastrar Cliente.");
             System.out.println("2. Cadastrar Produto.");
             System.out.println("3. Criar nova entrega.");
@@ -26,7 +26,7 @@ public class Main {
             switch (opcao) {
                 
                 case 1:
-                    sistema.cadastrarCliente(); //
+                    sistema.cadastrarCliente(); 
                     break;
                 case 2:
                    sistema.cadastrarProduto();
@@ -36,8 +36,6 @@ public class Main {
                     break;
                 case 4:
                     sistema.listarRelatorio();
-                    break;
-
             }
             
         } while (opcao != 0);

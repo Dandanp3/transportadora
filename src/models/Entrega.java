@@ -13,8 +13,8 @@ public class Entrega {
         this.status = status;
         this.valorFrete = valorFrete;
     }
+    public Entrega(){}
 
-    //getters e setters
 
     // devolve o cliente
     public Cliente getCliente() {

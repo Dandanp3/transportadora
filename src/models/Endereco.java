@@ -18,6 +18,7 @@ public class Endereco {
         this.uf = uf;
         this.cep = cep;
     } 
+    public Endereco(){}
 
     //getters e setters
     public String getLogradouro() { return logradouro; }

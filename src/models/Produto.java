@@ -10,7 +10,9 @@ public class Produto {
         this.preco = preco;
     }
 
-    //getters e seters
+    public Produto(){}
+
+    // getters e seters
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
