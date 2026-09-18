@@ -82,29 +82,35 @@ public class Sistema {
         }
         System.out.print("=== Cadastrando nova Entrega ===\n");
 
-        // pescando os clientes ja cadastrados
-        System.out.println("Selecione o Cliente (Digite o número correspondente): ");
-        for (int i = 0; i < clientes.size(); i++) {
-            // imprime os clientes
-            System.out.println(i + " - " + clientes.get(i).getNome());
+        
+
+        // lista de clientes
+        int contC = 1;
+        for (Cliente c : clientes) {
+            System.out.println(contC + " - " + c.getNome());
+            contC++;
         }
+        
+        // pega o cliente 
+        System.out.print("Selecione o Cliente (Digite o número correspondente): ");
         int indexCliente = scanner.nextInt();
         scanner.nextLine();
-        // pegando o cliente
-        Cliente clienteEscolhido = clientes.get(indexCliente);
+        Cliente clienteEscolhido = clientes.get(indexCliente - 1);
 
-
-        // pescando os produtos
-        System.out.println("Selecione o Produto (Digite o número correspondente): ");
-        for (int i = 0; i < produtos.size(); i++) {
-            // imprimindo os produtos
-            System.out.println(i + " - " + produtos.get(i).getNome());
+        // listando produtos
+        int contP = 1;
+        for (Produto p : produtos) {
+            System.out.println(contP + " - " + p.getNome());
+            contP++;
         }
+
+        //pegando o produto
+        System.out.print("Selecione o Produto (Digite o número correspondente): ");
         int indexProduto = scanner.nextInt();
         scanner.nextLine();
-        //pegando o produto
-        Produto produtoEscolhido = produtos.get(indexProduto);
-
+        Produto produtoEscolhido = produtos.get(indexProduto -1);
+        
+        // restante das informações
         System.out.print("Status atual do pedido: ");
         String status = scanner.nextLine();
 
@@ -118,6 +124,7 @@ public class Sistema {
         Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
         entregas.add(novaEntrega);
         System.out.println("Entrega cadastrada\n");
+        
     }
 
 
@@ -133,22 +140,23 @@ public class Sistema {
 
         // passa por todas as entregadas ja cadastradas
         
-        for (int i = 0; i < entregas.size(); i++) {
-            Entrega entregaAtual = entregas.get(i);
-
-            System.out.println("\n--- Pedido #" + (i+1) + "---");
-            System.out.println("Cliente: "+ entregaAtual.getCliente().getNome());
-            System.out.println("CPF: "+ entregaAtual.getCliente().getCPF());
+        int contE = 0;
+        for (Entrega e : entregas) {
+            //Entrega entregaAtual = entregas.get(i);
+            
+            System.out.println("\n--- Pedido #" + (contE) + "---");
+            System.out.println("Cliente: "+ e.getCliente().getNome());
+            System.out.println("CPF: "+ e.getCliente().getCPF());
 
             // metodo de endereço
-            System.out.println("Destino: "+ entregaAtual.getCliente().getEndereco().obterEnderecoCompleto());
+            System.out.println("Destino: "+ e.getCliente().getEndereco().obterEnderecoCompleto());
 
-            System.out.println("Status de envio: "+ entregaAtual.getStatus());
-            System.out.println("Frete: R$"+ entregaAtual.getValorFrete());
+            System.out.println("Status de envio: "+ e.getStatus());
+            System.out.println("Frete: R$"+ e.getValorFrete());
 
             // mini loop para varios itens da mesma pessoa
             System.out.println("Itens do pacote:");
-            for (Produto p : entregaAtual.getProdutos()) {
+            for (Produto p : e.getProdutos()) {
                 System.out.println("  - " + p.getNome() + " (Peso: " + p.getPeso() + "kg | Preço: R$" + p.getPreco() + ")");
             }
         }

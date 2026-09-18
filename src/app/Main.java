@@ -36,6 +36,11 @@ public class Main {
                     break;
                 case 4:
                     sistema.listarRelatorio();
+                    break;
+
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+                    break;
             }
             
         } while (opcao != 0);
