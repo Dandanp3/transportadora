@@ -1,6 +1,6 @@
 package src.service;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import src.models.Cliente;
 import src.models.Endereco;
 import src.models.Entrega;
@@ -51,9 +51,7 @@ public class Sistema {
         Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
         Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
         clientes.add(novoCliente);
-
         System.out.println("Cliente cadastrado!");
-
     }
 
     // CADASTRO DE PRODUTO
@@ -71,7 +69,6 @@ public class Sistema {
         produtos.add(novoProduto);
 
         System.out.println("Produto cadastrado!\n");
-
     }
 
     // CADASTRO DE ENTREGA
@@ -81,8 +78,6 @@ public class Sistema {
             System.out.println("Aviso: Cadastre ao menos um cliente e um produto primeiro");
         }
         System.out.print("=== Cadastrando nova Entrega ===\n");
-
-        
 
         // lista de clientes
         int contC = 1;
@@ -124,9 +119,7 @@ public class Sistema {
         Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
         entregas.add(novaEntrega);
         System.out.println("Entrega cadastrada\n");
-        
     }
-
 
     // RELATÓRIO
     public void listarRelatorio() {
@@ -138,12 +131,9 @@ public class Sistema {
             return;
         }
 
-        // passa por todas as entregadas ja cadastradas
-        
+        // passa por todas as entregas 
         int contE = 0;
         for (Entrega e : entregas) {
-            //Entrega entregaAtual = entregas.get(i);
-            
             System.out.println("\n--- Pedido #" + (contE) + "---");
             System.out.println("Cliente: "+ e.getCliente().getNome());
             System.out.println("CPF: "+ e.getCliente().getCPF());
@@ -157,10 +147,8 @@ public class Sistema {
             // mini loop para varios itens da mesma pessoa
             System.out.println("Itens do pacote:");
             for (Produto p : e.getProdutos()) {
-                System.out.println("  - " + p.getNome() + " (Peso: " + p.getPeso() + "kg | Preço: R$" + p.getPreco() + ")");
+                System.out.println(" - " + p.getNome() + " (Peso: " + p.getPeso() + "kg | Preço: R$" + p.getPreco() + ")");
             }
         }
     }
-
-
 }
