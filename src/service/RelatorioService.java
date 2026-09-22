@@ -2,6 +2,8 @@ package src.service;
 
 import java.util.List;
 
+import src.utils.CpfUtils;
+
 import src.models.Entrega;
 import src.models.Produto;
 
@@ -29,7 +31,7 @@ public class RelatorioService {
         for (Entrega e : entregas) {
             System.out.println("\n--- Pedido #" + (contE) + "---");
             System.out.println("Cliente: "+ e.getCliente().getNome());
-            System.out.println("CPF: "+ e.getCliente().getCPF());
+            System.out.println("CPF: "+ CpfUtils.formatarCPF(e.getCliente().getCPF()));
 
             // metodo de endereço
             System.out.println("Destino: "+ e.getCliente().getEndereco().obterEnderecoCompleto());

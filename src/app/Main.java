@@ -32,21 +32,16 @@ public class Main {
             
             switch (opcao) {
                 
-                case 1:
-                    clienteService.cadastrarCliente(); 
+                case 1: clienteService.cadastrarCliente(); 
                     break;
-                case 2:
-                   produtoService.cadastrarProduto();
+                case 2: produtoService.cadastrarProduto();
                    break;
-                case 3:
-                    entregaService.cadastrarEntrega();
+                case 3: entregaService.cadastrarEntrega();
                     break;
-                case 4:
-                    relatorioService.listarRelatorio();
+                case 4: relatorioService.listarRelatorio(); 
                     break;
 
-                default:
-                    System.out.println("Opção inválida! Tente novamente.");
+                default: System.out.println("Opção inválida! Tente novamente.");
                     break;
             }
             
