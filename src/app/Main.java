@@ -1,12 +1,19 @@
 package src.app;
 import java.util.Scanner;
-import src.service.Sistema;
 import src.service.ClienteService;
+import src.service.EntregaService;
+import src.service.ProdutoService;
+import src.service.RelatorioService;
+
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Sistema sistema = new Sistema(scanner);
+        ClienteService clienteService = new ClienteService(scanner);
+        ProdutoService produtoService = new ProdutoService(scanner);
+        EntregaService entregaService = new EntregaService(scanner, clienteService, produtoService);
+        RelatorioService relatorioService = new RelatorioService(entregaService);
+        
         
         int opcao = 0;
         System.out.println("=== BEM-VINDO AO SISTEMA ===");
@@ -26,16 +33,16 @@ public class Main {
             switch (opcao) {
                 
                 case 1:
-                    sistema.cadastrarCliente(); 
+                    clienteService.cadastrarCliente(); 
                     break;
                 case 2:
-                   sistema.cadastrarProduto();
+                   produtoService.cadastrarProduto();
                    break;
                 case 3:
-                    sistema.cadastrarEntrega();
+                    entregaService.cadastrarEntrega();
                     break;
                 case 4:
-                    sistema.listarRelatorio();
+                    relatorioService.listarRelatorio();
                     break;
 
                 default:

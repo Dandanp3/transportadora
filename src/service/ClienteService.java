@@ -48,5 +48,8 @@ public class ClienteService {
         clientes.add(novoCliente);
         System.out.println("Cliente cadastrado!");
     }
-    
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
 }
