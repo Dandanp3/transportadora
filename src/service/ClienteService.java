@@ -6,6 +6,7 @@ import java.util.List;
 
 import src.models.Cliente;
 import src.models.Endereco;
+import src.utils.CpfUtils;
 
 public class ClienteService {
     private List<Cliente> clientes = new ArrayList<>();
@@ -42,11 +43,17 @@ public class ClienteService {
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
 
-        // Criando o cliente
-        Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
-        Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
-        clientes.add(novoCliente);
-        System.out.println("Cliente cadastrado!");
+        if (!CpfUtils.validarCPF(cpf)) {
+            System.out.println("CPF inserido inválido.");
+        } else {
+            // Criando o cliente
+            Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
+            Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
+            clientes.add(novoCliente);
+            System.out.println("Cliente cadastrado!");
+        }
+
+        
     }
 
     public List<Cliente> getClientes() {

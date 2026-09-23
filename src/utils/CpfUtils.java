@@ -15,31 +15,37 @@ public class CpfUtils {
             return false; 
         }
         
-
-        // calculo do verificador cpf
+        // pegando array de numeros cpf
         int[] digitos = new int[11];
         for (int i = 0; i < 11; i++) {
             digitos[i] = cpf.charAt(i) - '0';
         }
 
-        /*
-        ANOTAÇÃO:
-        i passa por todos os valores do cpf, enquanto é incremendo +1 a ele
-        com isso consigo passar por cada digito e ainda subtrair dos pesos
-        após isso vem o calculo da multiplicaçao dos pesos.
-        
-        */
-        int somaPesos = 0;
+        // calculo verificador 1
+        int soma = 0;
+        int peso = 10;
         for (int i = 0; i < 9; i++) {
-            somaPesos += digitos[i] * (10-i);
+            soma += (cpf.charAt(i) - '0') * peso--;
         }
+        int resto = 11 - (soma % 11);
+        //System.out.println("Verificador 1: " + resto);
+        char verificador1 = (resto == 10 || resto == 11) ? '0' : (char) (resto + '0');
 
-        int resto = (int) (somaPesos / 11);
+        // calculo verificador 2
+        soma = 0;
+        peso = 11;
+        for (int i = 0; i< 10; i++) {
+            soma += (cpf.charAt(i) - '0')  * peso--;
+        }
+        resto = 11 - (soma % 11);
+        //System.out.println("Verificador 2: " + resto);
+        char verificador2 = (resto == 10 || resto == 11) ? '0' : (char) (resto + '0');
 
-
-
-        return true;
-
+        if (verificador1 == cpf.charAt(9) && verificador2 == cpf.charAt(10)) {
+            return true;
+        } else{
+            return false;
+        }
 
     }
 }
