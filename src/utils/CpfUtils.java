@@ -1,5 +1,6 @@
 package src.utils;
 
+
 public class CpfUtils {
     // metodo de formar CPF
     public static String formatarCPF(String cpf) {

@@ -2,10 +2,9 @@ package src.service;
 
 import java.util.List;
 
-import src.utils.CpfUtils;
-
 import src.models.Entrega;
 import src.models.Produto;
+import src.utils.CpfUtils;
 
 public class RelatorioService {
     private EntregaService entregaService;
