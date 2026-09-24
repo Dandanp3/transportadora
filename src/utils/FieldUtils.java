@@ -14,6 +14,11 @@ public class FieldUtils {
 
     }
 
+    public FieldUtils adicionarErro(String mensagemErro) {
+        erros.add(mensagemErro);
+        return this;
+    }
+
     public boolean temErros() {
         return !erros.isEmpty();
     }
