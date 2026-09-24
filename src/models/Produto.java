@@ -1,10 +1,10 @@
 package src.models;
 public class Produto {
     private String nome;
-    private double peso;
-    private double preco;
+    private String peso;
+    private String preco;
 
-    public Produto(String nome, double peso, double preco) {
+    public Produto(String nome, String peso, String preco) {
         this.nome = nome;
         this.peso = peso;
         this.preco = preco;
@@ -16,9 +16,9 @@ public class Produto {
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
-    public double getPeso() { return peso; }
-    public void setPeso(double peso) { this.peso = peso; }
+    public String getPeso() { return peso; }
+    public void setPeso(String peso) { this.peso = peso; }
 
-    public double getPreco() { return preco; }
-    public void setPreco(double preco) { this.preco = preco; }
+    public String getPreco() { return preco; }
+    public void setPreco(String preco) { this.preco = preco; }
 }

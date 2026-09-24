@@ -19,9 +19,9 @@ public class ProdutoService {
         System.out.print("Nome do item: ");
         String produtoNome = scanner.nextLine();
         System.out.print("Peso (Kg): ");
-        double produtoPeso = scanner.nextDouble();
+        String produtoPeso = scanner.nextLine();
         System.out.print("Preço: R$");
-        double produtoPreco = scanner.nextDouble();
+        String produtoPreco = scanner.nextLine();
 
         // Criando o produto
         Produto novoProduto = new Produto(produtoNome, produtoPeso, produtoPreco);
