@@ -7,8 +7,10 @@ import java.util.List;
 import src.models.Cliente;
 import src.models.Endereco;
 import src.utils.CpfUtils;
+import src.utils.FieldUtils;
 
 public class ClienteService {
+    FieldUtils campos = new FieldUtils();
     private List<Cliente> clientes = new ArrayList<>();
     private Scanner scanner;
 
@@ -43,17 +45,34 @@ public class ClienteService {
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
 
-        if (!CpfUtils.validarCPF(cpf)) {
-            System.out.println("CPF inserido inválido.");
-        } else {
-            // Criando o cliente
-            Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
-            Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
-            clientes.add(novoCliente);
-            System.out.println("Cliente cadastrado!");
-        }
+        campos.verificarNotBlank(nome, "Campo Nome é obrigatório.")
+                    .verificarNotBlank(cpf, "Campo CPF é obrigatório.")
+                    .verificarNotBlank(telefone, "Campo Telefone é obrigatório.")
+                    .verificarNotBlank(logradouro, "Campo Logradouro é obrigatório.")
+                    .verificarNotBlank(numero, "Campo Número é obrigatório.")
+                    .verificarNotBlank(complemento, "Campo Complemento é obrigatório.")
+                    .verificarNotBlank(bairro, "Campo Bairro é obrigatório")
+                    .verificarNotBlank(cidade, "Campo Cidade é obrigatório.")
+                    .verificarNotBlank(uf, "Campo UF é obrigatório.")
+                    .verificarNotBlank(cep, "Campo CEP é obrigatório.");
 
-        
+        if (campos.temErros()) {
+                campos.getErros().forEach(System.out::println);
+                return;
+            } else {
+
+                if (!CpfUtils.validarCPF(cpf)) {
+                    System.out.println("CPF inserido inválido.");
+                    return;
+                } else {
+
+                    // Criando o cliente
+                    Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
+                    Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
+                    clientes.add(novoCliente);
+                    System.out.println("Cliente cadastrado!");
+                }
+            }
     }
 
     public List<Cliente> getClientes() {

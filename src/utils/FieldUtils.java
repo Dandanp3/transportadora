@@ -13,4 +13,12 @@ public class FieldUtils {
         return this;
 
     }
+
+    public boolean temErros() {
+        return !erros.isEmpty();
+    }
+
+    public List<String> getErros() {
+        return erros;
+    }
 }
