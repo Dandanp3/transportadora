@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import src.models.Produto;
+import src.validators.ProdutoValidador;
 
 public class ProdutoService {
     private List<Produto> produtos = new ArrayList<>();
+    private ProdutoValidador validador = new ProdutoValidador();
     private Scanner scanner;
 
     public ProdutoService(Scanner scanner) {
@@ -23,11 +25,21 @@ public class ProdutoService {
         System.out.print("Preço: R$");
         String produtoPreco = scanner.nextLine();
 
-        // Criando o produto
+        // criando o produto
         Produto novoProduto = new Produto(produtoNome, produtoPeso, produtoPreco);
-        produtos.add(novoProduto);
+        
+        // Validando
+        List<String> erros = validador.validar(novoProduto);
 
-        System.out.println("Produto cadastrado!\n");
+        // mostra os erros
+        if (!erros.isEmpty()) {
+            erros.forEach(System.out::println);
+            return;
+        }
+        
+        // apenas adiciona se nao tiver erros
+        produtos.add(novoProduto);
+        System.out.println("Produto cadastrado com sucesso!\n");
     }
 
     public List<Produto> getProdutos() {
