@@ -1,4 +1,4 @@
-package src.service;
+package src.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import java.util.Scanner;
 import src.models.Produto;
 import src.validators.ProdutoValidador;
 
-public class ProdutoService {
+public class ProdutoControllers {
     private List<Produto> produtos = new ArrayList<>();
     private ProdutoValidador validador = new ProdutoValidador();
     private Scanner scanner;
 
-    public ProdutoService(Scanner scanner) {
+    public ProdutoControllers(Scanner scanner) {
         this.scanner = scanner;
     }
 

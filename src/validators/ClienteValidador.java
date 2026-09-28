@@ -3,8 +3,8 @@ package src.validators;
 import java.util.List;
 
 import src.models.Cliente;
-import src.utils.CpfUtils;
-import src.utils.FieldUtils;
+import utils.CpfUtils;
+import utils.FieldUtils;
 
 public class ClienteValidador implements Validador<Cliente> {
 

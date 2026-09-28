@@ -1,4 +1,4 @@
-package src.service;
+package src.controllers;
 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import java.util.List;
 import src.models.Cliente;
 import src.models.Endereco;
 import src.validators.ClienteValidador;
-import src.utils.NumeroUtils;
+import utils.NumeroUtils;
 
-public class ClienteService {
+public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();
     private ClienteValidador validador = new ClienteValidador();
     private Scanner scanner;
 
-    public ClienteService(Scanner scanner) {
+    public ClienteController(Scanner scanner) {
         this.scanner = scanner;
     }
 

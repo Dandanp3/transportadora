@@ -1,18 +1,19 @@
 package src.app;
 import java.util.Scanner;
-import src.service.ClienteService;
-import src.service.EntregaService;
-import src.service.ProdutoService;
-import src.service.RelatorioService;
+
+import src.controllers.ClienteController;
+import src.controllers.EntregaController;
+import src.controllers.ProdutoControllers;
+import src.controllers.RelatorioControllers;
 
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ClienteService clienteService = new ClienteService(scanner);
-        ProdutoService produtoService = new ProdutoService(scanner);
-        EntregaService entregaService = new EntregaService(scanner, clienteService, produtoService);
-        RelatorioService relatorioService = new RelatorioService(entregaService);
+        ClienteController clienteService = new ClienteController(scanner);
+        ProdutoControllers produtoService = new ProdutoControllers(scanner);
+        EntregaController entregaService = new EntregaController(scanner, clienteService, produtoService);
+        RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
         
         
         int opcao = 0;

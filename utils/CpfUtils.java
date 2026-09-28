@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 
 public class CpfUtils {
@@ -29,7 +29,6 @@ public class CpfUtils {
             soma += (cpf.charAt(i) - '0') * peso--;
         }
         int resto = 11 - (soma % 11);
-        //System.out.println("Verificador 1: " + resto);
         char verificador1 = (resto == 10 || resto == 11) ? '0' : (char) (resto + '0');
 
         // calculo verificador 2
@@ -39,7 +38,6 @@ public class CpfUtils {
             soma += (cpf.charAt(i) - '0')  * peso--;
         }
         resto = 11 - (soma % 11);
-        //System.out.println("Verificador 2: " + resto);
         char verificador2 = (resto == 10 || resto == 11) ? '0' : (char) (resto + '0');
 
         if (verificador1 == cpf.charAt(9) && verificador2 == cpf.charAt(10)) {

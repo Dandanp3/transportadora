@@ -3,7 +3,7 @@ package src.validators;
 import java.util.List;
 
 import src.models.Produto;
-import src.utils.FieldUtils;
+import utils.FieldUtils;
 
 public class ProdutoValidador implements Validador<Produto> {
 

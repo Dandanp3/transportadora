@@ -1,15 +1,15 @@
-package src.service;
+package src.controllers;
 
 import java.util.List;
 
 import src.models.Entrega;
 import src.models.Produto;
-import src.utils.CpfUtils;
+import utils.CpfUtils;
 
-public class RelatorioService {
-    private EntregaService entregaService;
+public class RelatorioControllers {
+    private EntregaController entregaService;
 
-    public RelatorioService(EntregaService entregaService) {
+    public RelatorioControllers(EntregaController entregaService) {
         this.entregaService = entregaService;
     }
 

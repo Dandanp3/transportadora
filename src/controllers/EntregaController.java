@@ -1,4 +1,4 @@
-package src.service;
+package src.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +8,13 @@ import src.models.Cliente;
 import src.models.Entrega;
 import src.models.Produto;
 
-public class EntregaService {
-    private ClienteService clienteService;
-    private ProdutoService produtoService;
+public class EntregaController {
+    private ClienteController clienteService;
+    private ProdutoControllers produtoService;
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
 
-    public EntregaService(Scanner scanner, ClienteService clienteService, ProdutoService produtoService) {
+    public EntregaController(Scanner scanner, ClienteController clienteService, ProdutoControllers produtoService) {
         this.scanner = scanner;
         this.clienteService = clienteService;
         this.produtoService = produtoService;

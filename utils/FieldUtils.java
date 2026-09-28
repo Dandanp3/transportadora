@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,6 @@ public class FieldUtils {
         }
 
         try {
-            // tenta converter para double
             Double numero = ConversaoUtils.converterDouble(valor);
             
             // verifica se é zero ou negativo
@@ -72,7 +71,6 @@ public class FieldUtils {
         if (temErros()) {
             return this;
         }
-
 
         try {
             Double preco = ConversaoUtils.converterDouble(valor); 
