@@ -29,6 +29,7 @@ public class EntregaController {
         // segurança para caso nao tenha clientes.
         if (clientes.isEmpty() || produtos.isEmpty()) {
             System.out.println("Aviso: Cadastre ao menos um cliente e um produto primeiro");
+            return;
         }
         System.out.print("=== Cadastrando nova Entrega ===\n");
 

@@ -28,7 +28,7 @@ public class RelatorioControllers {
         // passa por todas as entregas 
         int contE = 0;
         for (Entrega e : entregas) {
-            System.out.println("\n--- Pedido #" + (contE) + "---");
+            System.out.println("\n--- Pedido #" + (contE++) + "---");
             System.out.println("Cliente: "+ e.getCliente().getNome());
             System.out.println("CPF: "+ CpfUtils.formatarCPF(e.getCliente().getCPF()));
             System.out.println("Telefone: +55 " + e.getCliente().getTelefone());
