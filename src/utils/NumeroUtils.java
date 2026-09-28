@@ -1,4 +1,4 @@
-package utils;
+package src.utils;
 
 public class NumeroUtils {
     public static String formatarTelefone(String telefone) {

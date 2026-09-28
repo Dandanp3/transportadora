@@ -6,8 +6,8 @@ import java.util.List;
 
 import src.models.Cliente;
 import src.models.Endereco;
+import src.utils.NumeroUtils;
 import src.validators.ClienteValidador;
-import utils.NumeroUtils;
 
 public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();
