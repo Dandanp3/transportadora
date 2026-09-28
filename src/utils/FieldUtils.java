@@ -16,15 +16,14 @@ public class FieldUtils {
 
     // valida campo vazio e numero invalido
     public FieldUtils verificarDouble(String valor, String mensagemErro) {
-        // verifica se está vazio ou nulo 
-        if (valor == null || valor.trim().isEmpty()) {
-            erros.add(mensagemErro);
+        verificarNotBlank(valor, mensagemErro);
+        if (temErros()) {
             return this;
         }
 
         try {
             // tenta converter para double
-            double numero = Double.parseDouble(valor.trim().replace(",", "."));
+            Double numero = ConversaoUtils.converterDouble(valor);
             
             // verifica se é zero ou negativo
             if (numero <= 0) {
@@ -41,14 +40,13 @@ public class FieldUtils {
 
     // valida peso 
     public FieldUtils verificarPeso(String valor, String mensagemErro) {
-        // nao pode ser vazio
-        if (valor == null || valor.trim().isEmpty()) {
-            erros.add(mensagemErro + " - Campo obrigatório");
+        verificarNotBlank(valor, mensagemErro);
+        if (temErros()) {
             return this;
         }
 
         try {
-            double peso = Double.parseDouble(valor.trim().replace(",", "."));
+            double peso = ConversaoUtils.converterDouble(valor);
             
             // Peso nao pode ser zero ou negativo
             if (peso <= 0) {
@@ -69,13 +67,15 @@ public class FieldUtils {
     // validar preço
     public FieldUtils verificarPreco(String valor, String mensagemErro) {
         // N pode ser vazio
-        if (valor == null || valor.trim().isEmpty()) {
-            erros.add(mensagemErro + " - Campo obrigatório");
+        verificarNotBlank(valor, mensagemErro);
+
+        if (temErros()) {
             return this;
         }
 
+
         try {
-            double preco = Double.parseDouble(valor.trim().replace(",", "."));
+            Double preco = ConversaoUtils.converterDouble(valor); 
             
             // Preço nn pode ser zero ou ngativo
             if (preco <= 0) {

@@ -10,10 +10,6 @@ public class ConversaoUtils {
             return Double.parseDouble(valor.replace(",", "."));
          } catch (NumberFormatException e) {
             return null;
-         }
-
-
-
-        
+         }   
     }
 }

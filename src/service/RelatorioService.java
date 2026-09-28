@@ -31,6 +31,7 @@ public class RelatorioService {
             System.out.println("\n--- Pedido #" + (contE) + "---");
             System.out.println("Cliente: "+ e.getCliente().getNome());
             System.out.println("CPF: "+ CpfUtils.formatarCPF(e.getCliente().getCPF()));
+            System.out.println("Telefone: +55 " + e.getCliente().getTelefone());
 
             // metodo de endereço
             System.out.println("Destino: "+ e.getCliente().getEndereco().obterEnderecoCompleto());

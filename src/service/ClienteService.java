@@ -7,6 +7,7 @@ import java.util.List;
 import src.models.Cliente;
 import src.models.Endereco;
 import src.validators.ClienteValidador;
+import src.utils.NumeroUtils;
 
 public class ClienteService {
     private List<Cliente> clientes = new ArrayList<>();
@@ -47,7 +48,7 @@ public class ClienteService {
 
         // Criando o cliente
         Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
-        Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
+        Cliente novoCliente = new Cliente(nome, cpf, NumeroUtils.formatarTelefone(telefone), enderecoCliente);
 
         List<String> erros = validador.validar(novoCliente);
 
