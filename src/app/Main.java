@@ -6,6 +6,9 @@ import src.controllers.EntregaController;
 import src.controllers.ProdutoControllers;
 import src.controllers.RelatorioControllers;
 
+import src.dao.ProdutoDAO;
+import src.db.ConexaoBanco;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -14,6 +17,10 @@ public class Main {
         ProdutoControllers produtoService = new ProdutoControllers(scanner);
         EntregaController entregaService = new EntregaController(scanner, clienteService, produtoService);
         RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
+
+        ConexaoBanco.conectar();
+        ProdutoDAO dao = new ProdutoDAO();
+        dao.salvarProduto();
         
         
         int opcao = 0;
