@@ -1,5 +1,6 @@
 package src.models;
 public class Produto {
+    private int produtoId;
     private String nome;
     private String peso;
     private String preco;
@@ -13,6 +14,9 @@ public class Produto {
     public Produto(){}
 
     // getters e seters
+    public int getProdutoID() {return produtoId;}
+    public void setProdutoID(int produtoId) {this.produtoId = produtoId;}
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 

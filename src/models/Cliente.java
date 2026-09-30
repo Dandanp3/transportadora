@@ -5,6 +5,7 @@ public class Cliente {
     private String cpf;
     private String telefone;
     private Endereco endereco; 
+    private int clienteId;
 
     public Cliente(String nome, String cpf, String telefone, Endereco endereco) {
         this.nome = nome;
@@ -16,6 +17,10 @@ public class Cliente {
     public Cliente() {}
 
     //getters e setters 
+
+    public int getClienteId() { return clienteId;}
+    public void setClienteId(int clienteId) {this.clienteId = clienteId;}
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -27,6 +32,4 @@ public class Cliente {
 
     public Endereco getEndereco() { return endereco; }
     public void setEndereco(Endereco endereco ) {this.endereco = endereco; }
-
-
 }
