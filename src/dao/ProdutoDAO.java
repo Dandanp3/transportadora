@@ -14,7 +14,6 @@ public class ProdutoDAO {
     //private List<Produto> produtos = new ArrayList<>();
 
     public void salvarProduto() {
-    // Fase 1: 3 colunas e 3 valores
     String sql = "INSERT INTO transportadora.produto (produto_nome, peso, preco) VALUES (?, ?, ?)";
 
     Connection conn = ConexaoBanco.conectar();

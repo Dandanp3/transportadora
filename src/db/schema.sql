@@ -1,4 +1,5 @@
 create SCHEMA transportadora;
+
 CREATE TABLE transportadora.endereco(
     endereco_id SERIAL PRIMARY KEY,
     logradouro VARCHAR(25) NOT NULL,
