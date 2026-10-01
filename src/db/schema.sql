@@ -47,4 +47,4 @@ CREATE TABLE transportadora.itemEntrega(
     CONSTRAINT fk_entrega FOREIGN KEY (entrega_id) REFERENCES transportadora.entrega(entrega_id)
 );
 
-DROP TABLE transportadora.entrega, transportadora.produto, transportadora.cliente, transportadora.endereco CASCADE;
+DROP TABLE transportadora.entrega, transportadora.produto, transportadora.cliente, transportadora.endereco CASCADE;a

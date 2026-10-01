@@ -8,7 +8,6 @@ import src.dao.EnderecoDAO;
 import src.dao.ClienteDAO;
 import src.models.Cliente;
 import src.models.Endereco;
-import src.utils.NumeroUtils;
 import src.validators.ClienteValidador;
 
 public class ClienteController {
@@ -35,7 +34,7 @@ public class ClienteController {
         System.out.print("Logradouro: ");
         String logradouro = scanner.nextLine();
         System.out.print("Número: ");
-        int numero = scanner.nextInt();
+        int numero = Integer.parseInt(scanner.nextLine());
         System.out.print("Complemento: ");
         String complemento = scanner.nextLine();
         System.out.print("Bairro: ");
@@ -47,10 +46,9 @@ public class ClienteController {
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
 
-
         // Criando o cliente
         Endereco enderecoCliente = new Endereco(logradouro, numero, complemento, bairro, cidade, uf, cep);
-        Cliente novoCliente = new Cliente(nome, cpf, NumeroUtils.formatarTelefone(telefone), enderecoCliente);
+        Cliente novoCliente = new Cliente(nome, cpf, telefone, enderecoCliente);
 
         List<String> erros = validador.validar(novoCliente);
 
@@ -60,7 +58,6 @@ public class ClienteController {
         }
         
         EnderecoDAO enderecoDAO = new EnderecoDAO();
-
         int idDoEndereco = enderecoDAO.salvarEndereco(enderecoCliente);
 
         if (idDoEndereco != -1) {
@@ -68,12 +65,10 @@ public class ClienteController {
             ClienteDAO clienteDAO = new ClienteDAO();
             clienteDAO.salvarCliente(novoCliente);
             
-
             System.out.println("Cliente cadastrado com sucesso!");
         } else {
             System.out.println("Falha ao salvar endereço. Cliente não cadastrado.");
         }
-       
     }
 
     public List<Cliente> getClientes() {

@@ -11,7 +11,7 @@ import src.models.Cliente;
 
 public class ClienteDAO {
     public int salvarCliente(Cliente cliente) {
-        String sql = "INSERT INTO transportadora.cliente (nome, cpf, telefone) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO transportadora.cliente (nome, cpf, telefone, endereco_id) VALUES (?, ?, ?, ?)";
         int idGerado = -1;
 
         try (Connection conn = ConexaoBanco.conectar();
@@ -19,7 +19,8 @@ public class ClienteDAO {
                 
                 stmt.setString(1, cliente.getNome());
                 stmt.setString(2, cliente.getCPF());
-                stmt.setString(3, cliente.getNome());
+                stmt.setString(3, cliente.getTelefone());
+                stmt.setInt(4, cliente.getEndereco().getEnderecoID());
 
                 stmt.executeUpdate();
 
