@@ -5,6 +5,7 @@ import java.util.List;
 import src.models.Cliente;
 import src.utils.CpfUtils;
 import src.utils.FieldUtils;
+import src.utils.ConversaoUtils;
 
 public class ClienteValidador implements Validador<Cliente> {
 
@@ -16,7 +17,7 @@ public class ClienteValidador implements Validador<Cliente> {
                 .verificarNotBlank(cliente.getCPF(), "Erro: Campo CPF é obrigatório.")
                 .verificarNotBlank(cliente.getTelefone(), "Erro: Campo Telefone é obrigatório.")
                 .verificarNotBlank(cliente.getEndereco().getLogradouro(), "Erro: Campo Logradouro é obrigatório.")
-                .verificarNotBlank(cliente.getEndereco().getNumero(), "Erro: Campo Número é obrigatório.")
+                .verificarNotBlank(ConversaoUtils.converterString(cliente.getEndereco().getNumero()), "Erro: Campo Número é obrigatório.")
                 .verificarNotBlank(cliente.getEndereco().getBairro(), "Erro: Campo Bairro é obrigatório.")
                 .verificarNotBlank(cliente.getEndereco().getCidade(), "Erro: Campo Cidade é obrigatório.")
                 .verificarNotBlank(cliente.getEndereco().getUF(), "Erro: Campo UF é obrigatório.")

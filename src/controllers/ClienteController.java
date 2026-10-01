@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.dao.EnderecoDAO;
+import src.dao.ClienteDAO;
 import src.models.Cliente;
 import src.models.Endereco;
 import src.utils.NumeroUtils;
@@ -33,7 +35,7 @@ public class ClienteController {
         System.out.print("Logradouro: ");
         String logradouro = scanner.nextLine();
         System.out.print("Número: ");
-        String numero = scanner.nextLine();
+        int numero = scanner.nextInt();
         System.out.print("Complemento: ");
         String complemento = scanner.nextLine();
         System.out.print("Bairro: ");
@@ -56,8 +58,22 @@ public class ClienteController {
             erros.forEach(System.out::println);
             return;
         }
-        clientes.add(novoCliente);
-        System.out.println("Cliente cadastrado!");
+        
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+
+        int idDoEndereco = enderecoDAO.salvarEndereco(enderecoCliente);
+
+        if (idDoEndereco != -1) {
+            enderecoCliente.setEnderecoID(idDoEndereco);
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.salvarCliente(novoCliente);
+            
+
+            System.out.println("Cliente cadastrado com sucesso!");
+        } else {
+            System.out.println("Falha ao salvar endereço. Cliente não cadastrado.");
+        }
+       
     }
 
     public List<Cliente> getClientes() {

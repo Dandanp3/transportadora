@@ -14,14 +14,34 @@ public class EnderecoDAO {
         String sql = "INSERT INTO transportadora.endereco (logradouro, numero, complemento, bairro, cidade, uf, cep) VALUES (?, ?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
-        try (Connection conn = ConexaoBanco.conectar();
+
+        try (Connection conn = ConexaoBanco.conectar(); 
+            // guardando o id chave primaria
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                
+            
                 stmt.setString(1, endereco.getLogradouro());
+                stmt.setInt(2, endereco.getNumero());
+                stmt.setString(3, endereco.getComplemento());
+                stmt.setString(4, endereco.getBairro());
+                stmt.setString(5, endereco.getCidade());
+                stmt.setString(6, endereco.getUF());
+                stmt.setString(7, endereco.getCEP());
+
+                stmt.executeUpdate();
+
+                // guardando id em um resultset (uma caixa de resultados)
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    // se tiver alguma linha, pega o valor da primeira coluna
+                    if (generatedKeys.next()) {
+                        idGerado = generatedKeys.getInt(1);
+                    }
+                }
+
+            } catch(SQLException e) {
+                System.out.println("Erro ao salvar Endereço.");
+                e.printStackTrace();
             }
-        
-
-
+            return idGerado;
     }
     
 }
