@@ -22,7 +22,7 @@ CREATE TABLE transportadora.cliente(
 
 CREATE TABLE transportadora.produto(
     produto_id SERIAL PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
+    produto_nome VARCHAR(50) NOT NULL,
     peso FLOAT NOT NULL,
     preco FLOAT NOT NULL
 );
@@ -47,4 +47,12 @@ CREATE TABLE transportadora.itemEntrega(
     CONSTRAINT fk_entrega FOREIGN KEY (entrega_id) REFERENCES transportadora.entrega(entrega_id)
 );
 
-DROP TABLE transportadora.entrega, transportadora.produto, transportadora.cliente, transportadora.endereco CASCADE;a
+DROP TABLE transportadora.entrega, transportadora.produto, transportadora.cliente, transportadora.endereco CASCADE;
+
+DROP TABLE transportadora.itemEntrega
+
+TRUNCATE TABLE transportadora.cliente, transportadora.endereco CASCADE
+TRUNCATE TABLE transportadora.endereco;
+
+SELECT * FROM transportadora.cliente
+SELECT * FROM transportadora.endereco
