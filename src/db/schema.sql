@@ -43,6 +43,8 @@ CREATE TABLE transportadora.itemEntrega(
 	item_id SERIAL PRIMARY KEY,
 	produto_id INT NOT NULL,
     entrega_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    preco_unitario FLOAT NOT NULL,
 	CONSTRAINT fk_produto FOREIGN KEY (produto_id) REFERENCES transportadora.produto(produto_id),
     CONSTRAINT fk_entrega FOREIGN KEY (entrega_id) REFERENCES transportadora.entrega(entrega_id)
 );

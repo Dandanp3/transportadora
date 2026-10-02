@@ -15,3 +15,6 @@ Um sistema simples de logística via terminal (CLI) construído em Java. O proje
   - `models/`: Classes de molde (`Cliente`, `Produto`, etc).
   - `service/`: Onde a mágica acontece (`Sistema` com a lógica e menus).
   - `app/`: Apenas o `Main` para iniciar o programa.
+
+## MODELO ER
+<img width="1248" height="822" alt="Image" src="https://github.com/user-attachments/assets/5d457c77-31f1-4bc1-8eeb-838f91929b28" />
