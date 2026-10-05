@@ -18,6 +18,7 @@ Um sistema simples de logística via terminal (CLI) construído em Java. O proje
 
 ## MODELO ER
 ```mermaid
+%%{init: {'theme': 'dark'}}%%
 erDiagram
     CLIENTE {
         SERIAL id PK
