@@ -1,22 +1,43 @@
 package src.models;
 
 public class ItemEntrega {
-    private Entrega entrega;
-    private int itemEntregaId;
-    private Produto produto;
-    private int quantidade;
+    private int id;
+    private int entregaId;
+    private String codigoBarras;
+    private double pesoKg;
+    private double alturaCm;
+    private double larguraCm;
+    private double comprimentoCm;
 
-    public ItemEntrega(Entrega entrega, Produto produto, int quantidade) {
-    this.produto = produto;
-    this.entrega = entrega;
-    this.quantidade = quantidade;
+    public ItemEntrega() {}
+
+    public ItemEntrega(int entregaId, String codigoBarras, double pesoKg, double alturaCm, double larguraCm, double comprimentoCm) {
+        this.entregaId = entregaId;
+        this.codigoBarras = codigoBarras;
+        this.pesoKg = pesoKg;
+        this.alturaCm = alturaCm;
+        this.larguraCm = larguraCm;
+        this.comprimentoCm = comprimentoCm;
     }
 
-    public int getItemProdutoID() {return itemEntregaId;}
-    public void setItemProdutoID(int itemEntregaId) {this.itemEntregaId = itemEntregaId;}
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public Produto getProdutos() {return produto;}
-    public void setProdutos(Produto produto) {this.produto = produto;}
+    public int getEntregaId() { return entregaId; }
+    public void setEntregaId(int entregaId) { this.entregaId = entregaId; }
 
+    public String getCodigoBarras() { return codigoBarras; }
+    public void setCodigoBarras(String codigoBarras) { this.codigoBarras = codigoBarras; }
+
+    public double getPesoKg() { return pesoKg; }
+    public void setPesoKg(double pesoKg) { this.pesoKg = pesoKg; }
+
+    public double getAlturaCm() { return alturaCm; }
+    public void setAlturaCm(double alturaCm) { this.alturaCm = alturaCm; }
+
+    public double getLarguraCm() { return larguraCm; }
+    public void setLarguraCm(double larguraCm) { this.larguraCm = larguraCm; }
+
+    public double getComprimentoCm() { return comprimentoCm; }
+    public void setComprimentoCm(double comprimentoCm) { this.comprimentoCm = comprimentoCm; }
 }
-
