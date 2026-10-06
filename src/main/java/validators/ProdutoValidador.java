@@ -1,9 +1,9 @@
-package src.validators;
+package validators;
 
 import java.util.List;
 
-import src.models.Produto;
-import src.utils.FieldUtils;
+import models.Produto;
+import utils.FieldUtils;
 
 public class ProdutoValidador implements Validador<Produto> {
 

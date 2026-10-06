@@ -19,7 +19,7 @@ public class EnderecoDAO {
             // guardando o id chave primaria
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-
+                stmt.setInt(1, endereco.getClienteId());
                 stmt.setString(2, endereco.getTipoEndereco());
                 stmt.setString(3, endereco.getCep());
                 stmt.setString(4, endereco.getLogradouro());
