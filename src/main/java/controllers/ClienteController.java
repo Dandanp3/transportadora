@@ -55,27 +55,32 @@ public class ClienteController {
         String cep = scanner.nextLine();
 
         // Criando o cliente
-        Endereco enderecoCliente = new Endereco(clienteId, tipoEndereco, cep, logradouro, numero, complemento, bairro, cidade, uf);
+        
         Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, documento, email, telefone);
 
         List<String> erros = validador.validar(novoCliente);
-
         if (!erros.isEmpty()) {
             erros.forEach(System.out::println);
             return;
         }
         
-        EnderecoDAO enderecoDAO = new EnderecoDAO();
-        int idDoEndereco = enderecoDAO.salvarEndereco(enderecoCliente);
+        // salva o cliente no banco e pega o id
+        ClienteDAO clienteDAO = new ClienteDAO();
+        int idCliente = clienteDAO.salvarCliente(novoCliente);
 
-        if (idDoEndereco != -1) {
-            enderecoCliente.setEnderecoID(idDoEndereco);
-            ClienteDAO clienteDAO = new ClienteDAO();
-            clienteDAO.salvarCliente(novoCliente);
-            
-            System.out.println("Cliente cadastrado com sucesso!");
+        if (idCliente != -1) {
+            // guarda o id no objeto para uso futuro
+            novoCliente.setId(idCliente);
+            // cria o endereço com o id coletado
+            Endereco enderecoCliente = new Endereco(idCliente, tipoEndereco, cep, logradouro, numero, complemento, bairro, cidade, uf);
+            EnderecoDAO enderecoDAO = new EnderecoDAO();
+            enderecoDAO.salvarEndereco(enderecoCliente);
+
+            //clientes.add(novoCliente); -- lista memoria para usar depois
+
+            System.out.println("Cliente e Endereço cadastrados com sucesso!");
         } else {
-            System.out.println("Falha ao salvar endereço. Cliente não cadastrado.");
+            System.out.println("Falha ao salvar o cliente.");
         }
     }
 
