@@ -1,13 +1,12 @@
-package src.app;
+package app;
 import java.util.Scanner;
 
-import src.controllers.ClienteController;
-import src.controllers.EntregaController;
-import src.controllers.ProdutoControllers;
-import src.controllers.RelatorioControllers;
+import controllers.ClienteController;
+import controllers.EntregaController;
+import controllers.ProdutoControllers;
+import controllers.RelatorioControllers;
 
-import src.dao.ProdutoDAO;
-import src.db.ConexaoBanco;
+import db.ConnectionFactory;
 
 
 public class Main {
@@ -18,10 +17,7 @@ public class Main {
         EntregaController entregaService = new EntregaController(scanner, clienteService, produtoService);
         RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
 
-        ConexaoBanco.conectar();
-        ProdutoDAO dao = new ProdutoDAO();
-        dao.salvarProduto();
-        
+        ConnectionFactory.conectar();
         
         int opcao = 0;
         System.out.println("=== BEM-VINDO AO SISTEMA ===");

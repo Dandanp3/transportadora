@@ -1,14 +1,14 @@
-package src.controllers;
+package controllers;
 
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.dao.EnderecoDAO;
-import src.dao.ClienteDAO;
-import src.models.Cliente;
-import src.models.Endereco;
-import src.validators.ClienteValidador;
+import dao.EnderecoDAO;
+import dao.ClienteDAO;
+import models.Cliente;
+import models.Endereco;
+import validators.ClienteValidador;
 
 public class ClienteController {
     private List<Cliente> clientes = new ArrayList<>();

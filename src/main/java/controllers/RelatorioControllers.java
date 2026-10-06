@@ -1,10 +1,10 @@
-package src.controllers;
+package controllers;
 
 import java.util.List;
 
-import src.models.Entrega;
-import src.models.Produto;
-import src.utils.CpfUtils;
+import models.Entrega;
+import models.Produto;
+import utils.CpfUtils;
 
 public class RelatorioControllers {
     private EntregaController entregaService;

@@ -1,4 +1,4 @@
-package src.dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,26 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import src.db.ConexaoBanco;
-import src.models.Endereco;
+import db.ConnectionFactory;
+import models.Endereco;
 
 public class EnderecoDAO {
     public int salvarEndereco(Endereco endereco) {
-        String sql = "INSERT INTO transportadora.endereco (logradouro, numero, complemento, bairro, cidade, uf, cep) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO transportadora.endereco (cliente_id, tipo_endereco, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
 
-        try (Connection conn = ConexaoBanco.conectar(); 
+        try (Connection conn = ConnectionFactory.conectar(); 
             // guardando o id chave primaria
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-                stmt.setString(1, endereco.getLogradouro());
-                stmt.setInt(2, endereco.getNumero());
-                stmt.setString(3, endereco.getComplemento());
-                stmt.setString(4, endereco.getBairro());
-                stmt.setString(5, endereco.getCidade());
-                stmt.setString(6, endereco.getUF());
-                stmt.setString(7, endereco.getCEP());
+
+                stmt.setString(2, endereco.getTipoEndereco());
+                stmt.setString(3, endereco.getCep());
+                stmt.setString(4, endereco.getLogradouro());
+                stmt.setInt(5, endereco.getNumero());
+                stmt.setString(6, endereco.getComplemento());
+                stmt.setString(7, endereco.getBairro());
+                stmt.setString(8, endereco.getCidade());
+                stmt.setString(9, endereco.getUf());
 
                 stmt.executeUpdate();
 

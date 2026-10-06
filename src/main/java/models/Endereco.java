@@ -1,4 +1,4 @@
-package src.models;
+package models;
 
 public class Endereco {
     private int id;
@@ -6,7 +6,7 @@ public class Endereco {
     private String tipoEndereco;
     private String cep;
     private String logradouro;
-    private String numero;
+    private int numero;
     private String complemento;
     private String bairro;
     private String cidade;
@@ -14,7 +14,7 @@ public class Endereco {
 
     public Endereco() {}
 
-    public Endereco(int clienteId, String tipoEndereco, String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String uf) {
+    public Endereco(int clienteId, String tipoEndereco, String cep, String logradouro, int numero, String complemento, String bairro, String cidade, String uf) {
         this.clienteId = clienteId;
         this.tipoEndereco = tipoEndereco;
         this.cep = cep;
@@ -41,8 +41,8 @@ public class Endereco {
     public String getLogradouro() { return logradouro; }
     public void setLogradouro(String logradouro) { this.logradouro = logradouro; }
 
-    public String getNumero() { return numero; }
-    public void setNumero(String numero) { this.numero = numero; }
+    public int getNumero() { return numero; }
+    public void setNumero(int numero) { this.numero = numero; }
 
     public String getComplemento() { return complemento; }
     public void setComplemento(String complemento) { this.complemento = complemento; }

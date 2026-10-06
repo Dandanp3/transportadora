@@ -1,12 +1,12 @@
-package src.controllers;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import src.models.Cliente;
-import src.models.Entrega;
-import src.models.Produto;
+import models.Cliente;
+import models.Entrega;
+import models.Produto;
 
 public class EntregaController {
     private ClienteController clienteService;

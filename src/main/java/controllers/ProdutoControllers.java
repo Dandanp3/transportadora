@@ -1,11 +1,11 @@
-package src.controllers;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import src.models.Produto;
-import src.validators.ProdutoValidador;
+import models.Produto;
+import validators.ProdutoValidador;
 
 public class ProdutoControllers {
     private List<Produto> produtos = new ArrayList<>();

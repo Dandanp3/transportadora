@@ -1,4 +1,4 @@
-package src.models;
+package models;
 
 public class ItemEntrega {
     private int id;
@@ -39,5 +39,5 @@ public class ItemEntrega {
     public void setLarguraCm(double larguraCm) { this.larguraCm = larguraCm; }
 
     public double getComprimentoCm() { return comprimentoCm; }
-    public void setComprimentoCm(double comprimentoCm) { this.comprimentoCm = comprimentoCm; }
+    public void setComprimentoCm(Double comprimentoCm) { this.comprimentoCm = comprimentoCm; }
 }
