@@ -8,7 +8,7 @@ CREATE TABLE transportadora.cliente(
 	documento VARCHAR(14) UNIQUE NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	telefone VARCHAR(20) NOT NULL,
-	created_at TIMESTAMP NOT NULL
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE transportadora.endereco(

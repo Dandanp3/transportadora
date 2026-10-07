@@ -70,8 +70,8 @@ public class EntregaController {
         ArrayList<Produto> pacoteDeProdutos = new ArrayList<>();
         pacoteDeProdutos.add(produtoEscolhido);
 
-        Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
-        entregas.add(novaEntrega);
+        //Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
+        //entregas.add(novaEntrega);
         System.out.println("Entrega cadastrada\n");
     }
 

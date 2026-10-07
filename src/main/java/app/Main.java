@@ -4,7 +4,7 @@ import java.util.Scanner;
 import controllers.ClienteController;
 import controllers.EntregaController;
 import controllers.ProdutoControllers;
-import controllers.RelatorioControllers;
+//import controllers.RelatorioControllers;
 
 import db.ConnectionFactory;
 
@@ -15,7 +15,7 @@ public class Main {
         ClienteController clienteService = new ClienteController(scanner);
         ProdutoControllers produtoService = new ProdutoControllers(scanner);
         EntregaController entregaService = new EntregaController(scanner, clienteService, produtoService);
-        RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
+        //RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
 
         ConnectionFactory.conectar();
         
@@ -42,8 +42,8 @@ public class Main {
                    break;
                 case 3: entregaService.cadastrarEntrega();
                     break;
-                case 4: relatorioService.listarRelatorio(); 
-                    break;
+               // case 4: relatorioService.listarRelatorio(); 
+                 //   break;
 
                 default: System.out.println("Opção inválida! Tente novamente.");
                     break;

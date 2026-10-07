@@ -11,7 +11,7 @@ import models.Cliente;
 
 public class ClienteDAO {
     public int salvarCliente(Cliente cliente) {
-        String sql = "INSERT INTO transportadora.cliente (tipo_pessoa, nome, nome_fantasia, documento, email, telefone, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO transportadora.cliente (tipo_pessoa, nome, nome_fantasia, documento, email, telefone) VALUES (?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
         try (Connection conn = ConnectionFactory.conectar();
