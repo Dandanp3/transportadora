@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.ConnectionFactory;
 import models.Cliente;
@@ -40,5 +42,32 @@ public class ClienteDAO {
         
             return idGerado;
     }
-    
+
+    public List<Cliente> buscarClientes() {
+        List<Cliente> listaClientes = new ArrayList<>();
+        String sql = "SELECT * FROM transportadora.cliente";
+
+        try (Connection conn = ConnectionFactory.conectar(); 
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
+
+            // enquanto houver linhas, o loop vai passar por elas
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setDocumento(rs.getString("documento"));
+                cliente.setEmail(rs.getString("telefone"));
+                cliente.setTelefone(rs.getString("email"));
+
+                listaClientes.add(cliente);
+            }
+            
+        } catch(SQLException e) {
+            System.out.println("Erro ao buscar clientes.");
+            e.printStackTrace();
+        }
+
+        return listaClientes;
+    }
 }

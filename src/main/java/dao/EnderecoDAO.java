@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 import db.ConnectionFactory;
 import models.Endereco;
@@ -44,6 +46,35 @@ public class EnderecoDAO {
                 e.printStackTrace();
             }
             return idGerado;
+    }
+
+    public List<Endereco> buscarEnderecos() {
+        List<Endereco> listaEnderecos = new ArrayList<>();
+        String sql = "SELECT * FROM transportadora.endereco";
+
+        try (Connection conn = ConnectionFactory.conectar();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Endereco endereco = new Endereco();
+                endereco.setId(rs.getInt("id"));
+                endereco.setClienteId(rs.getInt("clienteId"));
+                endereco.setTipoEndereco(rs.getString("tipoEndereco"));
+                endereco.setCep(rs.getString("cep"));
+                endereco.setLogradouro(rs.getString("logradouro"));
+                endereco.setNumero(rs.getInt("numero"));
+
+
+                listaEnderecos.add(endereco);
+            }
+
+        } catch(SQLException e) {
+            System.out.println("Erro ao buscar endereços.");
+            e.printStackTrace();
+        }
+        
+        return listaEnderecos;
     }
     
 }

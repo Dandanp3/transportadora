@@ -7,24 +7,29 @@ import java.util.Scanner;
 import models.Cliente;
 import models.Entrega;
 import models.Produto;
+import dao.ClienteDAO;
+import dao.EnderecoDAO;
 
 public class EntregaController {
-    private ClienteController clienteService;
-    private ProdutoControllers produtoService;
+    private ClienteController clienteController;
+    private ProdutoControllers produtoController;
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
+    ClienteDAO clienteDAO = new ClienteDAO();
+    EnderecoDAO enderecoDAO = new EnderecoDAO();
 
-    public EntregaController(Scanner scanner, ClienteController clienteService, ProdutoControllers produtoService) {
+    public EntregaController(Scanner scanner, ClienteController clienteController, ProdutoControllers produtoController) {
         this.scanner = scanner;
-        this.clienteService = clienteService;
-        this.produtoService = produtoService;
+        this.clienteController = clienteController;
+        this.produtoController = produtoController;
     }
     
 
     // CADASTRO DE ENTREGA
     public void cadastrarEntrega() {
-        List<Cliente> clientes = clienteService.getClientes();
-        List<Produto> produtos = produtoService.getProdutos();
+        List<Cliente> clientes = clienteController.getClientes();
+        List<Produto> produtos = produtoController.getProdutos();
+         List<Cliente> clientesBanco = clienteDAO.buscarClientes();
 
         // segurança para caso nao tenha clientes.
         if (clientes.isEmpty() || produtos.isEmpty()) {
@@ -33,18 +38,28 @@ public class EntregaController {
         }
         System.out.print("=== Cadastrando nova Entrega ===\n");
 
-        // lista de clientes
+        // listar os clientes
+        System.out.println("Clientes disponíveis:");
         int contC = 1;
-        for (Cliente c : clientes) {
-            System.out.println(contC + " - " + c.getNome());
+        for (Cliente c : clientesBanco) {
+            System.out.println(contC + "- Nome: " + c.getNome() + " | Doc: " + c.getDocumento());
             contC++;
         }
-        
-        // pega o cliente 
-        System.out.print("Selecione o Cliente (Digite o número correspondente): ");
-        int indexCliente = scanner.nextInt();
+
+        // pegar o Remetente
+        System.out.println("Selecione o Remetente: ");
+        int indexRemetente = scanner.nextInt();
         scanner.nextLine();
-        Cliente clienteEscolhido = clientes.get(indexCliente - 1);
+        Cliente remetente = clientesBanco.get(indexRemetente - 1);
+
+        // pegar destinatario
+        System.out.println("Selecione o Destinatário: ");
+        int indexDestinatario = scanner.nextInt();
+        scanner.nextLine();
+        if (indexDestinatario == indexRemetente) {
+            System.out.println("O destinatário não pode ser o remetente.");
+        }
+        Cliente destinatario = clientesBanco.get(indexDestinatario - 1);
 
         // listando produtos
         int contP = 1;
@@ -66,13 +81,18 @@ public class EntregaController {
         System.out.print("Valor do Frete: R$");
         double valorFrete = scanner.nextDouble();
 
-        // criando uma caixa de produtos
-        ArrayList<Produto> pacoteDeProdutos = new ArrayList<>();
-        pacoteDeProdutos.add(produtoEscolhido);
+        System.out.println("Número de rastreio: ");
+        String numRastreio = scanner.nextLine();
 
-        //Entrega novaEntrega = new Entrega(clienteEscolhido, pacoteDeProdutos, status, valorFrete);
-        //entregas.add(novaEntrega);
-        System.out.println("Entrega cadastrada\n");
+        System.out.println("Data de emissão: ");
+        String dataEmissao = scanner.nextLine();
+
+        Entrega novaEntrega = new Entrega();
+
+        // salvar entrega
+        EnderecoDAO enderecoDAO = new EnderecoDAO(indexRemetente, indexDestinatario, );
+        int idEntrega = enderecoDAO.salvarEndereco(novaEntrega); 
+        
     }
 
     public List<Entrega> getEntregas() {
