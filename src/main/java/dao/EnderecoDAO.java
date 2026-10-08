@@ -59,8 +59,8 @@ public class EnderecoDAO {
             while (rs.next()) {
                 Endereco endereco = new Endereco();
                 endereco.setId(rs.getInt("id"));
-                endereco.setClienteId(rs.getInt("clienteId"));
-                endereco.setTipoEndereco(rs.getString("tipoEndereco"));
+                endereco.setClienteId(rs.getInt("cliente_id"));
+                endereco.setTipoEndereco(rs.getString("tipo_endereco"));
                 endereco.setCep(rs.getString("cep"));
                 endereco.setLogradouro(rs.getString("logradouro"));
                 endereco.setNumero(rs.getInt("numero"));
@@ -71,6 +71,43 @@ public class EnderecoDAO {
 
         } catch(SQLException e) {
             System.out.println("Erro ao buscar endereços.");
+            e.printStackTrace();
+        }
+        
+        return listaEnderecos;
+    }
+
+    public List<Endereco> buscarPorClienteId(int idDoCliente) {
+        List<Endereco> listaEnderecos = new ArrayList<>();
+        String sql = "SELECT * FROM transportadora.endereco WHERE cliente_id = ?";
+
+        try (Connection conn = ConnectionFactory.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // substitui a interrogaçao pelo ID do cliente (remetente ou destinatario)
+            stmt.setInt(1, idDoCliente);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Endereco endereco = new Endereco();
+                    
+                    endereco.setId(rs.getInt("id"));
+                    endereco.setClienteId(rs.getInt("cliente_id"));
+                    endereco.setTipoEndereco(rs.getString("tipo_endereco"));
+                    endereco.setCep(rs.getString("cep"));
+                    endereco.setLogradouro(rs.getString("logradouro"));
+                    endereco.setNumero(rs.getInt("numero"));
+                    endereco.setComplemento(rs.getString("complemento"));
+                    endereco.setBairro(rs.getString("bairro"));
+                    endereco.setCidade(rs.getString("cidade"));
+                    endereco.setUf(rs.getString("uf"));
+
+                    listaEnderecos.add(endereco);
+                }
+            }
+
+        } catch(SQLException e) {
+            System.out.println("Erro ao buscar endereços por cliente.");
             e.printStackTrace();
         }
         

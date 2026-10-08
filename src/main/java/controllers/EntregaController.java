@@ -9,6 +9,8 @@ import models.Entrega;
 import models.Produto;
 import dao.ClienteDAO;
 import dao.EnderecoDAO;
+import dao.EntregaDAO;
+import models.Endereco;
 
 public class EntregaController {
     private ClienteController clienteController;
@@ -24,16 +26,14 @@ public class EntregaController {
         this.produtoController = produtoController;
     }
     
-
     // CADASTRO DE ENTREGA
     public void cadastrarEntrega() {
         List<Cliente> clientes = clienteController.getClientes();
-        List<Produto> produtos = produtoController.getProdutos();
-         List<Cliente> clientesBanco = clienteDAO.buscarClientes();
+        List<Cliente> clientesBanco = clienteDAO.buscarClientes();
 
-        // segurança para caso nao tenha clientes.
-        if (clientes.isEmpty() || produtos.isEmpty()) {
-            System.out.println("Aviso: Cadastre ao menos um cliente e um produto primeiro");
+        // Verifica se tem plmns 2 clientes para fazer uma entrega
+        if (clientesBanco.size() < 2) {
+            System.out.println("Aviso: Você precisa cadastrar ao menos 2 clientes no banco primeiro (um remetente e um destinatário).");
             return;
         }
         System.out.print("=== Cadastrando nova Entrega ===\n");
@@ -60,19 +60,6 @@ public class EntregaController {
             System.out.println("O destinatário não pode ser o remetente.");
         }
         Cliente destinatario = clientesBanco.get(indexDestinatario - 1);
-
-        // listando produtos
-        int contP = 1;
-        for (Produto p : produtos) {
-            System.out.println(contP + " - " + p.getNome());
-            contP++;
-        }
-
-        //pegando o produto
-        System.out.print("Selecione o Produto (Digite o número correspondente): ");
-        int indexProduto = scanner.nextInt();
-        scanner.nextLine();
-        Produto produtoEscolhido = produtos.get(indexProduto -1);
         
         // restante das informações
         System.out.print("Status atual do pedido: ");
@@ -81,18 +68,43 @@ public class EntregaController {
         System.out.print("Valor do Frete: R$");
         double valorFrete = scanner.nextDouble();
 
-        System.out.println("Número de rastreio: ");
+        System.out.print("Número de rastreio: ");
         String numRastreio = scanner.nextLine();
 
-        System.out.println("Data de emissão: ");
+        System.out.print("Data de emissão (YYY-MM-DD): ");
         String dataEmissao = scanner.nextLine();
 
-        Entrega novaEntrega = new Entrega();
+        List<Endereco> enderecosOrigem = enderecoDAO.buscarPorClienteId(remetente.getId());
+        if (enderecosOrigem.isEmpty()) {
+            System.out.println("O remetente não possui endereços cadastrados!");
+            return;
+        }
 
-        // salvar entrega
-        EnderecoDAO enderecoDAO = new EnderecoDAO(indexRemetente, indexDestinatario, );
-        int idEntrega = enderecoDAO.salvarEndereco(novaEntrega); 
-        
+        Endereco origem = enderecosOrigem.get(0);
+
+        // pegando destino
+        List<Endereco> enderecosDestino = enderecoDAO.buscarPorClienteId(destinatario.getId());
+        if (enderecosDestino.isEmpty()) {
+            System.out.println("O destinatário não possui endereços cadastrados!");
+            return;
+        }
+
+        Endereco destino = enderecosDestino.get(0);
+
+        // criando a entrega
+        Entrega novaEntrega = new Entrega(remetente, destinatario, origem, destino, numRastreio, status, valorFrete, dataEmissao);
+
+        EntregaDAO entregaDAO = new EntregaDAO();
+        int idEntrega = entregaDAO.salvarEntrega(novaEntrega);
+
+        // guardando o id numa lista 
+        if (idEntrega != -1) {
+            novaEntrega.setId(idEntrega); 
+            entregas.add(novaEntrega);    
+            System.out.println("Cadastro finalizado!");
+        } else {
+            System.out.println("Falha ao salvar a entrega.");
+        }
     }
 
     public List<Entrega> getEntregas() {
