@@ -43,11 +43,11 @@ CREATE TABLE transportadora.entrega(
 	CONSTRAINT fk_destino FOREIGN KEY (endereco_destino_id) REFERENCES transportadora.endereco(id)
 );
 
-CREATE TABLE transportadora.notaFiscal (
+CREATE TABLE transportadora.documento_fiscal (
 	id SERIAL PRIMARY KEY NOT NULL,
 	entrega_id INTEGER NOT NULL,
 	numero_nf INTEGER NOT NULL,
-	chave_acesso VARCHAR(44) NOT NULL,
+	chave_acesso VARCHAR(44),
 	valor_mercadoria DECIMAL(10,2) NOT NULL,
 
 	CONSTRAINT fk_entrega FOREIGN KEY (entrega_id) REFERENCES transportadora.entrega(id)

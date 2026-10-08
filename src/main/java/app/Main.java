@@ -14,7 +14,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ClienteController clienteService = new ClienteController(scanner);
         ProdutoControllers produtoService = new ProdutoControllers(scanner);
-        EntregaController entregaService = new EntregaController(scanner, clienteService, produtoService);
+        EntregaController entregaService = new EntregaController(scanner);
         //RelatorioControllers relatorioService = new RelatorioControllers(entregaService);
 
         ConnectionFactory.conectar();

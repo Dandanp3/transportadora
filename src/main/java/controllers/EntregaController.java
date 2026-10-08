@@ -6,29 +6,23 @@ import java.util.Scanner;
 
 import models.Cliente;
 import models.Entrega;
-import models.Produto;
 import dao.ClienteDAO;
 import dao.EnderecoDAO;
 import dao.EntregaDAO;
 import models.Endereco;
 
 public class EntregaController {
-    private ClienteController clienteController;
-    private ProdutoControllers produtoController;
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
     ClienteDAO clienteDAO = new ClienteDAO();
     EnderecoDAO enderecoDAO = new EnderecoDAO();
 
-    public EntregaController(Scanner scanner, ClienteController clienteController, ProdutoControllers produtoController) {
+    public EntregaController(Scanner scanner) {
         this.scanner = scanner;
-        this.clienteController = clienteController;
-        this.produtoController = produtoController;
     }
     
     // CADASTRO DE ENTREGA
     public void cadastrarEntrega() {
-        List<Cliente> clientes = clienteController.getClientes();
         List<Cliente> clientesBanco = clienteDAO.buscarClientes();
 
         // Verifica se tem plmns 2 clientes para fazer uma entrega
