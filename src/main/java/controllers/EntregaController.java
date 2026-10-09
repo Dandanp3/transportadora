@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import models.Cliente;
 import models.Entrega;
+import models.ItemEntrega;
 import dao.ClienteDAO;
 import dao.EnderecoDAO;
 import dao.EntregaDAO;
@@ -15,6 +16,7 @@ import models.Endereco;
 public class EntregaController {
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
+    DocumentoFiscalController docController = new DocumentoFiscalController(scanner);
     ItemEntregaController itemController = new ItemEntregaController(scanner);
     ClienteDAO clienteDAO = new ClienteDAO();
     EnderecoDAO enderecoDAO = new EnderecoDAO();
@@ -61,9 +63,6 @@ public class EntregaController {
         System.out.print("Status atual do pedido: ");
         String status = scanner.nextLine();
 
-        System.out.print("Valor do Frete: R$");
-        double valorFrete = scanner.nextDouble();
-
         System.out.print("Número de rastreio: ");
         String numRastreio = scanner.nextLine();
 
@@ -88,20 +87,33 @@ public class EntregaController {
         Endereco destino = enderecosDestino.get(0);
 
         // criando a entrega
-        Entrega novaEntrega = new Entrega(remetente, destinatario, origem, destino, numRastreio, status, valorFrete, dataEmissao);
+        Entrega novaEntrega = new Entrega(remetente, destinatario, origem, destino, numRastreio, status, 0.0, dataEmissao);
 
         EntregaDAO entregaDAO = new EntregaDAO();
         int idEntrega = entregaDAO.salvarEntrega(novaEntrega);
 
-        // guardando o id numa lista 
         if (idEntrega != -1) {
             novaEntrega.setId(idEntrega); 
             entregas.add(novaEntrega); 
 
-            itemController.cadastrarItem(idEntrega);
-            
+            ItemEntrega itemCadastrado = itemController.cadastrarItem(idEntrega);
 
-            System.out.println("Cadastro finalizado!");
+            double freteCalculado = utils.CalculadorFreteUtils.calcularFrete(
+                itemCadastrado.getPesoKg(), 
+                itemCadastrado.getAlturaCm(), 
+                itemCadastrado.getLarguraCm(), 
+                itemCadastrado.getComprimentoCm()
+            );
+            System.out.printf("-> Frete calculado por cubagem: R$ %.2f\n", freteCalculado);
+            
+            // criar um metodo para atualizar frete dps...
+            // entregaDAO.atualizarFrete(idEntrega, freteCalculado);
+
+            // 3. CHAMA O DOCUMENTO FISCAL
+            DocumentoFiscalController docController = new DocumentoFiscalController(scanner);
+            docController.cadastrarDocumentoFiscal(idEntrega, remetente, origem.getUf(), dataEmissao);
+
+            System.out.println("\n✅ Cadastro da Entrega, Item e Documento finalizado com sucesso!");
         } else {
             System.out.println("Falha ao salvar a entrega.");
         }

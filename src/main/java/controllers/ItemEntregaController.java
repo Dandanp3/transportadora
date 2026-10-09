@@ -13,7 +13,7 @@ public class ItemEntregaController {
         this.scanner = scanner;
     }
 
-    public void cadastrarItem(int entregaId) {
+    public ItemEntrega cadastrarItem(int entregaId) {
         System.out.println("==== Cadastrando Item da entrega ====");
         System.out.println("Peso (kg): ");
         Double peso = scanner.nextDouble();
@@ -29,8 +29,6 @@ public class ItemEntregaController {
         
         ItemEntregaDAO itemDAO = new ItemEntregaDAO();
         itemDAO.salvarItemEntrega(novoItem);
+        return novoItem;
     }
-
-
-    
 }
