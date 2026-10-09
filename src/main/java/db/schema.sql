@@ -34,7 +34,7 @@ CREATE TABLE transportadora.entrega(
 	endereco_destino_id INTEGER NOT NULL,
 	num_rastreio VARCHAR(20) NOT NULL,
 	status_entrega VARCHAR(20) NOT NULL,
-	valor_frete decimal NOT NULL,
+	valor_frete decimal,
 	data_emissao DATE NOT NULL,
 
 	CONSTRAINT fk_remetente FOREIGN KEY (remetente_id) REFERENCES transportadora.cliente(id),

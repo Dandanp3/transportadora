@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 import models.Cliente;
 import models.Entrega;
 import dao.ClienteDAO;
@@ -14,6 +15,7 @@ import models.Endereco;
 public class EntregaController {
     private List<Entrega> entregas = new ArrayList<>();
     private Scanner scanner;
+    ItemEntregaController itemController = new ItemEntregaController(scanner);
     ClienteDAO clienteDAO = new ClienteDAO();
     EnderecoDAO enderecoDAO = new EnderecoDAO();
 
@@ -94,7 +96,11 @@ public class EntregaController {
         // guardando o id numa lista 
         if (idEntrega != -1) {
             novaEntrega.setId(idEntrega); 
-            entregas.add(novaEntrega);    
+            entregas.add(novaEntrega); 
+
+            itemController.cadastrarItem(idEntrega);
+            
+
             System.out.println("Cadastro finalizado!");
         } else {
             System.out.println("Falha ao salvar a entrega.");

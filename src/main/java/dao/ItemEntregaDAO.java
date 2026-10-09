@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import db.ConnectionFactory;
 import models.ItemEntrega;
 
-public class itemEntrega {
+public class ItemEntregaDAO {
     public int salvarItemEntrega(ItemEntrega itemEntrega) {
         String sql = "INSERT INTO transportadora.itemEntrega (entrega_id, codigo_barras, peso_kg, altura_cm, largura_cm, comprimento_cm) VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -33,6 +33,7 @@ public class itemEntrega {
         System.out.println("Item salvo.");
         } catch(SQLException e) {
         System.out.println("Erro ao salvar Item da entrega.");
+        e.printStackTrace();
     }
     return idGerado;
     }
