@@ -22,22 +22,29 @@ public class ClienteController {
     public void cadastrarCliente() {
         // cliente cadastro
         System.out.println("=== Cadastro de Cliente ===\n");
-        System.out.println("Tipo de pessoa - J | F: ");
-        String tipoPessoa = scanner.nextLine();
+        
         System.out.print("Nome / Razão social: ");
         String nome = scanner.nextLine();
-        System.out.println("Nome fantasia: ");
+        
+        System.out.print("Nome fantasia (se não houver, aperte Enter): ");
         String nomeFantasia = scanner.nextLine();
+        
         System.out.print("CPF / CNPJ: ");
         String documento = scanner.nextLine();
+        
+        String docLimpo = documento.replaceAll("[^0-9]", "");
+        // Se tiver mais de 11 digis, eh PJ
+        String tipoPessoa = docLimpo.length() > 11 ? "J" : "F";
+        
         System.out.print("Email: ");
         String email = scanner.nextLine();
+        
         System.out.print("Número/Phone: (+55) ");
         String telefone = scanner.nextLine();
 
         // endereço
-        System.out.println("=== Endereço ===\n");
-        System.out.println("Tipo do endereço: ");
+        System.out.println("\n=== Endereço ===");
+        System.out.print("Tipo do endereço (ex: Residencial, Comercial): ");
         String tipoEndereco = scanner.nextLine();
         System.out.print("Logradouro: ");
         String logradouro = scanner.nextLine();
@@ -54,8 +61,6 @@ public class ClienteController {
         System.out.print("CEP: ");
         String cep = scanner.nextLine();
 
-        // Criando o cliente
-        
         Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, documento, email, telefone);
 
         List<String> erros = validador.validar(novoCliente);
@@ -78,7 +83,7 @@ public class ClienteController {
 
             //clientes.add(novoCliente); -- lista memoria para usar depois
 
-            System.out.println("Cliente e Endereço cadastrados com sucesso!");
+            System.out.println("\nCliente e Endereço cadastrados com sucesso! Tipo definido como: " + tipoPessoa);
         } else {
             System.out.println("Falha ao salvar o cliente.");
         }
