@@ -1,6 +1,13 @@
 plugins {
     id 'java'
     id 'war' 
+    id "org.gretty" version "3.1.1"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
@@ -11,4 +18,12 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
     providedCompile 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
     implementation 'org.postgresql:postgresql:42.6.0' 
+}
+
+tasks.named('wrapper') {
+    gradleVersion = '7.6.4'
+}
+
+wrapper {
+    gradleVersion = '7.6.4'
 }
