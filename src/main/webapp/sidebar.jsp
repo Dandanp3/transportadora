@@ -23,12 +23,17 @@
         font-family: "Poppins", sans-serif;
     }
 
+    nav {
+        border-radius: 12px;
+    }
+
     .sidebar {
-        position: fixed;
+        position: sticky;
         top: 0;
         left: 0;
         height: 100vh;
         width: var(--sidebar-collapsed);
+        flex-shrink: 0;
         background-color: #fff;
         overflow: hidden;
         white-space: nowrap;
@@ -149,5 +154,6 @@
                 <span class="nav-item">Simulador de Frete</span>
             </a>
         </li>
+        
     </ul>
 </nav>
