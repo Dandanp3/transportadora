@@ -3,13 +3,12 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Clientes | Dandan Transportes</title>
+    <title>Dandan Transportes</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
         body { background-color: #f8fafc; }
 
-        /* Esse é o truque de ouro do layout! */
         .layout-principal {
             display: flex;
         }

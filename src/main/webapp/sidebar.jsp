@@ -1,44 +1,153 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!-- Importando os ícones modernos -->
+
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+    :root {
+        --sidebar-collapsed: 72px;
+        --sidebar-expanded: 250px;
+        --primary: #0d6efd;
+        --text: #555353;
+        --hover-bg: #eef3ff;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        text-decoration: none;
+        list-style: none;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
 
     .sidebar {
-        width: 260px;
-        background-color: #ffffff;
-        border-right: 1px solid #eef2f5;
-        display: flex;
-        flex-direction: column;
-        padding: 24px 16px;
-        height: 100vh; /* ocupa 100% altura da tela*/
-        position: fixed; /* fica fixo enquanto o conteudo rola*/
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: var(--sidebar-collapsed);
+        background-color: #fff;
+        overflow: hidden;
+        white-space: nowrap;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+        z-index: 1000;
     }
 
-    .brand {
+    .sidebar:hover {
+        width: var(--sidebar-expanded);
+    }
+
+    /* LOGO */
+    .sidebar .logo {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 40px;
-        padding: 0 8px;
+        height: 80px;
+        padding: 0 14px;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 10px;
     }
 
+    .sidebar .logo img {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        object-fit: contain;
+    }
+
+    .sidebar .logo .brand {
+        margin-left: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: #333;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .sidebar:hover .logo .brand {
+        opacity: 1;
+        transition-delay: 0.1s;
+    }
+
+    /*  MENU  */
+    .sidebar ul {
+        padding: 0 10px;
+    }
+
+    .sidebar ul li a {
+        display: flex;
+        align-items: center;
+        height: 48px;
+        padding: 0 14px;
+        margin-bottom: 4px;
+        border-radius: 10px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    .sidebar ul li a i {
+        font-size: 22px;
+        min-width: 24px;
+        text-align: center;
+    }
+
+    .sidebar ul li a .nav-item {
+        margin-left: 16px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .sidebar:hover ul li a .nav-item {
+        opacity: 1;
+        transition-delay: 0.1s;
+    }
+
+    .sidebar ul li a:hover {
+        background: var(--hover-bg);
+        color: var(--primary);
+    }
 </style>
 
-<aside class="sidebar">
-    <div class="brand">
-        <div class="brand-icon"></div>
-        <div class="brand-text">
-            <h2>GW</h2>
-            <span>Transportes</span>
-        </div>
+<nav class="sidebar">
+    <div class="logo">
+        <img src="./assets/truck.png" alt="Logo Dandan Transportes">
+        <span class="brand">Dandan<br>Transportes</span>
     </div>
 
-    <div class="menu-title"> MENU PRINCIPAL</div>
-    <nav class="nav-links">
-        <a href="inicio.jsp" class="menu-item">Início</a>
-        <a href="entregas.jsp" class="menu-item">Entregas</a>
-        <a href="clientes.jsp" class="menu-item">Clientes</a>
-        <a href="simulador.jsp" class="manu-item"> Simulador de Frete</a>
-    </nav>
-</aside>
+    <ul>
+        <li>
+            <a href="#">
+                <i class="ph ph-house"></i>
+                <span class="nav-item">Início</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="ph ph-users"></i>
+                <span class="nav-item">Clientes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="ph ph-package"></i>
+                <span class="nav-item">Entregas</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="ph ph-calculator"></i>
+                <span class="nav-item">Simulador de Frete</span>
+            </a>
+        </li>
+    </ul>
+</nav>
