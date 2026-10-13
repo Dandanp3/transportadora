@@ -1,0 +1,54 @@
+/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ========== BASE ========== */
+body {
+    background-color: #f8fafc;
+    color: #1a202c;
+}
+
+/* ========== LAYOUT GERAL ========== */
+.layout-principal {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 32px;
+}
+
+/* ========== BOTÃO PRINCIPAL ========== */
+.btn-principal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: #0d6efd;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-principal i {
+    font-size: 18px;
+}
+
+.btn-principal:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+}
+
+.btn-principal:active {
+    transform: translateY(0);
+}
