@@ -1,0 +1,271 @@
+.modal {
+    margin: auto;
+    padding: 0;
+    width: min(690px, calc(100% - 32px));
+    border: none;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+}
+.modal::backdrop {
+    background-color: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+}
+.modal[open] {
+    animation: modal-entrada 0.2s ease;
+}
+@keyframes modal-entrada {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to   { opacity: 1; transform: none; }
+}
+.modal [hidden] {
+    display: none !important;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh -  48px);
+}
+
+/* Header */
+.modal-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 28px 0;
+}
+
+.modal-cabecalho h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-cabecalho p {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #718096;
+}
+
+.passos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 28px;
+    list-style: none;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.passo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #a0aec0;
+}
+
+/* linha entre passo 1 e 2 */
+.passo + .passo::before {
+    content: "";
+    width: 32px;
+    height: 2px;
+    margin-right: 2px;
+    background-color: #e2e8f0;
+}
+
+.passo-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
+}
+
+.passo.ativo {
+    color: #1a202c;
+}
+
+.passo.ativo .passo-num {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+}
+
+.passo.concluido {
+    color: #16a34a;
+}
+
+.passo.concluido .passo-num {
+    background-color: #dcfce7;
+    border-color: #dcfce7;
+    color: #16a34a;
+}
+
+.modal-corpo {
+    padding: 24px 28px;
+    overflow-y: auto;
+}
+ .etapa {
+    min-width: 0;
+    border: none;
+ }
+ .form-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0,1fr));
+    gap: 18px 16px;
+ }
+
+.span-1 { grid-column: span 1; }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+.span-4 { grid-column: span 4; }
+.span-6 { grid-column: span 6; }
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo-rotulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.opcional {
+    font-weight: 400;
+    color: #a0aec0;
+}
+
+.campo input:not([type="radio"]),
+.campo select {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: #1a202c;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.campo input::placeholder {
+    color: #a0aec0;
+}
+
+.campo input:not([type="radio"]):focus,
+.campo select:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.campo input:user-invalid,
+.campo select:user-invalid {
+    border-color: #e53e3e;
+}
+
+.campo input:user-invalid:focus,
+.campo select:user-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15);
+}
+
+.opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.opcao {
+    position: relative;
+    cursor: pointer;
+}
+
+opcao input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.opcao span {
+    display: inline-block;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.opcao:hover span {
+    background-color: #f1f5f9;
+}
+
+.opcao input:checked + span {
+    background-color: #eef3ff;
+    border-color: #0d6efd;
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+.opcao input:focus-visible + span {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.modal-rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    background-color: #f8fafc;
+    border-top: 1px solid #edf2f7;
+}
+
+.btn-secundario {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: #f1f5f9;
+}
+
+@media (max-width: 560px) {
+    .modal-cabecalho { padding: 20px 20px 0; }
+    .passos          { padding: 16px 20px; }
+    .modal-corpo     { padding: 20px; }
+    .modal-rodape    { padding: 14px 20px; }
+
+    /* tudo em uma coluna */
+    .span-1, .span-2, .span-3, .span-4 { grid-column: span 6; }
+
+    /* so o nome do passo atual aparece */
+    .passo:not(.ativo) .passo-nome { display: none; }
+}
+

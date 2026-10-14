@@ -9,6 +9,8 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/clientes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/clienteModal.css">
+
 </head>
 <body>
 
@@ -52,7 +54,7 @@
                 <section class="painel">
 
                     <!-- busca -->
-                    <form class="busca" action="ClientePage.jsp" method="get" role="search">
+                    <form class="busca" action="modal/clienteModal.jsp" method="get" role="search">
                         <div class="busca-campo">
                             <i class="ph ph-magnifying-glass"></i>
                             <input type="search"
@@ -187,7 +189,7 @@
     </div>
 
     <!-- modal futuro de cadastro -->
-    <%-- <jsp:include page="ClienteModal.jsp" /> --%>
+    <jsp:include page="clienteModal.jsp" /> 
 
 </body>
 </html>

@@ -109,11 +109,11 @@ public class EntregaController {
             // criar um metodo para atualizar frete dps...
             // entregaDAO.atualizarFrete(idEntrega, freteCalculado);
 
-            // 3. CHAMA O DOCUMENTO FISCAL
+            
             DocumentoFiscalController docController = new DocumentoFiscalController(scanner);
             docController.cadastrarDocumentoFiscal(idEntrega, remetente, origem.getUf(), dataEmissao);
 
-            System.out.println("\n✅ Cadastro da Entrega, Item e Documento finalizado com sucesso!");
+            System.out.println("\nCadastro da Entrega, Item e Documento finalizado com sucesso!");
         } else {
             System.out.println("Falha ao salvar a entrega.");
         }
