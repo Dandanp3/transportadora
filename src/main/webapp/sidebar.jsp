@@ -128,14 +128,14 @@
 
     <ul>
         <li>
-            <a href="#">
+            <a href="./index.jsp">
                 <i class="ph ph-house"></i>
                 <span class="nav-item">Início</span>
             </a>
         </li>
 
         <li>
-            <a href="#">
+            <a href="./clientePage.jsp">
                 <i class="ph ph-users"></i>
                 <span class="nav-item">Clientes</span>
             </a>

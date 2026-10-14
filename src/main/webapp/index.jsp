@@ -69,7 +69,6 @@
 
                 </section>
 
-                <!-- Entregas recentes -->
                 <section class="recentes">
                     <div class="recentes-cabecalho">
                         <h2>Entregas recentes</h2>
@@ -90,28 +89,28 @@
                             <tbody>
                                 <tr>
                                     <td>BR03594754</td>
-                                    <td>Maria Silva</td>
-                                    <td>Belo Horizonte, MG</td>
+                                    <td>Daniel Peixoto</td>
+                                    <td>Recife, PE</td>
                                     <td>13/10/2026</td>
                                     <td><span class="status status-transito">Em trânsito</span></td>
                                 </tr>
                                 <tr>
                                     <td>BR03594801</td>
-                                    <td>João Souza</td>
-                                    <td>Contagem, MG</td>
+                                    <td>DneyDev</td>
+                                    <td>Ali, Bem ali</td>
                                     <td>13/10/2026</td>
                                     <td><span class="status status-rota">Em rota de entrega</span></td>
                                 </tr>
                                 <tr>
                                     <td>BR03594622</td>
-                                    <td>Comercial Alfa Ltda</td>
-                                    <td>Betim, MG</td>
+                                    <td>Michael Jackson Ltda</td>
+                                    <td>Xique xique, BA</td>
                                     <td>12/10/2026</td>
                                     <td><span class="status status-concluida">Concluída</span></td>
                                 </tr>
                                 <tr>
                                     <td>BR03594517</td>
-                                    <td>Ana Pereira</td>
+                                    <td>Ash Ketchum</td>
                                     <td>Uberlândia, MG</td>
                                     <td>12/10/2026</td>
                                     <td><span class="status status-pendente">Pendente</span></td>
