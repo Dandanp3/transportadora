@@ -12,35 +12,36 @@ import db.ConnectionFactory;
 import models.Cliente;
 
 public class ClienteDAO {
+    
     public int salvarCliente(Cliente cliente) {
         String sql = "INSERT INTO transportadora.cliente (tipo_pessoa, nome, nome_fantasia, documento, email, telefone) VALUES (?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
         try (Connection conn = ConnectionFactory.conectar();
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 
-                stmt.setString(1, cliente.getTipoPessoa());
-                stmt.setString(2, cliente.getNome());
-                stmt.setString(3, cliente.getNomeFantasia());
-                stmt.setString(4, cliente.getDocumento());
-                stmt.setString(5, cliente.getEmail());
-                stmt.setString(6, cliente.getTelefone());
-                
+            int index = 1;
+            stmt.setString(index++, cliente.getTipoPessoa());
+            stmt.setString(index++, cliente.getNome());
+            stmt.setString(index++, cliente.getNomeFantasia());
+            stmt.setString(index++, cliente.getDocumento());
+            stmt.setString(index++, cliente.getEmail());
+            stmt.setString(index++, cliente.getTelefone());
 
-                stmt.executeUpdate();
+            stmt.executeUpdate();
 
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        idGerado = generatedKeys.getInt(1);
-                    }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    idGerado = generatedKeys.getInt(1);
                 }
-            
-            } catch(SQLException e) {
-                System.out.println("Erro ao salvar cliente.");
-                e.printStackTrace();
             }
+            
+        } catch (SQLException e) {
+            System.out.println("Erro ao salvar cliente.");
+            e.printStackTrace();
+        }
         
-            return idGerado;
+        return idGerado;
     }
 
     public List<Cliente> buscarClientes() {
@@ -48,22 +49,21 @@ public class ClienteDAO {
         String sql = "SELECT * FROM transportadora.cliente";
 
         try (Connection conn = ConnectionFactory.conectar(); 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-            // enquanto houver linhas, o loop vai passar por elas
             while (rs.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id"));
                 cliente.setNome(rs.getString("nome"));
                 cliente.setDocumento(rs.getString("documento"));
-                cliente.setEmail(rs.getString("telefone"));
-                cliente.setTelefone(rs.getString("email"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
 
                 listaClientes.add(cliente);
             }
             
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Erro ao buscar clientes.");
             e.printStackTrace();
         }

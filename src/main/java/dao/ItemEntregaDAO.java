@@ -18,12 +18,13 @@ public class ItemEntregaDAO {
     try (Connection conn = ConnectionFactory.conectar();
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
         
-        stmt.setInt(1, itemEntrega.getEntregaId());
-        stmt.setString(2, itemEntrega.getCodigoBarras());
-        stmt.setDouble(3, itemEntrega.getPesoKg());
-        stmt.setDouble(4, itemEntrega.getAlturaCm());
-        stmt.setDouble(5, itemEntrega.getLarguraCm());
-        stmt.setDouble(6, itemEntrega.getComprimentoCm());
+        int index = 1;
+        stmt.setInt(index++, itemEntrega.getEntregaId());
+        stmt.setString(index++, itemEntrega.getCodigoBarras());
+        stmt.setDouble(index++, itemEntrega.getPesoKg());
+        stmt.setDouble(index++, itemEntrega.getAlturaCm());
+        stmt.setDouble(index++, itemEntrega.getLarguraCm());
+        stmt.setDouble(index++, itemEntrega.getComprimentoCm());
 
         try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
             if (generatedKeys.next()) {
