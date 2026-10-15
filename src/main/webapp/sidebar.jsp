@@ -142,7 +142,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="./entregaPage.jsp">
                 <i class="ph ph-package"></i>
                 <span class="nav-item">Entregas</span>
             </a>

@@ -20,13 +20,13 @@ public class ClienteDAO {
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 
-            int index = 1;
-            stmt.setString(index++, cliente.getTipoPessoa());
-            stmt.setString(index++, cliente.getNome());
-            stmt.setString(index++, cliente.getNomeFantasia());
-            stmt.setString(index++, cliente.getDocumento());
-            stmt.setString(index++, cliente.getEmail());
-            stmt.setString(index++, cliente.getTelefone());
+            int index = 0;
+            stmt.setString(++index, cliente.getTipoPessoa());
+            stmt.setString(++index, cliente.getNome());
+            stmt.setString(++index, cliente.getNomeFantasia());
+            stmt.setString(++index, cliente.getDocumento());
+            stmt.setString(++index, cliente.getEmail());
+            stmt.setString(++index, cliente.getTelefone());
 
             stmt.executeUpdate();
 

@@ -18,19 +18,19 @@ public class EntregaDAO {
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
         // mensageiro
 
-        int index = 1;
-        stmt.setInt(index++, entrega.getRemetente().getId());
-        stmt.setInt(index++, entrega.getDestinatario().getId());
-        stmt.setInt(index++, entrega.getEnderecoOrigem().getId());
-        stmt.setInt(index++, entrega.getEnderecoDestino().getId());
+        int index = 0;
+        stmt.setInt(++index, entrega.getRemetente().getId());
+        stmt.setInt(++index, entrega.getDestinatario().getId());
+        stmt.setInt(++index, entrega.getEnderecoOrigem().getId());
+        stmt.setInt(++index, entrega.getEnderecoDestino().getId());
 
         // preenche as lacunas com ? de acordo com os numeros
-        stmt.setString(index++, entrega.getNumRastreio());
-        stmt.setString(index++, entrega.getStatusEntrega());
-        stmt.setDouble(index++, entrega.getValorFrete());
+        stmt.setString(++index, entrega.getNumRastreio());
+        stmt.setString(++index, entrega.getStatusEntrega());
+        stmt.setDouble(++index, entrega.getValorFrete());
 
         //converte string de data para formato db
-        stmt.setDate(index++, java.sql.Date.valueOf((entrega.getDataEmissao())));
+        stmt.setDate(++index, java.sql.Date.valueOf((entrega.getDataEmissao())));
         stmt.executeUpdate();
 
         try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {

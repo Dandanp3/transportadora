@@ -21,16 +21,16 @@ public class EnderecoDAO {
             // guardando o id chave primaria
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-                int index = 1;
-                stmt.setInt(index++, endereco.getClienteId());
-                stmt.setString(index++, endereco.getTipoEndereco());
-                stmt.setString(index++, endereco.getCep());
-                stmt.setString(index++, endereco.getLogradouro());
-                stmt.setInt(index++, endereco.getNumero());
-                stmt.setString(index++, endereco.getComplemento());
-                stmt.setString(index++, endereco.getBairro());
-                stmt.setString(index++, endereco.getCidade());
-                stmt.setString(index++, endereco.getUf());
+                int index = 0;
+                stmt.setInt(++index, endereco.getClienteId());
+                stmt.setString(++index, endereco.getTipoEndereco());
+                stmt.setString(++index, endereco.getCep());
+                stmt.setString(++index, endereco.getLogradouro());
+                stmt.setInt(++index, endereco.getNumero());
+                stmt.setString(++index, endereco.getComplemento());
+                stmt.setString(++index, endereco.getBairro());
+                stmt.setString(++index, endereco.getCidade());
+                stmt.setString(++index, endereco.getUf());
 
                 stmt.executeUpdate();
 

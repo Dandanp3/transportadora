@@ -16,11 +16,11 @@ public class DocumentoFiscalDAO {
         try (Connection conn = ConnectionFactory.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
             
-            int index = 1;
-            stmt.setInt(index++, documentoFiscal.getEntregaId());
-            stmt.setString(index++, documentoFiscal.getNumeroNf());
-            stmt.setString(index++, documentoFiscal.getChaveAcesso());
-            stmt.setDouble(index++, documentoFiscal.getValorMercadoria());
+            int index = 0;
+            stmt.setInt(++index, documentoFiscal.getEntregaId());
+            stmt.setString(++index, documentoFiscal.getNumeroNf());
+            stmt.setString(++index, documentoFiscal.getChaveAcesso());
+            stmt.setDouble(++index, documentoFiscal.getValorMercadoria());
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
