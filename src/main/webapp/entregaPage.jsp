@@ -249,7 +249,7 @@
         </main>
     </div>
 
-    <%-- <jsp:include page="entregaModal.jsp" /> --%>
+    <jsp:include page="entregaModal.jsp"/>
 
 </body>
 </html>
