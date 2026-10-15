@@ -82,7 +82,7 @@ button.btn-principal {
     border-radius: 10px;
 }
 
-.busca-campo::placeholder {
+.busca-campo:placeholder {
     color: #e2e8f0;
 }
 

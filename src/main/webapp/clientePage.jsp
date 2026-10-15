@@ -54,7 +54,7 @@
                 <section class="painel">
 
                     <!-- busca -->
-                    <form class="busca" action="modal/clienteModal.jsp" method="get" role="search">
+                    <form class="busca" action="clienteModal.jsp" method="get" role="search">
                         <div class="busca-campo">
                             <i class="ph ph-magnifying-glass"></i>
                             <input type="search"
