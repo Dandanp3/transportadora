@@ -62,7 +62,7 @@ public class EntregaServlet extends HttpServlet {
             Endereco origem = enderecosOrigem.get(0);
             Endereco destino = enderecosDestino.get(0);
 
-            // verificar CPF/CNPJ
+            // verificar CPF
             List<Cliente> clientes = clienteDAO.buscarClientes();
             Cliente remetente = clientes.stream()
                     .filter(c -> c.getId() == remetenteId)

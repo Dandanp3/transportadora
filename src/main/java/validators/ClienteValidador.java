@@ -15,9 +15,9 @@ public class ClienteValidador implements Validador<Cliente> {
         campos.verificarNotBlank(cliente.getNome(), "Erro: Campo Nome é obrigatório.")
                 .verificarNotBlank(cliente.getDocumento(), "Erro: Campo CPF é obrigatório.");
 
-                if (!CpfUtils.validarCPF(cliente.getDocumento())) {
-                        campos.adicionarErro("CPF inserido inválido.");
-                    } 
+               // if (!CpfUtils.validarCPF(cliente.getDocumento())) {
+                      //  campos.adicionarErro("CPF inserido inválido.");
+                    //} 
         return campos.getErros();
     }
     

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/entrega.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/entregaModal.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modal.css">
+
 </head>
 <body>
 

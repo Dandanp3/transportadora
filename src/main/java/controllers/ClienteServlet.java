@@ -48,7 +48,7 @@ public class ClienteServlet extends HttpServlet {
         String uf = req.getParameter("uf");
 
         // montando o objeto
-        Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, documento, email, telefone);
+        Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, docLimpo, email, telefone);
         List<String> erros = validador.validar(novoCliente);
 
         if (!erros.isEmpty()) {

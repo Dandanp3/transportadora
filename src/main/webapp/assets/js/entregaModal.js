@@ -6,6 +6,24 @@
     const botoesRodape = form.querySelectorAll('.modal-rodape [data-etapa]');
     let etapaAtual = 0;
 
+    /* Abrir / fechar */
+    document.getElementById('btn-nova-entrega')
+        .addEventListener('click', () => modal.showModal());
+
+    form.querySelectorAll('[data-fechar]')
+        .forEach(b => b.addEventListener('click', () => modal.close()));
+
+    // Clicou no fundo escurecido 
+    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+
+    // Fechou (X, Cancelar, ESC ou fundo) limpa tudo
+    modal.addEventListener('close', () => {
+        form.reset();
+        combos.forEach(c => c.reiniciar());   // o reset do form não limpa os campos escondidos
+        dataEmissao.value = hoje();
+        irParaEtapa(0);
+    });
+
     const CLIENTES_DEMO = [
         { id: 1, codigo: 'CL-001', nome: 'Marcos Oliveira', tipo: 'F', documento: '12345678901',
           enderecos: [
@@ -287,24 +305,6 @@
         return d.toISOString().slice(0, 10);
     }
     dataEmissao.value = hoje();
-
-    /* Abrir / fechar */
-    document.getElementById('btn-nova-entrega')
-        .addEventListener('click', () => modal.showModal());
-
-    form.querySelectorAll('[data-fechar]')
-        .forEach(b => b.addEventListener('click', () => modal.close()));
-
-    // Clicou no fundo escurecido 
-    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
-
-    // Fechou (X, Cancelar, ESC ou fundo) limpa tudo
-    modal.addEventListener('close', () => {
-        form.reset();
-        combos.forEach(c => c.reiniciar());   // o reset do form não limpa os campos escondidos
-        dataEmissao.value = hoje();
-        irParaEtapa(0);
-    });
 
     /* Etapas */
     function irParaEtapa(n) {
