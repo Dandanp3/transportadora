@@ -76,17 +76,35 @@ public class ClienteServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/clientes.jsp?status=sucesso");
         } else {
             System.out.println("Falha ao salvar o cliente via Web.");
-            resp.sendRedirect(req.getContextPath() + "/clientes.jsp?status=erro");
+            resp.sendRedirect(req.getContextPath() + "/webapp/clientePage.jsp");
         }
     }
 
-    @Override 
-    protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletExceptionm IOException {
+    @Override
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+
+        System.out.println("1 - Entrou no doGet");
+
         ClienteDAO clienteDAO = new ClienteDAO();
 
+        System.out.println("2 - Chamando buscarClientes");
+
         List<Cliente> clientes = clienteDAO.buscarClientes();
+
+        for (Cliente cliente : clientes) {
+            System.out.println("ID: " + cliente.getId());
+            System.out.println("Nome: " + cliente.getNome());
+            System.out.println("Documento: " + cliente.getDocumento());
+        }
+
+        System.out.println("3 - Clientes encontrados: " + clientes.size());
+
         request.setAttribute("clientes", clientes);
 
-        request.getRequestDispatcher("/webapp/clientes.jsp").forward(request, response);
+        request.getRequestDispatcher("/clientePage.jsp")
+            .forward(request, response);
     }
 }

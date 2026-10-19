@@ -68,6 +68,7 @@ public class ClienteDAO {
             e.printStackTrace();
         }
 
+        System.out.println("Clientes puxados");
         return listaClientes;
     }
 }

@@ -82,6 +82,7 @@
                         </div>
 
                         <div class="tabela-wrapper">
+                            <p>Clientes recebidos: ${clientes.size()}</p>
                             <table class="tabela-clientes">
                                 <thead>
                                     <tr>
@@ -92,75 +93,47 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <span class="cliente-nome">Daniel Peixoto</span>
-                                            <span class="cliente-id">ID: CL-001</span>
-                                        </td>
-                                        <td>***.456.789-**</td>
-                                        <td><span class="tipo tipo-fisica">Pessoa física</span></td>
-                                        <td class="col-acoes">
-                                            <button type="button" class="btn-icone" aria-label="Ações do cliente Marcos Oliveira">
-                                                <i class="ph ph-dots-three"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>
-                                            <span class="cliente-nome">SixSeven Solutions Ltda.</span>
-                                            <span class="cliente-id">ID: CL-002</span>
-                                        </td>
-                                        <td>**.345.678/0001-**</td>
-                                        <td><span class="tipo tipo-juridica">Pessoa jurídica</span></td>
-                                        <td class="col-acoes">
-                                            <button type="button" class="btn-icone" aria-label="Ações do cliente Tech Solutions Ltda.">
-                                                <i class="ph ph-dots-three"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <c:forEach var="cliente" items="${clientes}">
+                                        <p>Objeto: ${cliente}</p>
+                                            <p>ID: ${cliente.id}</p>
+                                            <p>Nome: ${cliente.nome}</p>
+                                            <p>Documento: ${cliente.documento}</p>
+                                            <hr>
+                                    </c:forEach>
 
-                                    <tr>
-                                        <td>
-                                            <span class="cliente-nome">DneyDev</span>
-                                            <span class="cliente-id">ID: CL-003</span>
-                                        </td>
-                                        <td>***.789.123-**</td>
-                                        <td><span class="tipo tipo-fisica">Pessoa física</span></td>
-                                        <td class="col-acoes">
-                                            <button type="button" class="btn-icone" aria-label="Ações do cliente Ana Souza">
-                                                <i class="ph ph-dots-three"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>
-                                            <span class="cliente-nome">Mercado Livre</span>
-                                            <span class="cliente-id">ID: CL-004</span>
-                                        </td>
-                                        <td>**.567.890/0001-**</td>
-                                        <td><span class="tipo tipo-juridica">Pessoa jurídica</span></td>
-                                        <td class="col-acoes">
-                                            <button type="button" class="btn-icone" aria-label="Ações do cliente Comercial Horizonte">
-                                                <i class="ph ph-dots-three"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <c:forEach var="cliente" items="${clientes}">
 
-                                    <tr>
-                                        <td>
-                                            <span class="cliente-nome">Netanyahu</span>
-                                            <span class="cliente-id">ID: CL-005</span>
-                                        </td>
-                                        <td>***.321.654-**</td>
-                                        <td><span class="tipo tipo-fisica">Pessoa física</span></td>
-                                        <td class="col-acoes">
-                                            <button type="button" class="btn-icone" aria-label="Ações do cliente Lucas Ferreira">
-                                                <i class="ph ph-dots-three"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        
+
+
+                                        <tr>
+                                            <td>
+                                                <span class="cliente-nome">
+                                                    <c:out value="${cliente.nome}"/>
+                                                </span>
+                                                <span class="cliente-id">
+                                                    <c:out value="${cliente.id}"/>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <c:out value="${cliente.documento}"/>
+                                            </td>
+
+                                            <td>
+                                                <span class="tipo tipo-fisica">Pessoa física</span>
+                                            </td>
+
+                                            <td class="col-acoes">
+                                                <button type="button" class="btn-icone"
+                                                        aria-label="Ações do cliente">
+                                                    <i class="ph ph-dots-three"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -191,4 +164,8 @@
     <jsp:include page="clienteModal.jsp" /> 
 
 </body>
+
+<p>Teste EL: ${1 + 1}</p>
+<p>Nome: ${clientes[0].nome}</p>
+<p>Documento: ${clientes[0].documento}</p>
 </html>
