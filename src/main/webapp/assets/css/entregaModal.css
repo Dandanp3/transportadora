@@ -1,0 +1,161 @@
+.combo-limpar[hidden] {
+    display: none;
+}
+
+.grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 18px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.grupo-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.grupo-titulo i {
+    font-size: 18px;
+    color: #0d6efd;
+}
+
+/* campo busca*/
+.combo {
+    position: relative;   /* a lista e os ícones se posicionam em relação a esta caixa */
+}
+
+.combo-icone {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #a0aec0;
+    pointer-events: none;
+}
+
+/* 3 classes: precisa ganhar do ".campo input:not([type=radio])" do CSS base */
+.campo .combo .combo-input {
+    padding-left: 42px;    /* espaço da lupa */
+    padding-right: 42px;   /* espaço do botão de limpar */
+}
+
+.combo-limpar {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    color: #718096;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.combo-limpar:hover {
+    background-color: #eef3ff;
+    color: #0d6efd;
+}
+
+/* A lista suspensa */
+.combo-lista {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 20;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 6px;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+}
+
+.combo-opcao {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* hover do mouse e item destacado pelas setas do teclado */
+.combo-opcao:hover,
+.combo-opcao[aria-selected="true"] {
+    background-color: #eef3ff;
+}
+
+.combo-nome {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.combo-detalhe {
+    font-size: 12px;
+    color: #718096;
+}
+
+.combo-vazio {
+    padding: 14px 12px;
+    font-size: 13px;
+    text-align: center;
+    color: #718096;
+}
+
+/* ========== CAMPO COM BOTÃO DENTRO (nº de rastreio) ========== */
+.campo-acao {
+    position: relative;
+}
+
+.campo .campo-acao input.entrada-acao {
+    padding-right: 50px;
+    text-transform: uppercase;
+}
+
+.campo-acao .btn-icone {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+}
+
+/* ========== CAMPO COM PREFIXO "R$" ========== */
+.campo-prefixo {
+    position: relative;
+}
+
+.campo-prefixo > span {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    color: #718096;
+    pointer-events: none;
+}
+
+.campo .campo-prefixo input.entrada-prefixo {
+    padding-left: 42px;
+}

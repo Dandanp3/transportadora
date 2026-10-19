@@ -13,7 +13,6 @@
 
 </head>
 <body>
-
     <div class="layout-principal">
         <jsp:include page="sidebar.jsp" />
 

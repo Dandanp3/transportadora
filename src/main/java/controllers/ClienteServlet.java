@@ -79,4 +79,14 @@ public class ClienteServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/clientes.jsp?status=erro");
         }
     }
+
+    @Override 
+    protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletExceptionm IOException {
+        ClienteDAO clienteDAO = new ClienteDAO();
+
+        List<Cliente> clientes = clienteDAO.buscarClientes();
+        request.setAttribute("clientes", clientes);
+
+        request.getRequestDispatcher("/webapp/clientes.jsp").forward(request, response);
+    }
 }
