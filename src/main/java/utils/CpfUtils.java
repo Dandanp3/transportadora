@@ -47,4 +47,57 @@ public class CpfUtils {
         }
 
     }
+
+    public static boolean validarCNPJ(String cnpj) {
+        cnpj = cnpj.replaceAll("[^0-9]", "");
+
+        // o cnpj deve ter 14 digitos e não ter digitos repetidos
+        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}")) {
+            return false;
+        }
+
+        // pegando array de numeros cnpj
+        int[] digitos = new int[14];
+        for (int i = 0; i < 14; i++) {
+            digitos[i] = cnpj.charAt(i) - '0';
+        }
+        System.out.println("Chegou aqui 1");
+
+        // calculando verificador 1
+        int soma = 0;
+        int peso = 5;
+        for (int i = 0; i < 12; i++) {
+            if (peso == 1) {
+                peso = 9;
+                i--;
+            } else {
+                soma += (cnpj.charAt(i) - '0') * peso--;
+            }   
+        }
+        System.out.println("Chegou aqui 2");
+        int resto = 11 - (soma % 11);
+        char verificador1 = (resto == 10 || resto == 11) ? '0' : (char)(resto + '0');
+    
+        // calculando verificado 2
+        soma = 0;
+        peso = 6;
+        for (int i = 0; i < 13; i++) {
+            if (peso == 1) {
+                peso = 9;
+                i--;
+            } else {
+                soma += (cnpj.charAt(i) - '0') * peso--;
+            }   
+        }
+        System.out.println("Chegou aqui 3");
+        resto = 11 - (soma % 11);
+        char verificador2 = (resto == 10 || resto == 11) ? '0' : (char)(resto + '0');
+        System.out.println("Chegou aqui 4");
+
+        if (verificador1 == cnpj.charAt(12) && verificador2 == cnpj.charAt(13)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
