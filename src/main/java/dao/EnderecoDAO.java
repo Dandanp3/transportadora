@@ -16,37 +16,64 @@ public class EnderecoDAO {
         String sql = "INSERT INTO transportadora.endereco (cliente_id, tipo_endereco, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
 
-
         try (Connection conn = ConnectionFactory.conectar(); 
-            // guardando o id chave primaria
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-                int index = 0;
-                stmt.setInt(++index, endereco.getClienteId());
-                stmt.setString(++index, endereco.getTipoEndereco());
-                stmt.setString(++index, endereco.getCep());
-                stmt.setString(++index, endereco.getLogradouro());
-                stmt.setInt(++index, endereco.getNumero());
-                stmt.setString(++index, endereco.getComplemento());
-                stmt.setString(++index, endereco.getBairro());
-                stmt.setString(++index, endereco.getCidade());
-                stmt.setString(++index, endereco.getUf());
+            int index = 0;
+            stmt.setInt(++index, endereco.getClienteId());
+            stmt.setString(++index, endereco.getTipoEndereco());
+            stmt.setString(++index, endereco.getCep());
+            stmt.setString(++index, endereco.getLogradouro());
+            stmt.setInt(++index, endereco.getNumero());
+            stmt.setString(++index, endereco.getComplemento());
+            stmt.setString(++index, endereco.getBairro());
+            stmt.setString(++index, endereco.getCidade());
+            stmt.setString(++index, endereco.getUf());
 
-                stmt.executeUpdate();
+            stmt.executeUpdate();
 
-                // guardando id em um resultset (uma caixa de resultados)
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    // se tiver alguma linha, pega o valor da primeira coluna
-                    if (generatedKeys.next()) {
-                        idGerado = generatedKeys.getInt(1);
-                    }
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    idGerado = generatedKeys.getInt(1);
                 }
-
-            } catch(SQLException e) {
-                System.out.println("Erro ao salvar Endereço.");
-                e.printStackTrace();
             }
-            return idGerado;
+
+        } catch(SQLException e) {
+            System.out.println("Erro ao salvar Endereço.");
+            e.printStackTrace();
+        }
+        return idGerado;
+    }
+
+    public Endereco buscarPorID(int id) {
+        String sql = "SELECT * FROM transportadora.endereco WHERE id = ?";
+        Endereco endereco = null;
+
+        try (Connection conn = ConnectionFactory.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    endereco = new Endereco();
+                    endereco.setId(rs.getInt("id"));
+                    endereco.setClienteId(rs.getInt("cliente_id"));
+                    endereco.setTipoEndereco(rs.getString("tipo_endereco"));
+                    endereco.setCep(rs.getString("cep"));
+                    endereco.setLogradouro(rs.getString("logradouro"));
+                    endereco.setNumero(rs.getInt("numero")); 
+                    endereco.setComplemento(rs.getString("complemento"));
+                    endereco.setBairro(rs.getString("bairro"));
+                    endereco.setCidade(rs.getString("cidade"));
+                    endereco.setUf(rs.getString("uf"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar endereço por ID.");
+            e.printStackTrace();
+        }
+        return endereco;
     }
 
     public List<Endereco> buscarEnderecos() {
@@ -54,8 +81,8 @@ public class EnderecoDAO {
         String sql = "SELECT * FROM transportadora.endereco";
 
         try (Connection conn = ConnectionFactory.conectar();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Endereco endereco = new Endereco();
@@ -65,7 +92,10 @@ public class EnderecoDAO {
                 endereco.setCep(rs.getString("cep"));
                 endereco.setLogradouro(rs.getString("logradouro"));
                 endereco.setNumero(rs.getInt("numero"));
-
+                endereco.setComplemento(rs.getString("complemento"));
+                endereco.setBairro(rs.getString("bairro"));
+                endereco.setCidade(rs.getString("cidade"));
+                endereco.setUf(rs.getString("uf"));
 
                 listaEnderecos.add(endereco);
             }
@@ -77,42 +107,5 @@ public class EnderecoDAO {
         
         return listaEnderecos;
     }
-
-    public List<Endereco> buscarPorClienteId(int idDoCliente) {
-        List<Endereco> listaEnderecos = new ArrayList<>();
-        String sql = "SELECT * FROM transportadora.endereco WHERE cliente_id = ?";
-
-        try (Connection conn = ConnectionFactory.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            // substitui a interrogaçao pelo ID do cliente (remetente ou destinatario)
-            stmt.setInt(1, idDoCliente);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Endereco endereco = new Endereco();
-                    
-                    endereco.setId(rs.getInt("id"));
-                    endereco.setClienteId(rs.getInt("cliente_id"));
-                    endereco.setTipoEndereco(rs.getString("tipo_endereco"));
-                    endereco.setCep(rs.getString("cep"));
-                    endereco.setLogradouro(rs.getString("logradouro"));
-                    endereco.setNumero(rs.getInt("numero"));
-                    endereco.setComplemento(rs.getString("complemento"));
-                    endereco.setBairro(rs.getString("bairro"));
-                    endereco.setCidade(rs.getString("cidade"));
-                    endereco.setUf(rs.getString("uf"));
-
-                    listaEnderecos.add(endereco);
-                }
-            }
-
-        } catch(SQLException e) {
-            System.out.println("Erro ao buscar endereços por cliente.");
-            e.printStackTrace();
-        }
-        
-        return listaEnderecos;
-    }
-    
 }
+               

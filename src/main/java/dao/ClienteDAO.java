@@ -98,10 +98,6 @@ public class ClienteDAO {
         } catch (Exception e) {
             System.out.println("Erro ao buscar cliente por ID: " + e.getMessage());
         }
-
- 
         return cliente;
-
-
     }
 }

@@ -18,7 +18,7 @@ import models.Cliente;
 import models.Endereco;
 import models.Entrega;
 import models.ItemEntrega;
-import models.NotaFiscal;
+import models.DocumentoFiscal;
 import utils.CalculadorFreteUtils;
 import utils.CodBarrasUtils;
 import utils.GeradorNfeUtils;
@@ -92,9 +92,9 @@ public class EntregaServlet extends HttpServlet {
                 System.out.printf("Frete calculado via Web: R$ %.2f\n", freteCalculado);
 
                 // gera doc fiscal
-                NotaFiscal doc = new NotaFiscal();
+                DocumentoFiscal doc = new DocumentoFiscal();
                 doc.setEntregaId(idEntrega);
-                doc.setValorMercadoria(valorMercadoria);
+                doc.valorTotalDeclarado(valorMercadoria);
 
                 if (remetente.getDocumento().length() > 11) { // PJ
                     String numNf = req.getParameter("numNf");
