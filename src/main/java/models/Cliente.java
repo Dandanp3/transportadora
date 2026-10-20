@@ -1,5 +1,7 @@
 package models;
 
+import utils.CpfUtils;
+
 public class Cliente {
     private int id;
     private String tipoPessoa;
@@ -8,6 +10,7 @@ public class Cliente {
     private String documento;
     private String email;
     private String telefone;
+
 
     public Cliente() {}
 
@@ -40,4 +43,25 @@ public class Cliente {
 
     public String getTelefone() { return telefone; }
     public void setTelefone(String telefone) { this.telefone = telefone; }
+
+    public String getDocumentoFormatado() {
+        System.out.println("tipo: " + this.tipoPessoa + " - dpocumento: " + this.documento);
+        
+        if (this.documento == null || this.documento.isEmpty()) {
+            return "";
+        }
+
+        // PF
+        if ("F".equals(this.tipoPessoa) && this.documento.length() == 11) {
+            return CpfUtils.formatarCPF(this.documento);
+        } 
+        
+        // PJ
+        if ("J".equals(this.tipoPessoa) && this.documento.length() == 14) {
+            System.out.println("Entrou CNPJ"); 
+            return CpfUtils.formatarCNPJ(this.documento);
+        }
+         
+        return this.documento;
+    }
 }

@@ -56,6 +56,7 @@ public class ClienteDAO {
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getInt("id"));
                 cliente.setNome(rs.getString("nome"));
+                cliente.setTipoPessoa(rs.getString("tipo_pessoa"));
                 cliente.setDocumento(rs.getString("documento"));
                 cliente.setEmail(rs.getString("email"));
                 cliente.setTelefone(rs.getString("telefone"));
@@ -70,5 +71,37 @@ public class ClienteDAO {
 
         System.out.println("Clientes puxados");
         return listaClientes;
+    }
+
+    public Cliente buscarPorID(int id) {
+        String sql = "SELECT * FROM clientes WHERE id = ?";
+        Cliente cliente = null;
+
+
+        try (Connection conn = ConnectionFactory.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, id);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Se achou o cliente, monta o objeto
+                if (rs.next()) {
+                    cliente = new Cliente();
+                    cliente.setId(rs.getInt("id"));
+                    cliente.setNome(rs.getString("nome"));
+                    cliente.setNomeFantasia(rs.getString("nome_fantasia"));
+                    cliente.setDocumento(rs.getString("documento"));
+                    cliente.setEmail(rs.getString("email"));
+                    cliente.setTelefone(rs.getString("telefone"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar cliente por ID: " + e.getMessage());
+        }
+
+ 
+        return cliente;
+
+
     }
 }

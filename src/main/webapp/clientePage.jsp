@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -82,7 +83,6 @@
                         </div>
 
                         <div class="tabela-wrapper">
-                            <p>Clientes recebidos: ${clientes.size()}</p>
                             <table class="tabela-clientes">
                                 <thead>
                                     <tr>
@@ -93,21 +93,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <c:forEach var="cliente" items="${clientes}">
-                                        <p>Objeto: ${cliente}</p>
-                                            <p>ID: ${cliente.id}</p>
-                                            <p>Nome: ${cliente.nome}</p>
-                                            <p>Documento: ${cliente.documento}</p>
-                                            <hr>
-                                    </c:forEach>
-
-
-                                    <c:forEach var="cliente" items="${clientes}">
-
-                                        
-
-
                                         <tr>
                                             <td>
                                                 <span class="cliente-nome">
@@ -119,7 +105,7 @@
                                             </td>
 
                                             <td>
-                                                <c:out value="${cliente.documento}"/>
+                                                <c:out value="${cliente.documentoFormatado}"/>
                                             </td>
 
                                             <td>
@@ -160,12 +146,7 @@
         </main>
     </div>
 
-    <!-- modal futuro de cadastro -->
     <jsp:include page="clienteModal.jsp" /> 
 
 </body>
-
-<p>Teste EL: ${1 + 1}</p>
-<p>Nome: ${clientes[0].nome}</p>
-<p>Documento: ${clientes[0].documento}</p>
 </html>

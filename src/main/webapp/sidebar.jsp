@@ -135,14 +135,14 @@
         </li>
 
         <li>
-            <a href="./clientePage.jsp">
+            <a href="./clientes">
                 <i class="ph ph-users"></i>
                 <span class="nav-item">Clientes</span>
             </a>
         </li>
 
         <li>
-            <a href="./entregaPage.jsp">
+            <a href="./entregas">
                 <i class="ph ph-package"></i>
                 <span class="nav-item">Entregas</span>
             </a>

@@ -94,12 +94,6 @@ public class ClienteServlet extends HttpServlet {
 
         List<Cliente> clientes = clienteDAO.buscarClientes();
 
-        for (Cliente cliente : clientes) {
-            System.out.println("ID: " + cliente.getId());
-            System.out.println("Nome: " + cliente.getNome());
-            System.out.println("Documento: " + cliente.getDocumento());
-        }
-
         System.out.println("3 - Clientes encontrados: " + clientes.size());
 
         request.setAttribute("clientes", clientes);

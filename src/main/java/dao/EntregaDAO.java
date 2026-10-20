@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 import db.ConnectionFactory;
 import models.Entrega;
+import dao.ClienteDAO;
+import models.Cliente;
 
 public class EntregaDAO {
     public int salvarEntrega(Entrega entrega) {
@@ -45,5 +49,30 @@ public class EntregaDAO {
         e.printStackTrace();
     }
         return idGerado;
+    }
+
+    public List<Entrega> buscarEntregas() {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        List<Entrega> listaEntregas = new ArrayList<>();
+        String sql = "SELECT * FROM transportadora.entrega";
+        
+        try (Connection conn = ConnectionFactory.conectar();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+            List<Cliente> clientes = clienteDAO.buscarClientes();
+            
+
+            while (rs.next()) {
+                Entrega entrega = new Entrega();
+                entrega.setId(rs.getInt("id"));
+                entrega.setRemetente(null);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar entregas.");
+            e.printStackTrace();
+        }
+
+        return listaEntregas;
     }
 }
