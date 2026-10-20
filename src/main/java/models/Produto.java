@@ -1,28 +1,28 @@
 package models;
-public class Produto {
-    private int produtoId;
-    private String nome;
-    private String peso;
-    private String preco;
 
-    public Produto(String nome, String peso, String preco) {
-        this.nome = nome;
-        this.peso = peso;
-        this.preco = preco;
+public class Produto {
+    private int id;
+    private int clienteId; 
+    private String descricao;
+    private double valorPadrao;
+
+    public Produto() {}
+
+    public Produto(int clienteId, String descricao, double valorPadrao) {
+        this.clienteId = clienteId;
+        this.descricao = descricao;
+        this.valorPadrao = valorPadrao;
     }
 
-    public Produto(){}
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    // getters e seters
-    public int getProdutoID() {return produtoId;}
-    public void setProdutoID(int produtoId) {this.produtoId = produtoId;}
+    public int getClienteId() { return clienteId; }
+    public void setClienteId(int clienteId) { this.clienteId = clienteId; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public String getPeso() { return peso; }
-    public void setPeso(String peso) { this.peso = peso; }
-
-    public String getPreco() { return preco; }
-    public void setPreco(String preco) { this.preco = preco; }
+    public double getValorPadrao() { return valorPadrao; }
+    public void setValorPadrao(double valorPadrao) { this.valorPadrao = valorPadrao; }
 }
