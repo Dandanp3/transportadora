@@ -22,6 +22,13 @@ Table endereco {
   uf varchar(2) [not null]
 }
 
+Table produto {
+  id integer [primary key]
+  cliente_id integer [not null, note: "Dono do produto"]
+  descricao varchar(150) [not null]
+  valor_padrao decimal(10,2) [not null, note: "Valor de referência do produto"]
+}
+
 Table entrega {
   id integer [primary key]
   remetente_id integer [not null]
@@ -34,15 +41,8 @@ Table entrega {
   data_emissao date [not null]
 }
 
-Table nota_fiscal {
-  id integer [primary key]
-  entrega_id integer [not null]
-  numero_nf varchar(20) [not null]
-  chave_acesso varchar(44) [unique, not null, note: "Codigo de barras da NF-e"]
-  valor_mercadoria decimal(10,2) [not null, note: "para o seguro da carga"]
-}
-
-Table itemEntrega {
+// O VOLUME FÍSICO (A caixa no caminhão)
+Table item_entrega {
   id integer [primary key]
   entrega_id integer [not null]
   codigo_barras_etiqueta varchar(50) [unique, not null]
@@ -52,15 +52,35 @@ Table itemEntrega {
   comprimento_cm integer [not null]
 }
 
+// O DOCUMENTO LEGAL (Cabeçalho)
+Table documento_fiscal {
+  id integer [primary key]
+  entrega_id integer [not null]
+  tipo_documento varchar(20) [not null, note: "'NF-e' para PJ ou 'Declaracao' para PF"]
+  numero_documento varchar(20) [not null]
+  chave_acesso varchar(44) [unique, note: "Nulo se for Declaração de Conteúdo"]
+  valor_total_declarado decimal(10,2) [not null, note: "Para o seguro da carga"]
+}
 
+// O CONTEÚDO (O que está descrito no papel)
+Table item_documento {
+  id integer [primary key]
+  documento_fiscal_id integer [not null]
+  produto_id integer [not null]
+  quantidade integer [not null]
+  valor_unitario decimal(10,2) [not null, note: "Pode variar do valor_padrao no momento da emissao"]
+}
+
+// Relacionamentos - Clientes e Endereços
 Ref: endereco.cliente_id > cliente.id
-
 Ref: entrega.remetente_id > cliente.id
 Ref: entrega.destinatario_id > cliente.id
-
 Ref: entrega.endereco_origem_id > endereco.id
 Ref: entrega.endereco_destino_id > endereco.id
 
-Ref: nota_fiscal.entrega_id > entrega.id
-
-Ref: itemEntrega.entrega_id > entrega.id
+// Relacionamentos - Produtos, Entregas e Fiscal
+Ref: produto.cliente_id > cliente.id
+Ref: item_entrega.entrega_id > entrega.id
+Ref: documento_fiscal.entrega_id > entrega.id
+Ref: item_documento.documento_fiscal_id > documento_fiscal.id
+Ref: item_documento.produto_id > produto.id
