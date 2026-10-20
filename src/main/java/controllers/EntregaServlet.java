@@ -1,7 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +15,18 @@ import dao.ClienteDAO;
 import dao.DocumentoFiscalDAO;
 import dao.EnderecoDAO;
 import dao.EntregaDAO;
+import dao.ItemDocumentoDAO;
 import dao.ItemEntregaDAO;
+import dao.ProdutoDAO;
+
 import models.Cliente;
+import models.DocumentoFiscal;
 import models.Endereco;
 import models.Entrega;
+import models.ItemDocumento;
 import models.ItemEntrega;
-import models.DocumentoFiscal;
+import models.Produto;
+
 import utils.CalculadorFreteUtils;
 import utils.CodBarrasUtils;
 import utils.GeradorNfeUtils;
@@ -31,93 +39,95 @@ public class EntregaServlet extends HttpServlet {
     private EntregaDAO entregaDAO = new EntregaDAO();
     private ItemEntregaDAO itemDAO = new ItemEntregaDAO();
     private DocumentoFiscalDAO docDAO = new DocumentoFiscalDAO();
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    private ItemDocumentoDAO itemDocDAO = new ItemDocumentoDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
         try {
-            // Recebe os dados enviados pelo forms
+            // recebendo dados
             int remetenteId = Integer.parseInt(req.getParameter("remetenteId"));
             int destinatarioId = Integer.parseInt(req.getParameter("destinatarioId"));
-            String status = req.getParameter("status");
-            String numRastreio = req.getParameter("numRastreio");
-            String dataEmissao = req.getParameter("dataEmissao");
+            int produtoId = Integer.parseInt(req.getParameter("produtoId")); 
+            int quantidade = Integer.parseInt(req.getParameter("quantidade")); 
 
+            // dados da caixa
             double peso = Double.parseDouble(req.getParameter("peso"));
-            double altura = Double.parseDouble(req.getParameter("altura"));
-            double largura = Double.parseDouble(req.getParameter("largura"));
-            double comprimento = Double.parseDouble(req.getParameter("comprimento"));
-            double valorMercadoria = Double.parseDouble(req.getParameter("valorMercadoria"));
+            int altura = Integer.parseInt(req.getParameter("altura"));
+            int largura = Integer.parseInt(req.getParameter("largura"));
+            int comprimento = Integer.parseInt(req.getParameter("comprimento"));
 
-            // buscaendereços cadastrados dos clientes
+            // pegando os objetos
+            Cliente remetente = clienteDAO.buscarPorID(remetenteId);
+            Cliente destinatario = clienteDAO.buscarPorID(destinatarioId);
+            Produto produto = produtoDAO.buscarPorID(produtoId);
+
             List<Endereco> enderecosOrigem = enderecoDAO.buscarPorClienteId(remetenteId);
             List<Endereco> enderecosDestino = enderecoDAO.buscarPorClienteId(destinatarioId);
 
-            if (enderecosOrigem.isEmpty() || enderecosDestino.isEmpty()) {
-                resp.sendRedirect(req.getContextPath() + "/entregas.jsp?status=erro_endereco");
+            // segurança
+            if (remetente == null || destinatario == null || produto == null || enderecosOrigem.isEmpty() || enderecosDestino.isEmpty()) {
+                resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_dados");
                 return;
             }
 
             Endereco origem = enderecosOrigem.get(0);
             Endereco destino = enderecosDestino.get(0);
 
-            // verificar CPF
-            List<Cliente> clientes = clienteDAO.buscarClientes();
-            Cliente remetente = clientes.stream()
-                    .filter(c -> c.getId() == remetenteId)
-                    .findFirst()
-                    .orElse(null);
+            // calculo do frete
+            double freteCalculado = CalculadorFreteUtils.calcularFrete(peso, altura, largura, comprimento);
 
-            Cliente destinatario = new Cliente();
-            destinatario.setId(destinatarioId);
-
-            if (remetente == null) {
-                resp.sendRedirect(req.getContextPath() + "/entregas.jsp?status=erro_cliente");
-                return;
-            }
-
-            // salva a entrega no banco
-            Entrega novaEntrega = new Entrega(remetente, destinatario, origem, destino, numRastreio, status, 0.0, dataEmissao);
+            // salvandoa  entrega
+            String numRastreio = CodBarrasUtils.gerarCodBarras(); 
+            String dataEmissao = LocalDate.now().toString(); 
+            
+            Entrega novaEntrega = new Entrega(remetente, destinatario, origem, destino, numRastreio, "Pendente", freteCalculado, dataEmissao);
             int idEntrega = entregaDAO.salvarEntrega(novaEntrega);
 
             if (idEntrega != -1) {
-                // salva o item da entrega com cod de barras gerado
-                String codBarras = CodBarrasUtils.gerarCodBarras();
-                ItemEntrega item = new ItemEntrega(idEntrega, codBarras, peso, altura, largura, comprimento);
-                itemDAO.salvarItemEntrega(item);
+                
+                // gera o codigo unico com 8 caracteres e salva itemEntrega
+                String codEtiquetaCaixa = "ENV-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+                ItemEntrega itemEntrega = new ItemEntrega(idEntrega, codEtiquetaCaixa, peso, altura, largura, comprimento);
+                itemDAO.salvarItemEntrega(itemEntrega);
 
-                // calcula o frete por cubagem
-                double freteCalculado = CalculadorFreteUtils.calcularFrete(peso, altura, largura, comprimento);
-                System.out.printf("Frete calculado via Web: R$ %.2f\n", freteCalculado);
-
-                // gera doc fiscal
+                // gerando a NF-e
+                double valorTotalCarga = produto.getValorPadrao() * quantidade;
+                
                 DocumentoFiscal doc = new DocumentoFiscal();
                 doc.setEntregaId(idEntrega);
-                doc.valorTotalDeclarado(valorMercadoria);
+                doc.setValorTotalDeclarado(valorTotalCarga);
 
-                if (remetente.getDocumento().length() > 11) { // PJ
-                    String numNf = req.getParameter("numNf");
-                    if (numNf == null || numNf.isBlank()) numNf = "1001";
-
+                if ("J".equals(remetente.getTipoPessoa())) { 
+                    doc.setTipoDocumento("NF-e");
+                    doc.setNumeroDocumento("NF-" + (int)(Math.random() * 100000));
                     String chave = GeradorNfeUtils.gerarChaveAcesso(remetente.getDocumento(), origem.getUf(), dataEmissao);
-                    doc.setNumeroNf(numNf);
                     doc.setChaveAcesso(chave);
-                } else { // PF
-                    doc.setNumeroNf("DEC-CONT");
-                    doc.setChaveAcesso(null);
+                } else { 
+                    doc.setTipoDocumento("Declaracao");
+                    doc.setNumeroDocumento("DEC-" + (int)(Math.random() * 100000));
+                    doc.setChaveAcesso(null); 
+                }
+                
+                int idDocumento = docDAO.salvarDocumento(doc);
+
+                // salvando
+                if (idDocumento != -1) {
+                    ItemDocumento itemDoc = new ItemDocumento(idDocumento, produto, quantidade, produto.getValorPadrao());
+                    itemDocDAO.salvarItemDocumento(itemDoc);
                 }
 
-                docDAO.salvarDocumento(doc);
-
-                resp.sendRedirect(req.getContextPath() + "/entregas.jsp?status=sucesso");
+                System.out.printf("Entrega salva! Frete: R$ %.2f\n", freteCalculado);
+                resp.sendRedirect(req.getContextPath() + "/entregas?status=sucesso");
             } else {
-                resp.sendRedirect(req.getContextPath() + "/entregas.jsp?status=erro");
+                resp.sendRedirect(req.getContextPath() + "/entregas?status=erro");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            resp.sendRedirect(req.getContextPath() + "/entregas.jsp?status=erro");
+            resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_excecao");
         }
     }
 }

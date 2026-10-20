@@ -12,6 +12,7 @@ import db.ConnectionFactory;
 import models.Endereco;
 
 public class EnderecoDAO {
+    
     public int salvarEndereco(Endereco endereco) {
         String sql = "INSERT INTO transportadora.endereco (cliente_id, tipo_endereco, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int idGerado = -1;
@@ -76,6 +77,40 @@ public class EnderecoDAO {
         return endereco;
     }
 
+    public List<Endereco> buscarPorClienteId(int idDoCliente) {
+        List<Endereco> listaEnderecos = new ArrayList<>();
+        String sql = "SELECT * FROM transportadora.endereco WHERE cliente_id = ?";
+
+        try (Connection conn = ConnectionFactory.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idDoCliente);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Endereco endereco = new Endereco();
+                    endereco.setId(rs.getInt("id"));
+                    endereco.setClienteId(rs.getInt("cliente_id"));
+                    endereco.setTipoEndereco(rs.getString("tipo_endereco"));
+                    endereco.setCep(rs.getString("cep"));
+                    endereco.setLogradouro(rs.getString("logradouro"));
+                    endereco.setNumero(rs.getInt("numero"));
+                    endereco.setComplemento(rs.getString("complemento"));
+                    endereco.setBairro(rs.getString("bairro"));
+                    endereco.setCidade(rs.getString("cidade"));
+                    endereco.setUf(rs.getString("uf"));
+
+                    listaEnderecos.add(endereco);
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("Erro ao buscar endereços por cliente.");
+            e.printStackTrace();
+        }
+        
+        return listaEnderecos;
+    }
+
     public List<Endereco> buscarEnderecos() {
         List<Endereco> listaEnderecos = new ArrayList<>();
         String sql = "SELECT * FROM transportadora.endereco";
@@ -108,4 +143,3 @@ public class EnderecoDAO {
         return listaEnderecos;
     }
 }
-               
