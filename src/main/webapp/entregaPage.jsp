@@ -101,10 +101,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="entrega" items="${entregas}"></c:forEach>
+                                    <!--<c:forEach var="entrega" items="${entregas}"></c:forEach> -->
                                         <tr>
                                             <td>
-                                                <span class="texto-principal"><c:out value="${entrega.}"/></span>
+                                                <span class="texto-principal"></span>
                                                 <span class="texto-secundario">Criada em 13/10/2026</span>
                                             </td>
                                             <td>
@@ -128,7 +128,7 @@
                                         </tr>
 
                                         
-                                    </c:forEach>
+                                   
                                 </tbody>
                             </table>
 

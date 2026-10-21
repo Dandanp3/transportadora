@@ -97,15 +97,15 @@
                                         <tr>
                                             <td>
                                                 <span class="cliente-nome">
-                                                    <c:out value="${cliente.nome}"/>
+                                                    cliente nome
                                                 </span>
                                                 <span class="cliente-id">
-                                                    <c:out value="${cliente.id}"/>
+                                                    cliente id
                                                 </span>
                                             </td>
 
                                             <td>
-                                                <c:out value="${cliente.documentoFormatado}"/>
+                                                cliente - documento
                                             </td>
 
                                             <td>

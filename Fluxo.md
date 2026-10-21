@@ -1,5 +1,3 @@
-Aqui está o seu texto com as palavras originais mantidas de forma exata, apenas organizado e formatado para ficar mais limpo e visualmente agradável:
-
 # Divisão de responsabilidades
 
 * **Produto:**

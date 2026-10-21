@@ -52,9 +52,19 @@
                                        aria-controls="remetente-lista" autocomplete="off"
                                        placeholder="Buscar por nome, CPF ou CNPJ" required>
 
-                                <!-- aq vai o post -->
-                                <input type="hidden" name="remetenteId">
+                                       <input type="hidden" name="remetenteId" id="remetente-id">
 
+                                       <ul id="remetente-lista" class="combo-lista" role="listbox">
+                                        <c:forEach var="cliente" items="${clientes}" >
+                                            <li role="option" data-value="${cliente.id}" data-text="${cliente.nome}">
+                                                <strong><c:out value="${cliente.nome}"/></strong>
+                                                <small><c:out value="${cliente.documentoFormatado}"/></small>
+                                            </li>
+                                        </c:forEach>
+                                       </ul>
+
+                                <!-- aq vai o post -->
+                                
                                 <button type="button" class="combo-limpar" aria-label="Limpar remetente" hidden>
                                     <i class="ph ph-x"></i>
                                 </button>

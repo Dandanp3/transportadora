@@ -130,4 +130,16 @@ public class EntregaServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_excecao");
         }
     }
+
+    @Override 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        EntregaDAO entregaDAO = new EntregaDAO();
+
+        List<Entrega> entregas = entregaDAO.buscarEntregas();
+
+        request.setAttribute("entregas", entregas);
+
+        request.getRequestDispatcher("/entregaPage.jsp").forward(request, response);
+    }
 }
