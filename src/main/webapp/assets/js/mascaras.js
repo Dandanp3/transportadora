@@ -43,4 +43,37 @@ document.addEventListener("DOMContentLoaded", function() {
             this.value = v.substring(0, 9);
         });
     }
+
+    
 });
+
+function mascaraMoeda(input) {
+            let valor = input.value;
+            // deixa so numero e virgula
+            valor = valor.replace(/\D/g, "");
+            // coloca virgula antes dos dois ultimos digitos
+            valor = valor.replace(/(\d)(\d{2})$/, "$1,$2");
+            // formata milhar se passar de mil reais
+            valor = valor.replace(/(?=(\d{3})+(\D))\B/g, ".");
+            input.value = valor;
+        }
+
+        function mascaraPeso(input) {
+            let valor = input.value;
+            // mesma logica, mas peso precisa aceitar 3 casas decimais (gramas) se quiser
+            valor = valor.replace(/[^\d,]/g, "");
+            input.value = valor;
+        }
+        
+        // Dispara a mascara ao carregar a tela de edicao pra arrumar os numeros q vem do banco (ex: 150.0 vira 150,00)
+        window.onload = function() {
+            let valorInput = document.getElementById("valorPadrao");
+            let pesoInput = document.getElementById("pesoPadrao");
+            
+            if(valorInput.value && !valorInput.value.includes(',')) {
+                valorInput.value = parseFloat(valorInput.value).toFixed(2).replace('.', ',');
+            }
+            if(pesoInput.value && !pesoInput.value.includes(',')) {
+                pesoInput.value = parseFloat(pesoInput.value).toFixed(3).replace('.', ',');
+            }
+};

@@ -142,6 +142,13 @@
         </li>
 
         <li>
+            <a href="./enderecos">
+                <i class="ph ph-users"></i>
+                <span class="nav-item">Enderecos</span>
+            </a>
+        </li>
+
+        <li>
             <a href="./entregas">
                 <i class="ph ph-package"></i>
                 <span class="nav-item">Entregas</span>
@@ -149,7 +156,7 @@
         </li>
 
         <li>
-            <a href="#">
+            <a href="./produtos">
                 <i class="ph ph-calculator"></i>
                 <span class="nav-item">Produtos</span>
             </a>

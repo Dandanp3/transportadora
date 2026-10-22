@@ -24,7 +24,6 @@ public class EntregaDAO {
             stmt.setInt(++index, entrega.getDestinatario().getId());
             stmt.setInt(++index, entrega.getEnderecoOrigem().getId());
             stmt.setInt(++index, entrega.getEnderecoDestino().getId());
-            stmt.setString(++index, entrega.getNumRastreio());
             stmt.setString(++index, entrega.getStatusEntrega());
             stmt.setDouble(++index, entrega.getValorFrete());
             stmt.setDate(++index, java.sql.Date.valueOf((entrega.getDataEmissao())));
@@ -59,7 +58,6 @@ public class EntregaDAO {
             while (rs.next()) {
                 Entrega entrega = new Entrega();
                 entrega.setId(rs.getInt("id"));
-                entrega.setNumRastreio(rs.getString("num_rastreio"));
                 entrega.setStatusEntrega(rs.getString("status_entrega"));
                 entrega.setValorFrete(rs.getDouble("valor_frete"));
                 entrega.setDataEmissao(rs.getDate("data_emissao").toString());
@@ -84,6 +82,26 @@ public class EntregaDAO {
         }
 
         return listaEntregas;
+    }
+
+    public void deletarEntrega(int id) {
+        String sql = "DELETE FROM transportadora.entrega WHERE id = ?";
+        try (Connection conn = ConnectionFactory.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, id);
+
+                int linhasAfetas = stmt.executeUpdate();
+                if (linhasAfetas > 0) {
+                    System.out.println("Entrega excluída.");
+                } else {
+                    System.out.println("Nenhuma entrega");
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Erro ao excluir a entrega.");
+                e.printStackTrace();
+            }
     }
 
     

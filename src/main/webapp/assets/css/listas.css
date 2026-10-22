@@ -160,19 +160,18 @@ button.btn-principal {
     color: #718096;
 }
 
-
 /* TABELA */
 .tabela-wrapper {
     overflow: auto; /* caso o conteudo for maior que a caixa adiciona barra de rolamento*/
 }
 
-.tabela-clientes {
+.tabela-dados {
     width: 100%;
     border-collapse: collapse; /* funde a celula vizinha em uma unica linha */
     font-size: 14px;
 }
 
-.tabela-clientes th {
+.tabela-dados th {
     text-align: left;
     padding: 12px 16px;
     font-size: 12px;
@@ -183,39 +182,43 @@ button.btn-principal {
     border-bottom: 1px solid #e2e8f0;
 }
 
-.tabela-clientes td {
+.tabela-dados td {
     padding: 16px;
     white-space: nowrap; /* nao quebrar linha */
     vertical-align: middle;
     border-bottom: 1px solid #e2e8f0;
 }
 
-.tabela-clientes tbody tr:last-child td {
+.tabela-dados tbody tr:last-child td {
     border-bottom: none;
 }
 
-.tabela-clientes tbody tr:hover {
+.tabela-dados tbody tr:hover {
     background-color: #e9ebec;
 }
 
 /* COLUNA DE AÇOES */
-
 .col-acoes {
     width: 60px;
     text-align: right;
 }
 
-.cliente-nome {
+.dado-principal {
     display: block;
     font-weight: 600;
     color: #1a202c;
 }
 
-.cliente-id {
+.dado-secundario {
     display: block;
     margin-top: 2px;
     font-size: 12px;
     color: #718096;
+}
+
+.valor-destaque {
+    font-weight: 500;
+    color: #059669; /* um verdinho pro dinheiro */
 }
 
 /* badge dos tipos */
@@ -295,10 +298,3 @@ button.btn-principal {
         align-items: flex-start;
     }
 }
-
-
-
-
-
-
-

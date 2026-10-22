@@ -6,24 +6,28 @@ public class Entrega {
     private Cliente destinatario;
     private Endereco enderecoOrigem;
     private Endereco enderecoDestino;
-    private String numRastreio;
     private String statusEntrega;
     private double valorFrete;
+    private String numeroNotaFiscal;
     private String dataEmissao;
 
+    // Construtor vazio padrão
     public Entrega() {}
 
-    public Entrega(Cliente remetente, Cliente destinatario, Endereco enderecoOrigem, Endereco enderecoDestino, String numRastreio, String statusEntrega, double valorFrete, String dataEmissao) {
+
+    public Entrega(Cliente remetente, Cliente destinatario, Endereco enderecoOrigem, Endereco enderecoDestino, 
+                   String statusEntrega, double valorFrete, String numeroNotaFiscal, String dataEmissao) {
         this.remetente = remetente;
         this.destinatario = destinatario;
         this.enderecoOrigem = enderecoOrigem;
         this.enderecoDestino = enderecoDestino;
-        this.numRastreio = numRastreio;
         this.statusEntrega = statusEntrega;
         this.valorFrete = valorFrete;
+        this.numeroNotaFiscal = numeroNotaFiscal;
         this.dataEmissao = dataEmissao;
     }
 
+    // Getters e Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -39,14 +43,14 @@ public class Entrega {
     public Endereco getEnderecoDestino() { return enderecoDestino; }
     public void setEnderecoDestino(Endereco enderecoDestino) { this.enderecoDestino = enderecoDestino; }
 
-    public String getNumRastreio() { return numRastreio; }
-    public void setNumRastreio(String numRastreio) { this.numRastreio = numRastreio; }
-
     public String getStatusEntrega() { return statusEntrega; }
     public void setStatusEntrega(String statusEntrega) { this.statusEntrega = statusEntrega; }
 
     public double getValorFrete() { return valorFrete; }
     public void setValorFrete(double valorFrete) { this.valorFrete = valorFrete; }
+
+    public String getNumeroNotaFiscal() { return numeroNotaFiscal; }
+    public void setNumeroNotaFiscal(String numeroNotaFiscal) { this.numeroNotaFiscal = numeroNotaFiscal; }
 
     public String getDataEmissao() { return dataEmissao; }
     public void setDataEmissao(String dataEmissao) { this.dataEmissao = dataEmissao; }

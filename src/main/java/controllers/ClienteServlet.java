@@ -25,7 +25,6 @@ public class ClienteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // pra n bugar acento
         req.setCharacterEncoding("UTF-8");
 
         String acaoForm = req.getParameter("acaoForm");
@@ -107,6 +106,42 @@ public class ClienteServlet extends HttpServlet {
             numero = 0;
         }
 
+        // FLUXO DE EDITAR ENDERECO (ISOLADO)
+        if ("atualizarEndereco".equals(acaoForm)) {
+            int idEnd = Integer.parseInt(req.getParameter("enderecoId"));
+            int idCli = Integer.parseInt(req.getParameter("clienteId"));
+
+            // validador so do endereco
+            utils.FieldUtils validadorEnd = new utils.FieldUtils();
+            validadorEnd.verificarNotBlank(cep, "O CEP do endereço é obrigatório.")
+                        .verificarNotBlank(logradouro, "O Logradouro é obrigatório.")
+                        .verificarNotBlank(bairro, "O Bairro é obrigatório.")
+                        .verificarNotBlank(cidade, "A Cidade é obrigatória.")
+                        .verificarNotBlank(uf, "O Estado (UF) é obrigatório.");
+
+            if (validadorEnd.temErros()) {
+                req.setAttribute("erros", validadorEnd.getErros());
+                
+                // recria o objeto pra n apagar oq digitou na tela
+                Endereco endErro = new Endereco(idCli, cep, logradouro, numero, complemento, bairro, cidade, uf);
+                endErro.setId(idEnd);
+                
+                req.setAttribute("endereco", endErro);
+                req.setAttribute("clienteId", idCli);
+                req.getRequestDispatcher("/enderecoEditar.jsp").forward(req, resp);
+                return;
+            }
+
+            // se ta td certo, salva e volta pra tela de edicao do cliente
+            Endereco endParaSalvar = new Endereco(idCli, cep, logradouro, numero, complemento, bairro, cidade, uf);
+            endParaSalvar.setId(idEnd);
+            
+            enderecoDAO.atualizar(endParaSalvar); 
+            
+            resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + idCli + "&status=end_atualizado");
+            return;
+        }
+
         // validando endereco tb pq eh o cadastro 
         utils.FieldUtils validadorEndereco = new utils.FieldUtils();
         validadorEndereco.verificarNotBlank(cep, "O CEP do endereço é obrigatório.")
@@ -156,6 +191,19 @@ public class ClienteServlet extends HttpServlet {
             req.setAttribute("cliente", cliente);
             req.setAttribute("enderecos", listaEnderecos); 
             req.getRequestDispatcher("/clienteEditar.jsp").forward(req, resp);
+            return;
+        }
+
+        // clicou no editar do card de endereco
+        if ("editarEndereco".equals(acao)) {
+            int idEnd = Integer.parseInt(req.getParameter("id"));
+            int idCli = Integer.parseInt(req.getParameter("clienteId"));
+            
+            Endereco endereco = enderecoDAO.buscarPorID(idEnd);
+            
+            req.setAttribute("endereco", endereco);
+            req.setAttribute("clienteId", idCli);
+            req.getRequestDispatcher("/enderecoEditar.jsp").forward(req, resp);
             return;
         }
 

@@ -9,7 +9,7 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/clientes.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listas.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/clienteModal.css">
 
 </head>
@@ -28,6 +28,10 @@
                 <button type="button" class="btn-principal" onclick="window.location.href='${pageContext.request.contextPath}/clientes?acao=novo'">
                     <i class="ph ph-plus"></i>
                     Novo cliente
+                </button>
+                <button type="button" class="btn-principal" onclick="window.location.href='${pageContext.request.contextPath}/clientes?acao=novo'">
+                    <i class="ph ph-plus"></i>
+                    Novo Endereço
                 </button>
             </header>
 

@@ -89,7 +89,7 @@
                 <section class="cadastro-secao" style="margin-top: 32px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h2 class="secao-titulo" style="margin: 0;"><i class="ph ph-map-pin"></i> Endereços</h2>
-                        <button type="button" class="btn-secundario" style="padding: 8px 16px;"><i class="ph ph-plus"></i> Adicionar Endereço</button>
+                        <button type="button" class="btn-secundario" style="cursor: pointer; padding: 8px 16px;"><i class="ph ph-plus"></i> Adicionar Endereço</button>
                     </div>
 
                     <div class="endereco-grid">
@@ -106,14 +106,16 @@
                                         <p>CEP: ${end.cep} <c:if test="${not empty end.complemento}"> | Comp: ${end.complemento}</c:if></p>
                                         
                                         <div class="endereco-acoes">
-                                            <button type="button" class="btn-secundario" style="flex: 1; padding: 6px;"><i class="ph ph-pencil-simple"></i> Editar</button>
+                                            <a href="${pageContext.request.contextPath}/clientes?acao=editarEndereco&id=${end.id}&clienteId=${cliente.id}" class="btn-secundario" style="flex: 1; padding: 6px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                                                <i class="ph ph-pencil-simple" style="margin-right: 4px;"></i> Editar
+                                            </a>
                                             
                                             <!-- mini form invisivel so pra excluir esse endereco especifico -->
                                             <form action="${pageContext.request.contextPath}/clientes" method="post" style="flex: 1; display: flex;">
                                                 <input type="hidden" name="acaoForm" value="excluirEndereco">
                                                 <input type="hidden" name="enderecoId" value="${end.id}">
                                                 <input type="hidden" name="clienteId" value="${cliente.id}">
-                                                <button type="submit" class="btn-secundario" style="color: #ef4444; border-color: #fca5a5; width: 100%; padding: 6px;" onclick="return confirm('Apagar esse endereço?');">
+                                                <button type="submit" class="btn-secundario" style="cursor: pointer; color: #ef4444; border-color: #fca5a5; width: 100%; padding: 6px;" onclick="return confirm('Apagar esse endereço?');">
                                                     <i class="ph ph-trash"></i> Excluir
                                                 </button>
                                             </form>
@@ -132,7 +134,7 @@
                     <form action="${pageContext.request.contextPath}/clientes" method="post">
                         <input type="hidden" name="acaoForm" value="excluirCliente">
                         <input type="hidden" name="id" value="${cliente.id}">
-                        <button type="submit" class="btn-secundario" style="color: #ef4444; border-color: #ef4444; background: white;" onclick="return confirm('Certeza absoluta? Vai apagar tudo do cliente.');">
+                        <button type="submit" class="btn-secundario" style="cursor: pointer; color: #ef4444; border-color: #ef4444; background: white;" onclick="return confirm('Certeza absoluta? Vai apagar tudo do cliente.');">
                             <i class="ph ph-warning"></i> Excluir Cliente Permanentemente
                         </button>
                     </form>

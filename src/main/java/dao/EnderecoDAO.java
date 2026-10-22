@@ -45,9 +45,9 @@ public class EnderecoDAO {
         return idGerado;
     }
 
-    // metodo pra atualizar o endereco 
+    // metodo para atualizar
     public void atualizar(Endereco endereco) {
-        String sql = "UPDATE transportadora.endereco SET cep = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, uf = ? WHERE cliente_id = ?";
+        String sql = "UPDATE transportadora.endereco SET cep = ?, logradouro = ?, numero = ?, complemento = ?, bairro = ?, cidade = ?, uf = ? WHERE id = ?";
         
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -60,7 +60,7 @@ public class EnderecoDAO {
             stmt.setString(++index, endereco.getBairro());
             stmt.setString(++index, endereco.getCidade());
             stmt.setString(++index, endereco.getUf());
-            stmt.setInt(++index, endereco.getClienteId()); 
+            stmt.setInt(++index, endereco.getId()); 
 
             stmt.executeUpdate();
             
