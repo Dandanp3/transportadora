@@ -25,7 +25,7 @@
                     <p>Gerencie os clientes cadastrados na transportadora.</p>
                 </div>
 
-                <button type="button" class="btn-principal" id="btn-novo-cliente">
+                <button type="button" class="btn-principal" onclick="window.location.href='${pageContext.request.contextPath}/clientes?acao=novo'">
                     <i class="ph ph-plus"></i>
                     Novo cliente
                 </button>
@@ -37,17 +37,17 @@
                 <section class="resumo" aria-label="Resumo de clientes">
                     <div class="resumo-card">
                         <span class="resumo-titulo">Total de clientes</span>
-                        <strong class="resumo-valor">1.284</strong>
+                        <strong class="resumo-valor">${totalClientes}</strong>
                     </div>
 
                     <div class="resumo-card">
                         <span class="resumo-titulo">Pessoas físicas</span>
-                        <strong class="resumo-valor">856</strong>
+                        <strong class="resumo-valor">${totalFisica}</strong>
                     </div>
 
                     <div class="resumo-card">
                         <span class="resumo-titulo">Pessoas jurídicas</span>
-                        <strong class="resumo-valor">428</strong>
+                        <strong class="resumo-valor">${totalJuridica}</strong>
                     </div>
                 </section>
 
@@ -62,26 +62,10 @@
                                    placeholder="Buscar por nome, CPF/CNPJ ou código..."
                                    aria-label="Buscar clientes">
                         </div>
-
-                        <button type="button" class="btn-icone" aria-label="Filtros avançados">
-                            <i class="ph ph-sliders-horizontal"></i>
-                        </button>
                     </form>
-
-                    <!-- links com ?tipo=, a aba ativa recebe a classe ativo -->
-                    <nav class="filtros" aria-label="Filtrar por tipo">
-                        <a href="?tipo=todos" class="filtro ativo">Todos</a>
-                        <a href="?tipo=fisica" class="filtro">Pessoa física</a>
-                        <a href="?tipo=juridica" class="filtro">Pessoa jurídica</a>
-                    </nav>
 
                     <!-- lista -->
                     <div class="lista">
-                        <div class="lista-cabecalho">
-                            <h2>Lista de clientes</h2>
-                            <span class="lista-contagem">1–5 de 1.284</span>
-                        </div>
-
                         <div class="tabela-wrapper">
                             <table class="tabela-clientes">
                                 <thead>
@@ -97,26 +81,28 @@
                                         <tr>
                                             <td>
                                                 <span class="cliente-nome">
-                                                    cliente nome
+                                                    <c:out value="${cliente.nome}"/>
                                                 </span>
                                                 <span class="cliente-id">
-                                                    cliente id
+                                                    <c:out value="${cliente.id}"/>
                                                 </span>
                                             </td>
 
                                             <td>
-                                                cliente - documento
+                                                <c:out value="${cliente.documentoFormatado}"/>
                                             </td>
 
                                             <td>
-                                                <span class="tipo tipo-fisica">Pessoa física</span>
+                                                <span class="tipo tipo-fisica">
+                                                    <c:out value="${cliente.tipoFormatado}"/>
+                                                </span>
                                             </td>
 
                                             <td class="col-acoes">
-                                                <button type="button" class="btn-icone"
-                                                        aria-label="Ações do cliente">
-                                                    <i class="ph ph-dots-three"></i>
-                                                </button>
+                                                <a href="${pageContext.request.contextPath}/clientes?acao=editar&id=${cliente.id}" 
+                                                class="btn-icone" aria-label="Editar cliente" title="Editar">
+                                                    <i class="ph ph-pencil-simple"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -124,29 +110,13 @@
                             </table>
                         </div>
 
-                        <footer class="lista-rodape">
-                            <span class="lista-info">5 clientes por página</span>
-
-                            <nav class="paginacao" aria-label="Paginação">
-                                <a href="?pagina=0" class="pag-btn" aria-label="Página anterior">
-                                    <i class="ph ph-caret-left"></i>
-                                </a>
-                                <a href="?pagina=1" class="pag-btn ativo" aria-current="page">1</a>
-                                <a href="?pagina=2" class="pag-btn">2</a>
-                                <a href="?pagina=3" class="pag-btn">3</a>
-                                <a href="?pagina=2" class="pag-btn" aria-label="Próxima página">
-                                    <i class="ph ph-caret-right"></i>
-                                </a>
-                            </nav>
-                        </footer>
+                        
                     </div>
 
                 </section>
             </div>
         </main>
     </div>
-
-    <jsp:include page="clienteModal.jsp" /> 
 
 </body>
 </html>

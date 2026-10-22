@@ -3,7 +3,6 @@ package models;
 public class Endereco {
     private int id;
     private int clienteId;
-    private String tipoEndereco;
     private String cep;
     private String logradouro;
     private int numero;
@@ -14,9 +13,8 @@ public class Endereco {
 
     public Endereco() {}
 
-    public Endereco(int clienteId, String tipoEndereco, String cep, String logradouro, int numero, String complemento, String bairro, String cidade, String uf) {
+    public Endereco(int clienteId, String cep, String logradouro, int numero, String complemento, String bairro, String cidade, String uf) {
         this.clienteId = clienteId;
-        this.tipoEndereco = tipoEndereco;
         this.cep = cep;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -31,9 +29,6 @@ public class Endereco {
 
     public int getClienteId() { return clienteId; }
     public void setClienteId(int clienteId) { this.clienteId = clienteId; }
-
-    public String getTipoEndereco() { return tipoEndereco; }
-    public void setTipoEndereco(String tipoEndereco) { this.tipoEndereco = tipoEndereco; }
 
     public String getCep() { return cep; }
     public void setCep(String cep) { this.cep = cep; }

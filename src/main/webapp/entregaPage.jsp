@@ -10,7 +10,6 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/entrega.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/entregaModal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modal.css">
 
 </head>
@@ -26,7 +25,7 @@
                     <p>Gerencie as entregas já cadastradas.</p>
                 </div>
 
-                <button type="button" class="btn-principal" id="btn-nova-entrega">
+                <button type="button" class="btn-principal" onclick="window.location.href='${pageContext.request.contextPath}/entregas?acao=novo'">
                     <i class="ph ph-plus"></i>
                     Nova entrega
                 </button>
@@ -67,25 +66,9 @@
                                    aria-label="Buscar entregas">
                         </div>
 
-                        <button type="button" class="btn-icone" aria-label="Filtros avançados">
-                            <i class="ph ph-sliders-horizontal"></i>
-                        </button>
                     </form>
-
-                    <nav class="filtros" aria-label="Filtrar por status">
-                        <a href="?status=todas"     class="filtro ativo">Todas</a>
-                        <a href="?status=pendente"  class="filtro">Pendentes</a>
-                        <a href="?status=transito"  class="filtro">Em trânsito</a>
-                        <a href="?status=rota"      class="filtro">Em rota</a>
-                        <a href="?status=concluida" class="filtro">Concluídas</a>
-                    </nav>
-
                     <!-- Lista -->
                     <div class="lista">
-                        <div class="lista-cabecalho">
-                            <h2>Lista de entregas</h2>
-                            <span class="lista-contagem">1–5 de 200</span>
-                        </div>
 
                         <div class="tabela-wrapper">
                             <table class="tabela-entregas">
@@ -101,7 +84,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--<c:forEach var="entrega" items="${entregas}"></c:forEach> -->
                                         <tr>
                                             <td>
                                                 <span class="texto-principal"></span>
@@ -133,30 +115,12 @@
                             </table>
 
                         </div>
-
-                        <footer class="lista-rodape">
-                            <span class="lista-info">5 entregas por página</span>
-
-                            <nav class="paginacao" aria-label="Paginação">
-                                <a href="?pagina=0" class="pag-btn" aria-label="Página anterior">
-                                    <i class="ph ph-caret-left"></i>
-                                </a>
-                                <a href="?pagina=1" class="pag-btn ativo" aria-current="page">1</a>
-                                <a href="?pagina=2" class="pag-btn">2</a>
-                                <a href="?pagina=3" class="pag-btn">3</a>
-                                <a href="?pagina=2" class="pag-btn" aria-label="Próxima página">
-                                    <i class="ph ph-caret-right"></i>
-                                </a>
-                            </nav>
-                        </footer>
                     </div>
 
                 </section>
             </div>
         </main>
     </div>
-
-    <jsp:include page="entregaModal.jsp"/>
 
 </body>
 </html>

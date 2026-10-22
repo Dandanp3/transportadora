@@ -151,7 +151,7 @@
         <li>
             <a href="#">
                 <i class="ph ph-calculator"></i>
-                <span class="nav-item">Simulador de Frete</span>
+                <span class="nav-item">Produtos</span>
             </a>
         </li>
         

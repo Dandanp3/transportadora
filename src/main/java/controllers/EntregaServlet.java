@@ -64,8 +64,12 @@ public class EntregaServlet extends HttpServlet {
             Cliente destinatario = clienteDAO.buscarPorID(destinatarioId);
             Produto produto = produtoDAO.buscarPorID(produtoId);
 
-            List<Endereco> enderecosOrigem = enderecoDAO.buscarPorClienteId(remetenteId);
-            List<Endereco> enderecosDestino = enderecoDAO.buscarPorClienteId(destinatarioId);
+            // envelopando o endereco unico q o dao traz agr numa lista pra n quebrar o jsp
+            Endereco endOrigem = enderecoDAO.buscarPorClienteId(remetenteId);
+            List<Endereco> enderecosOrigem = endOrigem != null ? java.util.Arrays.asList(endOrigem) : new java.util.ArrayList<>();
+            
+            Endereco endDestino = enderecoDAO.buscarPorClienteId(destinatarioId);
+            List<Endereco> enderecosDestino = endDestino != null ? java.util.Arrays.asList(endDestino) : new java.util.ArrayList<>();
 
             // segurança
             if (remetente == null || destinatario == null || produto == null || enderecosOrigem.isEmpty() || enderecosDestino.isEmpty()) {

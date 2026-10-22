@@ -29,3 +29,7 @@ tasks.named('wrapper') {
 wrapper {
     gradleVersion = '7.6.4'
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

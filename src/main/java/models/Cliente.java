@@ -64,4 +64,19 @@ public class Cliente {
          
         return this.documento;
     }
+
+    public String getTipoFormatado() {
+        //pf
+        if ("F".equals(this.tipoPessoa) && this.documento.length() == 11) {
+            return "Pessoa Física";
+        } 
+        // PJ
+        if ("J".equals(this.tipoPessoa) && this.documento.length() == 14) {
+            System.out.println("Entrou CNPJ"); 
+            return "Pessoa Jurídica";
+        }
+
+        return "Indefinido";
+
+    }
 }

@@ -14,6 +14,24 @@ public class FieldUtils {
         return this;
     }
 
+    public FieldUtils verificarEmail(String valor, String mensagemErro) {
+        verificarNotBlank(valor, mensagemErro);
+        if (temErros()) return this;
+        
+        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        if (!valor.matches(regex)) {
+            erros.add(mensagemErro + " (Formato inválido)");
+        }
+        return this;
+    }
+
+    public FieldUtils verificarTamanho(String valor, int min, int max, String mensagemErro) {
+        if (valor != null && (valor.trim().length() < min || valor.trim().length() > max)) {
+            erros.add(mensagemErro);
+        }
+        return this;
+    }
+
     // valida campo vazio e numero invalido
     public FieldUtils verificarDouble(String valor, String mensagemErro) {
         verificarNotBlank(valor, mensagemErro);

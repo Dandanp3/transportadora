@@ -15,90 +15,162 @@ import models.Cliente;
 import models.Endereco;
 import validators.ClienteValidador;
 
-// mapeando a rota do formulario jsp
 @WebServlet("/clientes")
 public class ClienteServlet extends HttpServlet {
-
+    
+    // instanciando 
     private ClienteValidador validador = new ClienteValidador();
+    private ClienteDAO clienteDAO = new ClienteDAO();
+    private EnderecoDAO enderecoDAO = new EnderecoDAO();
 
-    // o metodo doPost eh executado quando o user clica no botao "salvar cliente" no modal
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-        // faz o java entender acentuação
+        // pra n bugar acento
         req.setCharacterEncoding("UTF-8");
 
-        //pega os dados co cliente
+        String acaoForm = req.getParameter("acaoForm");
+        
+        //  apagar o cliente inteiro 
+        if ("excluirCliente".equals(acaoForm)) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            enderecoDAO.deletarEnderecoPorCliente(id); 
+            clienteDAO.deletarCliente(id);              
+            resp.sendRedirect(req.getContextPath() + "/clientes?status=excluido");
+            return;
+        }
+
+        // apagar so um endereco especifico da lista
+        if ("excluirEndereco".equals(acaoForm)) {
+            int idEnd = Integer.parseInt(req.getParameter("enderecoId"));
+            int idCli = Integer.parseInt(req.getParameter("clienteId"));
+            
+            enderecoDAO.deletarPorId(idEnd); 
+            
+            // volta pra propria tela de edicao
+            resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + idCli + "&status=end_excluido");
+            return;
+        }
+
+        // pegando as info pessoais 
+        String idParam = req.getParameter("id");
         String nome = req.getParameter("nome");
         String nomeFantasia = req.getParameter("nomeFantasia");
         String documento = req.getParameter("documento");
         String email = req.getParameter("email");
         String telefone = req.getParameter("telefone");
 
-        String docLimpo = documento.replaceAll("[^0-9]", "");
+        // tira ponto e traço
+        String docLimpo = documento != null ? documento.replaceAll("[^0-9]", "") : "";
         String tipoPessoa = docLimpo.length() > 11 ? "J" : "F";
 
-        String tipoEndereco = req.getParameter("tipoEndereco");
+        Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, docLimpo, email, telefone);
+        List<String> erros = validador.validar(novoCliente);
+
+        // atualizar dados pessoais na tela de edicao
+        if ("atualizarCliente".equals(acaoForm)) {
+            if (!erros.isEmpty()) {
+                req.setAttribute("erros", erros);
+                // devolve pra tela nova se der bo
+                req.setAttribute("cliente", novoCliente);
+                
+                // puxa os enderecos dnv pra renderizar a lista em baixo msm com erro
+                Endereco endereco = enderecoDAO.buscarPorClienteId(Integer.parseInt(idParam)); 
+                List<Endereco> listaEnderecos = endereco != null ? java.util.Arrays.asList(endereco) : new java.util.ArrayList<>();
+                req.setAttribute("enderecos", listaEnderecos);
+                
+                req.getRequestDispatcher("/clienteEditar.jsp").forward(req, resp);
+                return;
+            }
+            
+            novoCliente.setId(Integer.parseInt(idParam));
+            clienteDAO.atualizar(novoCliente);
+            resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + novoCliente.getId() + "&status=atualizado");
+            return;
+        }
+
+        // cadastro de cliente novo (se nao tem acaoForm, eh pq veio do clienteCadastro.jsp)
         String cep = req.getParameter("cep");
         String logradouro = req.getParameter("logradouro");
-        int numero = Integer.parseInt(req.getParameter("numero"));
         String complemento = req.getParameter("complemento");
         String bairro = req.getParameter("bairro");
         String cidade = req.getParameter("cidade");
         String uf = req.getParameter("uf");
 
-        // montando o objeto
-        Cliente novoCliente = new Cliente(tipoPessoa, nome, nomeFantasia, docLimpo, email, telefone);
-        List<String> erros = validador.validar(novoCliente);
+        // gambiarra do s/n
+        int numero = 0;
+        try {
+            String numParam = req.getParameter("numero");
+            if (numParam != null && !numParam.trim().isEmpty() && !numParam.equalsIgnoreCase("S/N")) {
+                numero = Integer.parseInt(numParam);
+            }
+        } catch (NumberFormatException e) {
+            numero = 0;
+        }
+
+        // validando endereco tb pq eh o cadastro 
+        utils.FieldUtils validadorEndereco = new utils.FieldUtils();
+        validadorEndereco.verificarNotBlank(cep, "O CEP do endereço é obrigatório.")
+                         .verificarNotBlank(logradouro, "O Logradouro é obrigatório.")
+                         .verificarNotBlank(bairro, "O Bairro é obrigatório.")
+                         .verificarNotBlank(cidade, "A Cidade é obrigatória.")
+                         .verificarNotBlank(uf, "O Estado (UF) é obrigatório.");
+        
+        erros.addAll(validadorEndereco.getErros());
 
         if (!erros.isEmpty()) {
-            // de der erro imprime
-            System.out.println("Erros de validação:");
-            erros.forEach(System.out::println);
-            // volta para a pag de clientes com alerta erro na URL
-            resp.sendRedirect(req.getContextPath() + "/clientes.jsp?status=erro");
+            req.setAttribute("erros", erros);
+            req.getRequestDispatcher("/clienteCadastro.jsp").forward(req, resp);
             return;
         }
 
-        // salva com DAO
-        ClienteDAO clienteDAO = new ClienteDAO();
+        // salva no banco
         int idCliente = clienteDAO.salvarCliente(novoCliente);
-
         if (idCliente != -1) {
             novoCliente.setId(idCliente);
-            
-            Endereco enderecoCliente = new Endereco(idCliente, tipoEndereco, cep, logradouro, numero, complemento, bairro, cidade, uf);
-            EnderecoDAO enderecoDAO = new EnderecoDAO();
+            Endereco enderecoCliente = new Endereco(idCliente, cep, logradouro, numero, complemento, bairro, cidade, uf);
             enderecoDAO.salvarEndereco(enderecoCliente);
-
-            System.out.println("Cliente salvo via Web: " + nome);
-            // manda usuario para a tela de clientes com uma mensagem de sucesso
-            resp.sendRedirect(req.getContextPath() + "/clientes.jsp?status=sucesso");
+            resp.sendRedirect(req.getContextPath() + "/clientes?status=sucesso");
         } else {
-            System.out.println("Falha ao salvar o cliente via Web.");
-            resp.sendRedirect(req.getContextPath() + "/webapp/clientePage.jsp");
+            req.setAttribute("erros", List.of("erro interno pra salvar no banco"));
+            req.getRequestDispatcher("/clienteCadastro.jsp").forward(req, resp);
         }
     }
 
     @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String acao = req.getParameter("acao");
 
-        System.out.println("1 - Entrou no doGet");
+        // clicou em novo, vai pra tela limpa
+        if ("novo".equals(acao)) {
+            req.getRequestDispatcher("/clienteCadastro.jsp").forward(req, resp);
+            return; 
+        }
 
-        ClienteDAO clienteDAO = new ClienteDAO();
+        // clicou no lapis, manda pra tela nova de clienteEditar
+        if ("editar".equals(acao)) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Cliente cliente = clienteDAO.buscarPorID(id); 
+            
+            List<Endereco> listaEnderecos = enderecoDAO.buscarTodosPorClienteId(id);
+            
+            req.setAttribute("cliente", cliente);
+            req.setAttribute("enderecos", listaEnderecos); 
+            req.getRequestDispatcher("/clienteEditar.jsp").forward(req, resp);
+            return;
+        }
 
-        System.out.println("2 - Chamando buscarClientes");
-
+        // listagem padrao da tela principal
         List<Cliente> clientes = clienteDAO.buscarClientes();
+        
+        int totalClientes = clientes.size();
+        long totalFisica = clientes.stream().filter(c -> "F".equals(c.getTipoPessoa())).count();
+        long totalJuridica = clientes.stream().filter(c -> "J".equals(c.getTipoPessoa())).count();
 
-        System.out.println("3 - Clientes encontrados: " + clientes.size());
-
-        request.setAttribute("clientes", clientes);
-
-        request.getRequestDispatcher("/clientePage.jsp")
-            .forward(request, response);
+        req.setAttribute("clientes", clientes);
+        req.setAttribute("totalClientes", totalClientes);
+        req.setAttribute("totalFisica", totalFisica);
+        req.setAttribute("totalJuridica", totalJuridica);
+        
+        req.getRequestDispatcher("/clientePage.jsp").forward(req, resp);
     }
 }
