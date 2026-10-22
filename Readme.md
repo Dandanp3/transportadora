@@ -16,7 +16,7 @@ Um sistema simples de logística via terminal (CLI) construído em Java. O proje
   - `service/`: Onde a mágica acontece (`Sistema` com a lógica e menus).
   - `app/`: Apenas o `Main` para iniciar o programa.
 
-## MODELO ER
+
 ```mermaid
 erDiagram
     CLIENTE {
@@ -32,14 +32,19 @@ erDiagram
     ENDERECO {
         SERIAL id PK
         INTEGER cliente_id FK
-        VARCHAR(20) tipo_endereco
-        VARCHAR(20) cep
-        VARCHAR(50) logradouro
+        VARCHAR(10) cep
+        VARCHAR(100) logradouro
         INTEGER numero
-        VARCHAR(30) complemento
-        VARCHAR(30) bairro
-        VARCHAR(30) cidade
+        VARCHAR(50) complemento
+        VARCHAR(50) bairro
+        VARCHAR(50) cidade
         VARCHAR(2) uf
+    }
+    PRODUTO {
+        SERIAL id PK
+        VARCHAR(150) descricao
+        DECIMAL(10_2) valor_padrao
+        DECIMAL(8_3) peso_padrao
     }
     ENTREGA {
         SERIAL id PK
@@ -47,26 +52,17 @@ erDiagram
         INTEGER destinatario_id FK
         INTEGER endereco_origem_id FK
         INTEGER endereco_destino_id FK
-        VARCHAR(20) num_rastreio
         VARCHAR(20) status_entrega
-        DECIMAL valor_frete
+        DECIMAL(10_2) valor_frete
+        VARCHAR(50) numero_nota_fiscal
         DATE data_emissao
-    }
-    NOTA_FISCAL {
-        SERIAL id PK
-        INTEGER entrega_id FK
-        INTEGER numero_nf
-        VARCHAR(44) chave_acesso
-        DECIMAL(10_2) valor_mercadoria
     }
     ITEM_ENTREGA {
         SERIAL id PK
         INTEGER entrega_id FK
-        VARCHAR(50) codigo_barras
-        DECIMAL peso_kg
-        DECIMAL altura_cm
-        DECIMAL largura_cm
-        DECIMAL comprimento_cm
+        INTEGER produto_id FK
+        INTEGER quantidade
+        DECIMAL(10_2) valor_unitario
     }
 
     CLIENTE ||--o{ ENDERECO : "possui"
@@ -74,5 +70,6 @@ erDiagram
     CLIENTE ||--o{ ENTREGA : "atua como destinatário"
     ENDERECO ||--o{ ENTREGA : "local de origem (coleta)"
     ENDERECO ||--o{ ENTREGA : "local de destino (entrega)"
-    ENTREGA ||--o{ NOTA_FISCAL : "documentada por"
-    ENTREGA ||--o{ ITEM_ENTREGA : "composta por volumes"
+    ENTREGA ||--o{ ITEM_ENTREGA : "possui itens"
+    PRODUTO ||--o{ ITEM_ENTREGA : "compõe os itens"
+```

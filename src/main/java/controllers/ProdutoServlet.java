@@ -61,16 +61,32 @@ public class ProdutoServlet extends HttpServlet {
         // converte pra double e ja troca virgula por ponto
         double valorPadrao = 0.0;
         double pesoPadrao = 0.0;
-        
+
+        System.out.println("Valor recebido: [" + valorStr + "]");
+        System.out.println("Peso recebido: [" + pesoStr + "]");
+
         try {
-            if (valorStr != null && !valorStr.isEmpty()) {
-                valorPadrao = Double.parseDouble(valorStr.replace(",", "."));
+            if (valorStr != null && !valorStr.isBlank()) {
+                valorPadrao = Double.parseDouble(
+                    valorStr.trim().replace(".", "").replace(",", ".")
+                );
             }
-            if (pesoStr != null && !pesoStr.isEmpty()) {
-                pesoPadrao = Double.parseDouble(pesoStr.replace(",", "."));
+
+            if (pesoStr != null && !pesoStr.isBlank()) {
+                pesoPadrao = Double.parseDouble(
+                    pesoStr.trim().replace(".", "").replace(",", ".")
+                );
             }
+
+            if (!Double.isFinite(valorPadrao) || !Double.isFinite(pesoPadrao)) {
+                throw new NumberFormatException("Valor ou peso inválido.");
+            }
+
         } catch (NumberFormatException e) {
-            req.setAttribute("erros", List.of("Os campos de Valor e Peso devem conter apenas números."));
+            req.setAttribute("erros", List.of(
+                "Os campos de Valor e Peso devem conter apenas números válidos."
+            ));
+
             if ("atualizarProduto".equals(acaoForm)) {
                 req.getRequestDispatcher("/produtoEditar.jsp").forward(req, resp);
             } else {
@@ -78,7 +94,6 @@ public class ProdutoServlet extends HttpServlet {
             }
             return;
         }
-
         // cria objeto
         Produto novoProduto = new Produto(descricao, valorPadrao, pesoPadrao);
 

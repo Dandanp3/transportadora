@@ -27,7 +27,7 @@ public class ProdutoDAO {
             return true;
             
         } catch (SQLException e) {
-            System.out.println("Deu ruim ao salvar produto");
+            System.out.println("Erro ao salvar produto.");
             e.printStackTrace();
             return false;
         }
@@ -53,7 +53,7 @@ public class ProdutoDAO {
             }
             
         } catch (SQLException e) {
-            System.out.println("Deu ruim ao listar os produtos");
+            System.out.println("Erro ao listar");
             e.printStackTrace();
         }
         return produtos;
@@ -80,7 +80,7 @@ public class ProdutoDAO {
             }
             
         } catch (SQLException e) {
-            System.out.println("Deu ruim ao buscar o produto por ID");
+            System.out.println("Erro ao buscar o produto por ID");
             e.printStackTrace();
         }
         return p;
@@ -102,7 +102,7 @@ public class ProdutoDAO {
             return true;
             
         } catch (SQLException e) {
-            System.out.println("Deu ruim ao atualizar o produto");
+            System.out.println("Erro ao atualizar o produto");
             e.printStackTrace();
             return false;
         }
@@ -120,7 +120,7 @@ public class ProdutoDAO {
             return true;
             
         } catch (SQLException e) {
-            System.out.println("Deu ruim ao excluir o produto");
+            System.out.println("Erro ao excluir o produto");
             e.printStackTrace();
             return false;
         }
