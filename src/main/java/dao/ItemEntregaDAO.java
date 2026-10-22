@@ -1,29 +1,28 @@
 package dao;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import db.ConnectionFactory;
 import models.ItemEntrega;
+import db.ConnectionFactory;
 
 public class ItemEntregaDAO {
-    public int salvarItemEntrega(ItemEntrega itemEntrega) {
-        String sql = "INSERT INTO transportadora.item_entrega (entrega_id, codigo_barras_etiqueta, peso_kg, altura_cm, largura_cm, comprimento_cm) VALUES (?, ?, ?, ?, ?, ?)";
+
+    // salva o item associado a entrega
+    public int salvar(ItemEntrega itemEntrega) {
+        String sql = "INSERT INTO transportadora.item_entrega (entrega_id, produto_id, quantidade, valor_unitario) VALUES (?, ?, ?, ?)";
         int idGerado = -1;
-    
+
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            
-            int index = 0;
-            stmt.setInt(++index, itemEntrega.getEntregaId());
-            stmt.setString(++index, itemEntrega.getCodigoBarras());
-            stmt.setDouble(++index, itemEntrega.getPesoKg());
-            stmt.setDouble(++index, itemEntrega.getAlturaCm()); 
-            stmt.setDouble(++index, itemEntrega.getLarguraCm());
-            stmt.setDouble(++index, itemEntrega.getComprimentoCm());
+
+            stmt.setInt(1, itemEntrega.getEntregaId());
+            stmt.setInt(2, itemEntrega.getProdutoId());
+            stmt.setInt(3, itemEntrega.getQuantidade());
+            stmt.setDouble(4, itemEntrega.getValorUnitario());
 
             stmt.executeUpdate();
 
@@ -32,12 +31,17 @@ public class ItemEntregaDAO {
                     idGerado = generatedKeys.getInt(1);
                 }
             }
-            System.out.println("Item da entrega salvo.");
-            
-        } catch(SQLException e) {
-            System.out.println("Erro ao salvar Item da entrega.");
+            System.out.println("item da entrega salvo com sucesso");
+
+        } catch (SQLException e) {
+            System.out.println("deu merda ao salvar item da entrega");
             e.printStackTrace();
         }
         return idGerado;
+    }
+
+    // apelido pro metodo antigo n quebrar chamadas antigas
+    public int salvarItemEntrega(ItemEntrega itemEntrega) {
+        return salvar(itemEntrega);
     }
 }

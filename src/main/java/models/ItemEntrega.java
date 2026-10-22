@@ -3,21 +3,19 @@ package models;
 public class ItemEntrega {
     private int id;
     private int entregaId;
-    private String codigoBarras;
-    private double pesoKg;
-    private double alturaCm;
-    private double larguraCm;
-    private double comprimentoCm;
+    private int produtoId;
+    private int quantidade;
+    private double valorUnitario;
 
+    // Construtor vazio padrão
     public ItemEntrega() {}
 
-    public ItemEntrega(int entregaId, String codigoBarras, double pesoKg, double alturaCm, double larguraCm, double comprimentoCm) {
+    // Construtor pra salvar no banco (o mesmo que a gente chamou no Servlet)
+    public ItemEntrega(int entregaId, int produtoId, int quantidade, double valorUnitario) {
         this.entregaId = entregaId;
-        this.codigoBarras = codigoBarras;
-        this.pesoKg = pesoKg;
-        this.alturaCm = alturaCm;
-        this.larguraCm = larguraCm;
-        this.comprimentoCm = comprimentoCm;
+        this.produtoId = produtoId;
+        this.quantidade = quantidade;
+        this.valorUnitario = valorUnitario;
     }
 
     public int getId() { return id; }
@@ -26,18 +24,12 @@ public class ItemEntrega {
     public int getEntregaId() { return entregaId; }
     public void setEntregaId(int entregaId) { this.entregaId = entregaId; }
 
-    public String getCodigoBarras() { return codigoBarras; }
-    public void setCodigoBarras(String codigoBarras) { this.codigoBarras = codigoBarras; }
+    public int getProdutoId() { return produtoId; }
+    public void setProdutoId(int produtoId) { this.produtoId = produtoId; }
 
-    public double getPesoKg() { return pesoKg; }
-    public void setPesoKg(double pesoKg) { this.pesoKg = pesoKg; }
+    public int getQuantidade() { return quantidade; }
+    public void setQuantidade(int quantidade) { this.quantidade = quantidade; }
 
-    public double getAlturaCm() { return alturaCm; }
-    public void setAlturaCm(double alturaCm) { this.alturaCm = alturaCm; }
-
-    public double getLarguraCm() { return larguraCm; }
-    public void setLarguraCm(double larguraCm) { this.larguraCm = larguraCm; }
-
-    public double getComprimentoCm() { return comprimentoCm; }
-    public void setComprimentoCm(Double comprimentoCm) { this.comprimentoCm = comprimentoCm; }
+    public double getValorUnitario() { return valorUnitario; }
+    public void setValorUnitario(double valorUnitario) { this.valorUnitario = valorUnitario; }
 }
