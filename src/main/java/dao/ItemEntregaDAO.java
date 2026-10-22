@@ -34,7 +34,7 @@ public class ItemEntregaDAO {
             System.out.println("item da entrega salvo com sucesso");
 
         } catch (SQLException e) {
-            System.out.println("deu merda ao salvar item da entrega");
+            System.out.println("Erro ao salvar item da entrega");
             e.printStackTrace();
         }
         return idGerado;
