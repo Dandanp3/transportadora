@@ -45,7 +45,7 @@
                     <div class="alerta-erro">
                         <i class="ph ph-warning-circle"></i>
                         <div>
-                            <strong>Deu ruim, arruma isso aí:</strong>
+                            <strong>Errom, favor editar.</strong>
                             <ul><c:forEach var="erro" items="${erros}"><li>${erro}</li></c:forEach></ul>
                         </div>
                     </div>
