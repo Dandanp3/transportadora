@@ -112,7 +112,7 @@
 
                     <div class="cadastro-rodape">
                         <a href="${pageContext.request.contextPath}/entregas" class="btn-secundario">Cancelar</a>
-                        <button type="submit" class="btn-principal">
+                        <button type="submit" class="btn-principal" style="cursor: pointer;">
                             <i class="ph ph-truck" aria-hidden="true"></i> Gerar Entrega e Frete
                         </button>
                     </div>
