@@ -12,7 +12,7 @@ import db.ConnectionFactory;
 
 public class ProdutoDAO {
 
-    // 1. CREATE - Salvar um produto novo no catálogo
+    // salvar 
     public boolean salvar(Produto produto) {
         String sql = "INSERT INTO transportadora.produto (descricao, valor_padrao, peso_padrao) VALUES (?, ?, ?)";
         
@@ -33,10 +33,10 @@ public class ProdutoDAO {
         }
     }
 
-    // 2. READ - Listar todos pra mostrar naquela tela produtoPage.jsp
+    // buscando
     public List<Produto> buscarTodos() {
         List<Produto> produtos = new ArrayList<>();
-        // Trazendo os mais recentes primeiro
+        // ordena pelos mais recentes
         String sql = "SELECT * FROM transportadora.produto ORDER BY id DESC";
 
         try (Connection conn = ConnectionFactory.conectar();
@@ -59,7 +59,7 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    // 3. READ - Buscar 1 só (usado na hora de clicar em Editar)
+    // pega apenas 1 pelo id
     public Produto buscarPorID(int id) {
         String sql = "SELECT * FROM transportadora.produto WHERE id = ?";
         Produto p = null;
@@ -86,7 +86,7 @@ public class ProdutoDAO {
         return p;
     }
 
-    // 4. UPDATE - Salvar as edições
+    // update 
     public boolean atualizar(Produto produto) {
         String sql = "UPDATE transportadora.produto SET descricao = ?, valor_padrao = ?, peso_padrao = ? WHERE id = ?";
 
@@ -108,7 +108,7 @@ public class ProdutoDAO {
         }
     }
 
-    // 5. DELETE - Apagar o produto do catálogo
+    // delete
     public boolean deletar(int id) {
         String sql = "DELETE FROM transportadora.produto WHERE id = ?";
 

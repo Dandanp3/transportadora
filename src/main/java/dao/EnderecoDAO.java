@@ -182,7 +182,7 @@ public class EnderecoDAO {
         }
     } 
 
-    // agr sim, esse aq puxa TODOS os enderecos vinculados ao cliente
+    // puxa todos os endereços vinculados ao cliente
     public List<Endereco> buscarTodosPorClienteId(int idDoCliente) {
         List<Endereco> listaEnderecos = new ArrayList<>();
         String sql = "SELECT * FROM transportadora.endereco WHERE cliente_id = ?";
@@ -193,7 +193,6 @@ public class EnderecoDAO {
             stmt.setInt(1, idDoCliente);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                // while pq agora a gnt quer varrer todos os resultados q o banco achar
                 while (rs.next()) {
                     Endereco endereco = new Endereco();
                     endereco.setId(rs.getInt("id"));
@@ -217,19 +216,21 @@ public class EnderecoDAO {
         return listaEnderecos;
     }
 
-    // metodo pra apagar UM endereco so da lista (usado no fluxo 2 do servlet)
-    public void deletarPorId(int id) {
+    // metodo pra apagar UM endereço 
+    public boolean deletarPorId(int id) {
         String sql = "DELETE FROM transportadora.endereco WHERE id = ?";
         
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-            stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0; // Devolve true se conseguiu apagar
 
         } catch (SQLException e) {
             System.out.println("erro ao tentar apagar o endereco especifico.");
             e.printStackTrace();
+            return false; // Devolve false pq violou a chave estrangeira da entrega
         }
     }
 }

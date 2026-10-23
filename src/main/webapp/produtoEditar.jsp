@@ -13,13 +13,6 @@
         .alerta-erro { display: flex; gap: 12px; background-color: #fef2f2; border: 1px solid #f87171; color: #991b1b; padding: 16px; border-radius: 12px; margin-bottom: 24px; }
         .alerta-erro i { font-size: 24px; color: #ef4444; }
         
-        /* css bolado pros cards de endereco */
-        .endereco-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 16px; }
-        .endereco-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 16px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; }
-        .endereco-card h3 { font-size: 16px; margin: 0; color: #1e293b; }
-        .endereco-card p { font-size: 14px; margin: 0; color: #64748b; }
-        .endereco-acoes { display: flex; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid #e2e8f0; }
-        
         .zona-perigo { margin-top: 40px; padding: 24px; border: 1px solid #fca5a5; background-color: #fef2f2; border-radius: 12px; }
         .zona-perigo h2 { color: #dc2626; margin-bottom: 8px; font-size: 18px; }
         .zona-perigo p { color: #991b1b; font-size: 14px; margin-bottom: 16px; }
@@ -32,12 +25,12 @@
         <main class="main">
             <div class="cadastro-container">
                 <header class="cadastro-topo">
-                    <a href="${pageContext.request.contextPath}/clientes" class="btn-voltar" aria-label="Voltar">
+                    <a href="${pageContext.request.contextPath}/produtos" class="btn-voltar" aria-label="Voltar">
                         <i class="ph ph-arrow-left"></i>
                     </a>
                     <div class="cadastro-titulo">
                         <h1>Editar Produto</h1>
-                        <p>Atualize os dados do produtos.</p>
+                        <p>Atualize os dados deste item no catálogo.</p>
                     </div>
                 </header>
 
@@ -46,38 +39,32 @@
                         <i class="ph ph-warning-circle"></i>
                         <div>
                             <strong>Erro, favor ajustar:</strong>
-                            <ul><c:forEach var="erro" items="${erros}"><li>${erro}</li></c:forEach></ul>
+                            <ul style="margin-top: 4px; margin-left: 20px;">
+                                <c:forEach var="erro" items="${erros}"><li>${erro}</li></c:forEach>
+                            </ul>
                         </div>
                     </div>
                 </c:if>
 
-                <!-- dados 1 -->
-                <form action="${pageContext.request.contextPath}/clientes" method="post">
-                    <input type="hidden" name="acaoForm" value="atualizarCliente">
-                    <input type="hidden" name="id" value="${cliente.id}">
+                <!-- form 1 - atualizar dados -->
+                <form action="${pageContext.request.contextPath}/produtos" method="post">
+                    <input type="hidden" name="acaoForm" value="atualizarProduto">
+                    <input type="hidden" name="id" value="${produto.id}">
 
                     <section class="cadastro-secao">
-                        <h2 class="secao-titulo"><i class="ph ph-user"></i> Dados Pessoais</h2>
+                        <h2 class="secao-titulo"><i class="ph ph-package"></i> Dados do Produto</h2>
                         <div class="form-grid">
+                            <div class="campo span-6">
+                                <label class="campo-rotulo" for="descricao">Descrição do Produto (Nome ou Categoria)</label>
+                                <input type="text" id="descricao" name="descricao" value="${produto.descricao}" minlength="3" maxlength="150" required>
+                            </div>
                             <div class="campo span-3">
-                                <label class="campo-rotulo" for="documento">CPF / CNPJ</label>
-                                <input type="text" id="documento" name="documento" value="${cliente.documento}" minlength="14" maxlength="18" required>
+                                <label class="campo-rotulo" for="valorPadrao">Valor Padrão (R$)</label>
+                                <input type="text" id="valorPadrao" name="valorPadrao" value="${produto.valorPadrao}" oninput="mascaraMoeda(this)" required>
                             </div>
                             <div class="campo span-3">
-                                <label class="campo-rotulo" for="telefone">Telefone</label>
-                                <input type="tel" id="telefone" name="telefone" value="${cliente.telefone}" minlength="14" maxlength="15" required>
-                            </div>
-                            <div class="campo span-6">
-                                <label class="campo-rotulo" for="nome">Nome completo ou Razão Social</label>
-                                <input type="text" id="nome" name="nome" value="${cliente.nome}" minlength="3" maxlength="100" required>
-                            </div>
-                            <div class="campo span-6">
-                                <label class="campo-rotulo" for="nomeFantasia">Nome Fantasia <span class="opcional">(Opcional)</span></label>
-                                <input type="text" id="nomeFantasia" name="nomeFantasia" value="${cliente.nomeFantasia}" maxlength="100">
-                            </div>
-                            <div class="campo span-6">
-                                <label class="campo-rotulo" for="email">E-mail</label>
-                                <input type="email" id="email" name="email" value="${cliente.email}" maxlength="100" required>
+                                <label class="campo-rotulo" for="pesoPadrao">Peso Padrão (Kg)</label>
+                                <input type="text" id="pesoPadrao" name="pesoPadrao" value="${produto.pesoPadrao}" oninput="mascaraPeso(this)" required>
                             </div>
                         </div>
                         <div style="margin-top: 16px; text-align: right;">
@@ -86,15 +73,14 @@
                     </section>
                 </form>
 
-                
                 <!-- form 2 - excluir produto inteiro -->
                 <section class="zona-perigo">
                     <h2>ZONA DE PERIGO</h2>
-                    <p>Excluindo este produto, essa ação não terá volta.</p>
-                    <form action="${pageContext.request.contextPath}/clientes" method="post">
-                        <input type="hidden" name="acaoForm" value="excluirCliente">
-                        <input type="hidden" name="id" value="${cliente.id}">
-                        <button type="submit" class="btn-secundario" style="cursor: pointer; color: #ef4444; border-color: #ef4444; background: white;" onclick="return confirm('Certeza absoluta? Vai apagar tudo do cliente.');">
+                    <p>Excluindo este produto, a ação não terá volta.</p>
+                    <form action="${pageContext.request.contextPath}/produtos" method="post">
+                        <input type="hidden" name="acaoForm" value="excluirProduto">
+                        <input type="hidden" name="id" value="${produto.id}">
+                        <button type="submit" class="btn-secundario" style="cursor: pointer; color: #ef4444; border-color: #ef4444; background: white;" onclick="return confirm('Certeza absoluta? Vai apagar este produto do catálogo.');">
                             <i class="ph ph-warning"></i> Excluir Produto Permanentemente
                         </button>
                     </form>
@@ -104,7 +90,33 @@
         </main>
     </div>
 
-    <!-- mascaras -->
-    <script src="${pageContext.request.contextPath}/assets/js/mascaras.js"></script>
+    <!-- Masscaras inline -->
+    <script>
+        function mascaraMoeda(input) {
+            let valor = input.value;
+            valor = valor.replace(/\D/g, "");
+            valor = valor.replace(/(\d)(\d{2})$/, "$1,$2");
+            valor = valor.replace(/(?=(\d{3})+(\D))\B/g, ".");
+            input.value = valor;
+        }
+
+        function mascaraPeso(input) {
+            let valor = input.value;
+            valor = valor.replace(/[^\d,]/g, "");
+            input.value = valor;
+        }
+        
+        window.onload = function() {
+            let valorInput = document.getElementById("valorPadrao");
+            let pesoInput = document.getElementById("pesoPadrao");
+            
+            if(valorInput.value && !valorInput.value.includes(',')) {
+                valorInput.value = parseFloat(valorInput.value).toFixed(2).replace('.', ',');
+            }
+            if(pesoInput.value && !pesoInput.value.includes(',')) {
+                pesoInput.value = parseFloat(pesoInput.value).toFixed(3).replace('.', ',');
+            }
+        };
+    </script>
 </body>
 </html>

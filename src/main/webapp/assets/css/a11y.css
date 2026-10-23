@@ -1,0 +1,58 @@
+/* a11y.css — acessibilidade e componentes compartilhados (carregar DEPOIS de global.css) */
+
+/* respeita o atributo hidden mesmo quando outro CSS define display */
+[hidden] { display: none !important; }
+
+/* link "pular para o conteúdo" */
+.skip-link {
+    position: absolute; left: 8px; top: -64px; z-index: 1000;
+    background: #0f172a; color: #fff; padding: 10px 16px; border-radius: 8px;
+    text-decoration: none; font-weight: 600;
+}
+.skip-link:focus { top: 8px; }
+
+/* foco sempre visível (WCAG 2.4.7) */
+:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+main:focus { outline: none; }
+
+/* avisos de status e resumo de erros */
+.aviso { padding: 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.aviso i { font-size: 20px; }
+.aviso-ok { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+.aviso-erro { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+.alerta-erro:focus { outline: 3px solid #b91c1c; outline-offset: 2px; }
+
+/* erro por campo */
+.campo-erro { display: block; color: #b91c1c; font-size: .875rem; margin-top: 4px; font-weight: 500; }
+.campo-ajuda { color: #475569; font-size: .8125rem; margin: 4px 0 0; }
+input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] {
+    border-color: #b91c1c !important; box-shadow: 0 0 0 1px #b91c1c;
+}
+
+/* links com aparência de botão (substituem <button onclick="location.href">) */
+a.btn-principal, a.btn-secundario { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+
+/* ações destrutivas com contraste AA (#b91c1c sobre branco = 6,5:1) */
+.btn-perigo { color: #b91c1c !important; border-color: #fca5a5 !important; cursor: pointer; }
+.btn-perigo-solido { background: #b91c1c !important; border-color: #b91c1c !important; color: #fff !important; }
+
+/* alvos de toque maiores */
+.btn-icone { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.btn-compacto { padding: 6px 12px; min-height: 36px; font-size: .875rem; cursor: pointer; }
+
+/* região de tabela rolável acessível por teclado */
+.tabela-wrapper:focus-visible { outline: 3px solid #1d4ed8; outline-offset: -3px; }
+
+/* botão que expande linha da tabela */
+.btn-expandir { display: flex; gap: 8px; align-items: flex-start; background: none; border: 0; padding: 4px 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.btn-expandir .btn-expandir-texto { display: block; }
+.btn-expandir .btn-expandir-texto > span { display: block; }
+.btn-expandir i { margin-top: 3px; transition: transform .15s; }
+.btn-expandir[aria-expanded="true"] i { transform: rotate(90deg); }
+
+/* select de status (mantém contorno de foco) */
+.status-form { display: flex; align-items: center; gap: 8px; margin: 0; flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

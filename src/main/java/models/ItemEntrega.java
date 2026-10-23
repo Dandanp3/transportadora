@@ -1,11 +1,14 @@
 package models;
 
+import java.util.List;
+
 public class ItemEntrega {
     private int id;
     private int entregaId;
     private int produtoId;
     private int quantidade;
     private double valorUnitario;
+    private Produto produto;
 
     // Construtor vazio padrão
     public ItemEntrega() {}
@@ -32,4 +35,11 @@ public class ItemEntrega {
 
     public double getValorUnitario() { return valorUnitario; }
     public void setValorUnitario(double valorUnitario) { this.valorUnitario = valorUnitario; }
+
+    public Produto getProduto() {
+        return produto;
+    }
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
 }

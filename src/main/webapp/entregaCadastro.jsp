@@ -1,99 +1,111 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="pt_BR"/>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Entrega | Dandan Transportes</title>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/cadastro.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/a11y.css">
 </head>
 <body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo principal</a>
+
     <div class="layout-principal">
         <jsp:include page="sidebar.jsp" />
 
-        <main class="main">
+        <main class="main" id="conteudo" tabindex="-1">
             <div class="cadastro-container">
                 <header class="cadastro-topo">
-                    <a href="${pageContext.request.contextPath}/entregas" class="btn-voltar" aria-label="Voltar">
-                        <i class="ph ph-arrow-left"></i>
+                    <a href="${pageContext.request.contextPath}/entregas" class="btn-voltar" aria-label="Voltar para a lista de entregas">
+                        <i class="ph ph-arrow-left" aria-hidden="true"></i>
                     </a>
                     <div class="cadastro-titulo">
                         <h1>Nova Entrega</h1>
-                        <p>Defina a origem, destino, produto e o tamanho da caixa.</p>
+                        <p>Defina a origem, destino e a carga do catálogo. Campos marcados com * são obrigatórios.</p>
                     </div>
                 </header>
 
                 <form action="${pageContext.request.contextPath}/entregas" method="post">
-                    
-                    <!-- BLOCO 1: ENVOLVIDOS -->
+                    <input type="hidden" name="acaoForm" value="salvarEntrega">
+
+                    <!-- clientes / endereços -->
                     <section class="cadastro-secao">
-                        <h2 class="secao-titulo"><i class="ph ph-users"></i> Envolvidos no Transporte</h2>
+                        <h2 class="secao-titulo"><i class="ph ph-users" aria-hidden="true"></i> Envolvidos no Transporte</h2>
                         <div class="form-grid">
+
                             <div class="campo span-3">
-                                <label class="campo-rotulo" for="remetenteId">Remetente (Quem envia)</label>
+                                <label class="campo-rotulo" for="remetenteId">Remetente (quem envia) *</label>
                                 <select id="remetenteId" name="remetenteId" required>
-                                    <option value="" disabled selected>Escolha um cliente...</option>
+                                    <option value="" disabled selected>Escolha o remetente...</option>
                                     <c:forEach var="cliente" items="${clientes}">
-                                        <option value="${cliente.id}">${cliente.nome} (${cliente.documentoFormatado})</option>
+                                        <option value="${cliente.id}"><c:out value="${cliente.nome} (${cliente.documento})"/></option>
                                     </c:forEach>
                                 </select>
                             </div>
+
                             <div class="campo span-3">
-                                <label class="campo-rotulo" for="destinatarioId">Destinatário (Quem recebe)</label>
-                                <select id="destinatarioId" name="destinatarioId" required>
-                                    <option value="" disabled selected>Escolha um cliente...</option>
-                                    <c:forEach var="cliente" items="${clientes}">
-                                        <option value="${cliente.id}">${cliente.nome} (${cliente.documentoFormatado})</option>
+                                <label class="campo-rotulo" for="enderecoOrigemId">Endereço de coleta *</label>
+                                <select id="enderecoOrigemId" name="enderecoOrigemId" required disabled aria-describedby="aviso-origem">
+                                    <option value="" disabled selected>Escolha o remetente primeiro...</option>
+                                    <c:forEach var="end" items="${enderecos}">
+                                        <option value="${end.id}" class="opt-endereco-origem" data-cliente="${end.clienteId}">
+                                            <c:out value="${end.logradouro}, ${end.numero == 0 ? 'S/N' : end.numero} - ${end.cidade}/${end.uf}"/>
+                                        </option>
                                     </c:forEach>
                                 </select>
+                                <p id="aviso-origem" class="campo-ajuda" role="status"></p>
+                            </div>
+
+                            <div class="campo span-3">
+                                <label class="campo-rotulo" for="destinatarioId">Destinatário (quem recebe) *</label>
+                                <select id="destinatarioId" name="destinatarioId" required>
+                                    <option value="" disabled selected>Escolha o destinatário...</option>
+                                    <c:forEach var="cliente" items="${clientes}">
+                                        <option value="${cliente.id}"><c:out value="${cliente.nome} (${cliente.documento})"/></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div class="campo span-3">
+                                <label class="campo-rotulo" for="enderecoDestinoId">Endereço de entrega *</label>
+                                <select id="enderecoDestinoId" name="enderecoDestinoId" required disabled aria-describedby="aviso-destino">
+                                    <option value="" disabled selected>Escolha o destinatário primeiro...</option>
+                                    <c:forEach var="end" items="${enderecos}">
+                                        <option value="${end.id}" class="opt-endereco-destino" data-cliente="${end.clienteId}">
+                                            <c:out value="${end.logradouro}, ${end.numero == 0 ? 'S/N' : end.numero} - ${end.cidade}/${end.uf}"/>
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                                <p id="aviso-destino" class="campo-ajuda" role="status"></p>
                             </div>
                         </div>
                     </section>
 
-                    <!-- BLOCO 2: MUNDO FISCAL (Conteúdo) -->
+                    <!-- BLOCO 2: CARGA -->
                     <section class="cadastro-secao">
-                        <h2 class="secao-titulo"><i class="ph ph-receipt"></i> Conteúdo (Nota Fiscal)</h2>
+                        <h2 class="secao-titulo"><i class="ph ph-package" aria-hidden="true"></i> Dados da Carga</h2>
                         <div class="form-grid">
                             <div class="campo span-4">
-                                <label class="campo-rotulo" for="produtoId">Produto da Tabela</label>
+                                <label class="campo-rotulo" for="produtoId">Produto (catálogo) *</label>
                                 <select id="produtoId" name="produtoId" required>
-                                    <option value="" disabled selected>Escolha um produto cadastrado...</option>
-                                    <!-- Temporariamente hardcoded, ideal buscar do backend -->
-                                    <option value="1">Produto Genérico para Teste</option> 
+                                    <option value="" disabled selected>Escolha a carga...</option>
+                                    <c:forEach var="produto" items="${produtos}">
+                                        <option value="${produto.id}">
+                                            <c:out value="${produto.descricao}"/> (base: <fmt:formatNumber value="${produto.valorPadrao}" type="currency" currencyCode="BRL"/>)
+                                        </option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <div class="campo span-2">
-                                <label class="campo-rotulo" for="quantidade">Quantidade</label>
-                                <!-- Bloqueia valores menores que 1 e maiores que 9.999 -->
-                                <input type="number" id="quantidade" name="quantidade" value="1" min="1" max="9999" required>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- BLOCO 3: MUNDO FÍSICO (A Caixa) -->
-                    <section class="cadastro-secao">
-                        <h2 class="secao-titulo"><i class="ph ph-package"></i> Dimensões do Pacote</h2>
-                        <div class="form-grid">
-                            <div class="campo span-3">
-                                <label class="campo-rotulo" for="peso">Peso (Kg)</label>
-                                <!-- Aceita decimais (step=0.01), não pode ser 0 ou negativo, máximo 5000kg -->
-                                <input type="number" id="peso" name="peso" step="0.01" min="0.01" max="5000" placeholder="Ex: 1.5" required>
-                            </div>
-                            <div class="campo span-1">
-                                <label class="campo-rotulo" for="altura">Alt. (cm)</label>
-                                <!-- Min 1cm, max 1000cm (10 metros) -->
-                                <input type="number" id="altura" name="altura" min="1" max="1000" placeholder="20" required>
-                            </div>
-                            <div class="campo span-1">
-                                <label class="campo-rotulo" for="largura">Larg. (cm)</label>
-                                <input type="number" id="largura" name="largura" min="1" max="1000" placeholder="20" required>
-                            </div>
-                            <div class="campo span-1">
-                                <label class="campo-rotulo" for="comprimento">Comp. (cm)</label>
-                                <input type="number" id="comprimento" name="comprimento" min="1" max="1000" placeholder="20" required>
+                                <label class="campo-rotulo" for="quantidade">Quantidade *</label>
+                                <input type="number" id="quantidade" name="quantidade" value="1" min="1" max="9999"
+                                       inputmode="numeric" required>
                             </div>
                         </div>
                     </section>
@@ -101,12 +113,54 @@
                     <div class="cadastro-rodape">
                         <a href="${pageContext.request.contextPath}/entregas" class="btn-secundario">Cancelar</a>
                         <button type="submit" class="btn-principal">
-                            <i class="ph ph-truck"></i> Gerar Entrega e Frete
+                            <i class="ph ph-truck" aria-hidden="true"></i> Gerar Entrega e Frete
                         </button>
                     </div>
                 </form>
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectOrigem = document.getElementById('enderecoOrigemId');
+            var selectDestino = document.getElementById('enderecoDestinoId');
+
+            // guarda as options originais de endereço
+            var origensData = Array.from(selectOrigem.querySelectorAll('.opt-endereco-origem'));
+            var destinosData = Array.from(selectDestino.querySelectorAll('.opt-endereco-destino'));
+
+            // esvazia os selects até escolher o cliente
+            selectOrigem.innerHTML = '<option value="" disabled selected>Escolha o remetente primeiro...</option>';
+            selectDestino.innerHTML = '<option value="" disabled selected>Escolha o destinatário primeiro...</option>';
+
+            function filtrarEnderecos(clienteSelectId, enderecoSelect, dadosOriginais, avisoId) {
+                var clienteId = document.getElementById(clienteSelectId).value;
+                var aviso = document.getElementById(avisoId);
+                enderecoSelect.innerHTML = '<option value="" disabled selected>Escolha o endereço...</option>';
+                enderecoSelect.disabled = false;
+                aviso.textContent = '';
+
+                var encontrou = false;
+                dadosOriginais.forEach(function (opt) {
+                    if (opt.getAttribute('data-cliente') === clienteId) {
+                        enderecoSelect.appendChild(opt.cloneNode(true));
+                        encontrou = true;
+                    }
+                });
+
+                if (!encontrou) {
+                    aviso.textContent = 'Este cliente não possui endereços cadastrados.';
+                }
+            }
+
+            document.getElementById('remetenteId').addEventListener('change', function () {
+                filtrarEnderecos('remetenteId', selectOrigem, origensData, 'aviso-origem');
+            });
+            document.getElementById('destinatarioId').addEventListener('change', function () {
+                filtrarEnderecos('destinatarioId', selectDestino, destinosData, 'aviso-destino');
+            });
+        });
+    </script>
 </body>
 </html>

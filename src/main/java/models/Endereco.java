@@ -10,6 +10,7 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+    private Cliente cliente;
 
     public Endereco() {}
 
@@ -53,5 +54,12 @@ public class Endereco {
 
     public String obterEnderecoCompleto() {
         return logradouro + ", " + numero + " - " + complemento + " | " + bairro + ", " + cidade + "-" + uf + " | CEP: " + cep;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

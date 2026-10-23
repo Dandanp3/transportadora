@@ -16,6 +16,20 @@ Um sistema simples de logística via terminal (CLI) construído em Java. O proje
   - `service/`: Onde a mágica acontece (`Sistema` com a lógica e menus).
   - `app/`: Apenas o `Main` para iniciar o programa.
 
+- **DAO**
+    
+    -`ClienteDAO`: Responsável por todos os metodos envolvendo manipulação do cliente dentro do banco.
+    
+    - salvarCliente(cliente)
+    - atualizar(cliente)
+    - buscarClientes() - Retorna uma lista de clientes
+    - buscarPorID(id) - retorna aquele cliente em especifico
+    - existeDocumento(documento) - ver se ja tem algum cliente com este documento
+    - existeDocumentoDeOutro(documento, idAtual) - usado em updates p/ ver se possui algum outro cliente com o mesmo documento
+    - deletarCliente(id)
+    - excluirComEnderecos(id) - serve para deletar um cliente e todos os endereços associados a ele 
+    - mapear(rs) -
+
 
 ```mermaid
 erDiagram

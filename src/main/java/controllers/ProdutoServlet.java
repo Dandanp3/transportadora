@@ -51,7 +51,7 @@ public class ProdutoServlet extends HttpServlet {
         if (validador.temErros()) {
             req.setAttribute("erros", validador.getErros());
             if ("atualizarProduto".equals(acaoForm)) {
-                req.getRequestDispatcher("/produtoEditar.jsp").forward(req, resp);
+                req.getRequestDispatcher("/produtoCadastro.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher("/produtoCadastro.jsp").forward(req, resp);
             }
@@ -88,7 +88,7 @@ public class ProdutoServlet extends HttpServlet {
             ));
 
             if ("atualizarProduto".equals(acaoForm)) {
-                req.getRequestDispatcher("/produtoEditar.jsp").forward(req, resp);
+                req.getRequestDispatcher("/produtoCadastro.jsp").forward(req, resp);
             } else {
                 req.getRequestDispatcher("/produtoCadastro.jsp").forward(req, resp);
             }
@@ -132,7 +132,7 @@ public class ProdutoServlet extends HttpServlet {
             Produto produto = produtoDAO.buscarPorID(id);
             
             req.setAttribute("produto", produto);
-            req.getRequestDispatcher("/produtoEditar.jsp").forward(req, resp);
+            req.getRequestDispatcher("/produtoCadastro.jsp").forward(req, resp);
             return;
         }
 

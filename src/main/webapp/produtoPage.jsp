@@ -10,7 +10,6 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/global.css">
-    <!-- reaproveitando o css da lista que agr é generico -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/listas.css">
 </head>
 <body>

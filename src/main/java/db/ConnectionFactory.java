@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:postgresql://localhost:5432/daniel";
-    private static final String USUARIO = "daniel";
-    //private static final String URL = "jdbc:postgresql://localhost:5432/postgres"; // pc
-    //private static final String USUARIO = "postgres"; // pc
+    //private static final String URL = "jdbc:postgresql://localhost:5432/daniel";
+    //private static final String USUARIO = "daniel";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres"; // pc
+    private static final String USUARIO = "postgres"; // pc
     private static final String SENHA = "123456789";
 
     public static Connection conectar() {

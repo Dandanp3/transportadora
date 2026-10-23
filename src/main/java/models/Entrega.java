@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 public class Entrega {
     private int id;
     private Cliente remetente;
@@ -10,6 +12,7 @@ public class Entrega {
     private double valorFrete;
     private String numeroNotaFiscal;
     private String dataEmissao;
+    private List<ItemEntrega> itens;
 
     // Construtor vazio padrão
     public Entrega() {}
@@ -54,4 +57,11 @@ public class Entrega {
 
     public String getDataEmissao() { return dataEmissao; }
     public void setDataEmissao(String dataEmissao) { this.dataEmissao = dataEmissao; }
+
+    public List<ItemEntrega> getItens() {
+        return itens;
+    }
+    public void setItens(List<ItemEntrega> itens) {
+        this.itens = itens;
+    }
 }
