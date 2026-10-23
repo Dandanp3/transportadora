@@ -53,7 +53,7 @@ CREATE TABLE transportadora.entrega (
     CONSTRAINT fk_destino FOREIGN KEY (endereco_destino_id) REFERENCES transportadora.endereco(id)
 );
 
--- 5. ITEM ENTREGA 
+-- ITEM ENTREGA 
 CREATE TABLE transportadora.item_entrega (
     id SERIAL PRIMARY KEY,
     entrega_id INTEGER NOT NULL,

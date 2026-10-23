@@ -76,7 +76,7 @@ public class EntregaServlet extends HttpServlet {
             }
             
             // Calculo do frete 
-            double freteCalculado = produto.getValorPadrao() * (quantidade / 12.0); // O 12.0 evita que 1/12 dê zero absoluto no Java
+            double freteCalculado = 35.0; 
 
             String dataEmissao = LocalDate.now().toString(); 
             
