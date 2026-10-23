@@ -6,7 +6,6 @@ Um sistema simples de logística via terminal (CLI) construído em Java. O proje
 - **Cadastro de Clientes:** Salva dados do cliente e seu endereço.
 - **Cadastro de Produtos:** Registra itens com peso e valor.
 - **Gestão de Entregas:** Junta o cliente aos produtos escolhidos e calcula o frete.
-- **Relatórios:** Exibe um resumo completo de todas as entregas e pacotes registrados.
 
 ## Tecnologias e Estrutura
 - **Linguagem:** Java

@@ -122,7 +122,7 @@
 
 <nav class="sidebar">
     <div class="logo">
-        <img src="./assets/truck.png" alt="Logo Dandan Transportes">
+        <img src="./assets/img/truck.png" alt="Logo Dandan Transportes">
         <span class="brand">Dandan<br>Transportes</span>
     </div>
 

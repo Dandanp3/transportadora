@@ -58,7 +58,14 @@ public class EntregaServlet extends HttpServlet {
             int destinatarioId = Integer.parseInt(req.getParameter("destinatarioId"));
             int enderecoOrigemId = Integer.parseInt(req.getParameter("enderecoOrigemId"));
             int enderecoDestinoId = Integer.parseInt(req.getParameter("enderecoDestinoId"));
-            
+
+            // remetente e destinatário não podem ser o mesmo cliente
+            // garantia de post manual
+            if (remetenteId == destinatarioId) {
+                resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_mesmo_cliente");
+                return;
+            }
+
             int produtoId = Integer.parseInt(req.getParameter("produtoId")); 
             int quantidade = Integer.parseInt(req.getParameter("quantidade"));
 

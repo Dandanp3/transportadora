@@ -1,7 +1,5 @@
 package models;
 
-import java.util.List;
-
 public class ItemEntrega {
     private int id;
     private int entregaId;

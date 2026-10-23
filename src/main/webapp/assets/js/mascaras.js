@@ -60,20 +60,20 @@ function mascaraMoeda(input) {
 
         function mascaraPeso(input) {
             let valor = input.value;
-            // mesma logica, mas peso precisa aceitar 3 casas decimais (gramas) se quiser
+            // peso precisa aceitar 3 casas decimais (gramas) se quiser
             valor = valor.replace(/[^\d,]/g, "");
             input.value = valor;
         }
         
         // Dispara a mascara ao carregar a tela de edicao pra arrumar os numeros q vem do banco (ex: 150.0 vira 150,00)
-        window.onload = function() {
-            let valorInput = document.getElementById("valorPadrao");
-            let pesoInput = document.getElementById("pesoPadrao");
-            
-            if(valorInput.value && !valorInput.value.includes(',')) {
-                valorInput.value = parseFloat(valorInput.value).toFixed(2).replace('.', ',');
-            }
-            if(pesoInput.value && !pesoInput.value.includes(',')) {
-                pesoInput.value = parseFloat(pesoInput.value).toFixed(3).replace('.', ',');
-            }
-};
+        window.addEventListener("load", function () {
+        const valorInput = document.getElementById("valorPadrao");
+        const pesoInput = document.getElementById("pesoPadrao");
+
+        if (valorInput && valorInput.value && !valorInput.value.includes(',')) {
+            valorInput.value = parseFloat(valorInput.value).toFixed(2).replace('.', ',');
+        }
+        if (pesoInput && pesoInput.value && !pesoInput.value.includes(',')) {
+            pesoInput.value = parseFloat(pesoInput.value).toFixed(3).replace('.', ',');
+        }
+} );

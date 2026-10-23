@@ -159,7 +159,7 @@ public class ClienteDAO {
 
         } catch (SQLException e) {
             if (VIOLACAO_FK.equals(e.getSQLState())) {
-                System.out.println("Cliente " + id + " não pode ser excluído: tem entregas, produtos ou endereços ligados a ele.");
+                System.out.println("Cliente " + id + " não pode ser excluído: \"... tem entregas ou endereços ligados a ele.\"");
             } else {
                 System.out.println("Erro ao tentar excluir cliente.");
                 e.printStackTrace();
@@ -188,7 +188,7 @@ public class ClienteDAO {
             } catch (SQLException e) {
                 conn.rollback();   // desfaz tb o DELETE dos endereços
                 if (VIOLACAO_FK.equals(e.getSQLState())) {
-                    System.out.println("Cliente " + id + " não pode ser excluído: tem entregas ou produtos ligados a ele.");
+                    System.out.println("Cliente " + id + " não pode ser excluído: tem entregas ligadas a ele.");
                 } else {
                     System.out.println("Erro ao excluir cliente e endereços.");
                     e.printStackTrace();

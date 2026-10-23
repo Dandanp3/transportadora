@@ -57,6 +57,9 @@
                     <c:when test="${param.status == 'erro_produto'}">
                         <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> O produto selecionado não foi encontrado. Escolha outro e tente novamente.</div>
                     </c:when>
+                    <c:when test="${param.status == 'erro_mesmo_cliente'}">
+                        <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> O remetente e o destinatário não podem ser o mesmo cliente.</div>
+                    </c:when>
                     <c:when test="${param.status == 'erro_banco' || param.status == 'erro_excecao'}">
                         <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> Erro interno ao processar a entrega.</div>
                     </c:when>
@@ -169,7 +172,7 @@
                                                         <span class="texto-secundario">CEP <c:out value="${entrega.enderecoDestino.cep}"/></span>
                                                     </td>
 
-                                                    <!-- Status -->
+                                                    <!-- status -->
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${st == 'ENTREGUE' || st == 'CANCELADO'}">

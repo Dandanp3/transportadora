@@ -160,7 +160,7 @@
                 <!-- excluir cliente inteiro -->
                 <section class="zona-perigo" aria-labelledby="titulo-perigo">
                     <h2 id="titulo-perigo">Zona de perigo</h2>
-                    <p>Ao excluir este cliente, todos os endereços vinculados serão apagados permanentemente. Clientes que já têm entregas ou produtos vinculados não podem ser excluídos. Essa ação não pode ser desfeita.</p>
+                    <p>Ao excluir este cliente, todos os endereços vinculados serão apagados permanentemente. Clientes que já têm entregas vinculadas não podem ser excluídos. Essa ação não pode ser desfeita.</p>
                     <form action="${pageContext.request.contextPath}/clientes" method="post">
                         <input type="hidden" name="acaoForm" value="excluirCliente">
                         <input type="hidden" name="id" value="<c:out value='${cliente.id}'/>">

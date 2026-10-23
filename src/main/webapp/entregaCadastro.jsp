@@ -87,7 +87,7 @@
                         </div>
                     </section>
 
-                    <!-- BLOCO 2: CARGA -->
+                    <!-- carga -->
                     <section class="cadastro-secao">
                         <h2 class="secao-titulo"><i class="ph ph-package" aria-hidden="true"></i> Dados da Carga</h2>
                         <div class="form-grid">
@@ -125,6 +125,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             var selectOrigem = document.getElementById('enderecoOrigemId');
             var selectDestino = document.getElementById('enderecoDestinoId');
+            var selectRemetente = document.getElementById('remetenteId');
+            var selectDestinatario = document.getElementById('destinatarioId');
+
+            // guarda as options originais de cliente (sem o placeholder)
+            var remetentesData = Array.from(selectRemetente.querySelectorAll('option:not([value=""])'));
+            var destinatariosData = Array.from(selectDestinatario.querySelectorAll('option:not([value=""])'));
 
             // guarda as options originais de endereço
             var origensData = Array.from(selectOrigem.querySelectorAll('.opt-endereco-origem'));
@@ -154,11 +160,34 @@
                 }
             }
 
-            document.getElementById('remetenteId').addEventListener('change', function () {
+            // elect de clientes sem o cliente que ja foi escolhido 
+            function refazerClientes(select, dadosOriginais, textoPlaceholder, idExcluido) {
+                var selecionado = select.value;
+                select.innerHTML = '<option value="" disabled>' + textoPlaceholder + '</option>';
+
+                dadosOriginais.forEach(function (opt) {
+                    if (opt.value !== idExcluido) {
+                        select.appendChild(opt.cloneNode(true));
+                    }
+                });
+
+                // mantém a escolha anterior se ela ainda existe; senão volta pro placeholder
+                if (selecionado && selecionado !== idExcluido) {
+                    select.value = selecionado;
+                } else {
+                    select.selectedIndex = 0;
+                }
+            }
+
+            selectRemetente.addEventListener('change', function () {
                 filtrarEnderecos('remetenteId', selectOrigem, origensData, 'aviso-origem');
+                // o remetente escolhido some da lista de destinatários
+                refazerClientes(selectDestinatario, destinatariosData, 'Escolha o destinatário...', selectRemetente.value);
             });
-            document.getElementById('destinatarioId').addEventListener('change', function () {
+            selectDestinatario.addEventListener('change', function () {
                 filtrarEnderecos('destinatarioId', selectDestino, destinosData, 'aviso-destino');
+                // o destinatário escolhido some da lista de remetentes
+                refazerClientes(selectRemetente, remetentesData, 'Escolha o remetente...', selectDestinatario.value);
             });
         });
     </script>

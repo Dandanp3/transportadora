@@ -46,7 +46,7 @@
                         <div class="aviso aviso-ok" role="status"><i class="ph ph-trash" aria-hidden="true"></i> Cliente excluído do sistema.</div>
                     </c:when>
                     <c:when test="${param.status == 'erro_exclusao'}">
-                        <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> Não foi possível excluir: este cliente possui entregas ou produtos vinculados.</div>
+                        <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i>Não foi possível excluir: este cliente possui entregas vinculadas.</div>
                     </c:when>
                 </c:choose>
 
