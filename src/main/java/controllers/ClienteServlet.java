@@ -44,38 +44,33 @@ public class ClienteServlet extends HttpServlet {
         // apagar so um endereco especifico da lista
         if ("excluirEndereco".equals(acaoForm)) {
             try {
-                System.out.println("=== ENTROU NO BLOCO EXCLUIR ENDEREÇO ===");
+                int id = Integer.parseInt(req.getParameter("id"));
+
+                // pega pelo id dele
+                Endereco enderecoAlvo = enderecoDAO.buscarPorID(id);
                 
-                String idEndStr = req.getParameter("enderecoId");
-                String idCliStr = req.getParameter("clienteId");
-                
-                System.out.println("Parametros brutos -> enderecoId: " + idEndStr + " | clienteId: " + idCliStr);
-                
-                int idEnd = Integer.parseInt(idEndStr);
-                int idCli = Integer.parseInt(idCliStr);
-                
-                List<Endereco> enderecosDoCliente = enderecoDAO.buscarTodosPorClienteId(idCli);
-                System.out.println("Quantidade de endereços achados no banco: " + enderecosDoCliente.size());
-                
-                if (enderecosDoCliente.size() <= 1) {
-                    System.out.println("BLOQUEADO: Cliente so tem 1 endereco ou menos.");
-                    guardarFlash(req, "flashErros", List.of("Não é possível excluir este endereço. Todo cliente precisa ter obrigatoriamente pelo menos 1 endereço cadastrado."));
-                    resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + idCli + "&status=erro");
-                    return;
+                if (enderecoAlvo != null) {
+                    // tras lista de endereços desse cliente
+                    List<Endereco> enderecosDoCliente = enderecoDAO.buscarTodosPorClienteId(enderecoAlvo.getClienteId());
+                    
+                    // 1 ou 0 n excluir
+                    if (enderecosDoCliente.size() <= 1) {
+                        resp.sendRedirect(req.getContextPath() + "/enderecos?status=erro_unico_endereco");
+                        return; // Trava o código aqui
+                    }
                 }
-                
-                boolean sucesso = enderecoDAO.deletarPorId(idEnd); 
-                System.out.println("Resultado da exclusao no DAO: " + sucesso);
-                
+
+                // Se passou pela trava, apaga normalmente
+                boolean sucesso = enderecoDAO.deletarPorId(id);
+
                 if (sucesso) {
-                    resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + idCli + "&status=end_excluido");
+                    resp.sendRedirect(req.getContextPath() + "/enderecos?status=excluido");
                 } else {
-                    guardarFlash(req, "flashErros", List.of("Este endereço não pode ser excluído pois está vinculado a uma entrega."));
-                    resp.sendRedirect(req.getContextPath() + "/clientes?acao=editar&id=" + idCli + "&status=erro");
+                    resp.sendRedirect(req.getContextPath() + "/enderecos?status=erro_exclusao");
                 }
             } catch (Exception e) {
-                System.out.println("EXCECAO CAPTURADA NA EXCLUSAO DE ENDERECO:");
                 e.printStackTrace();
+                resp.sendRedirect(req.getContextPath() + "/enderecos?status=erro_exclusao");
             }
             return;
         }

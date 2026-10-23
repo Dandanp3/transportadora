@@ -72,6 +72,22 @@ public class EnderecoServlet extends HttpServlet {
         if ("excluirEndereco".equals(acaoForm)) {
             try {
                 int id = Integer.parseInt(req.getParameter("id"));
+
+                // busca endereco desse id
+                Endereco enderecoAlvo = enderecoDAO.buscarPorID(id);
+                
+                if (enderecoAlvo != null) {
+                    // tras a lista de todos os endereços desse cliente
+                    List<Endereco> enderecosDoCliente = enderecoDAO.buscarTodosPorClienteId(enderecoAlvo.getClienteId());
+                    
+                    // se tiver 1 ou 0 endereços exclui
+                    if (enderecosDoCliente.size() <= 1) {
+                        resp.sendRedirect(req.getContextPath() + "/enderecos?status=erro_unico_endereco");
+                        return; // Trava o código aqui
+                    }
+                }
+
+                // se passou pela trava, apaga normalmente
                 boolean sucesso = enderecoDAO.deletarPorId(id);
                 
                 if (sucesso) {

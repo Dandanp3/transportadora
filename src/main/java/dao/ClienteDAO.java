@@ -13,7 +13,7 @@ import models.Cliente;
 
 public class ClienteDAO {
 
-    // código do PostgreSQL para "esse registro ainda é usado por outra tabela" (chave estrangeira)
+    // cod do PostgreSQL para "esse registro ainda é usado por outra tabela" (chave estrangeira)
     private static final String VIOLACAO_FK = "23503";
 
     public int salvarCliente(Cliente cliente) {

@@ -45,6 +45,9 @@
                     <c:when test="${param.status == 'excluido'}">
                         <div class="aviso aviso-ok" role="status"><i class="ph ph-trash" aria-hidden="true"></i> Endereço excluído do sistema.</div>
                     </c:when>
+                    <c:when test="${param.status == 'erro_unico_endereco'}">
+                        <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> Não é possível excluir. Todo cliente precisa de pelo menos 1 endereço cadastrado.</div>
+                    </c:when>
                     <c:when test="${param.status == 'erro_exclusao'}">
                         <div class="aviso aviso-erro" role="alert"><i class="ph ph-warning" aria-hidden="true"></i> Não foi possível excluir o endereço. Ele pode estar vinculado a uma entrega existente.</div>
                     </c:when>
