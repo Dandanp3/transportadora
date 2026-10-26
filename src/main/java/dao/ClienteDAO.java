@@ -89,8 +89,6 @@ public class ClienteDAO {
             System.out.println("Erro ao buscar clientes.");
             e.printStackTrace();
         }
-
-        System.out.println("Clientes puxados");
         return listaClientes;
     }
 

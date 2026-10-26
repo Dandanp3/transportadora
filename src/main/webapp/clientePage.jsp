@@ -35,6 +35,8 @@
             <div class="conteudo-principal">
 
                 <!-- aviso de status: -->
+                
+
                 <c:choose>
                     <c:when test="${param.status == 'sucesso'}">
                         <div class="aviso aviso-ok" role="status"><i class="ph ph-check-circle" aria-hidden="true"></i> Cliente cadastrado com sucesso!</div>
@@ -69,6 +71,19 @@
                 </section>
 
                 <section class="painel" aria-labelledby="titulo-lista-clientes">
+
+                    <!-- busca -->
+                    <form class="busca" action="${pageContext.request.contextPath}/clientes" method="get" role="search">
+                        <div class="busca-campo">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="search"
+                                   name="q"
+                                   placeholder="Buscar por CPF / CNPJ"
+                                   aria-label="Buscar Clientes"
+                                   autocomplete="off">
+                        </div>
+                    </form>
+
                     <h2 id="titulo-lista-clientes" class="sr-only">Lista de clientes</h2>
 
                     <div class="lista">
@@ -124,6 +139,11 @@
                                             </c:forEach>
                                         </c:otherwise>
                                     </c:choose>
+                                    <tr id="sem-resultado" style="display: none;">
+                                        <td colspan="4" style="text-align: center; padding: 32px; color: #475569;">
+                                            Nenhum cliente encontrado para essa busca.
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
