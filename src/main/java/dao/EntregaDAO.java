@@ -121,4 +121,21 @@ public class EntregaDAO {
             e.printStackTrace();
         }
     }
+
+    public String buscarStatusPorId(int id) {
+        String sql = "SELECT status_entrega FROM transportadora.entrega WHERE id = ?";
+        try (Connection conn = db.ConnectionFactory.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, id);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("status_entrega");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        return null;
+    }
 }

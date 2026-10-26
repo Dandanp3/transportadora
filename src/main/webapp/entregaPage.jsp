@@ -186,10 +186,19 @@
                                                                     <input type="hidden" name="id" value="${entrega.id}">
                                                                     <label class="sr-only" for="status-${entrega.id}">Status da entrega NFe <c:out value="${entrega.numeroNotaFiscal}"/></label>
                                                                     <select id="status-${entrega.id}" name="novoStatus" class="status-select ${st == 'PENDENTE' ? 'pendente' : 'rota'}">
-                                                                        <option value="PENDENTE" ${st == 'PENDENTE' ? 'selected' : ''}>Pendente</option>
-                                                                        <option value="EM ROTA" ${(st == 'EM ROTA' || st == 'EM_ROTA') ? 'selected' : ''}>Em rota</option>
-                                                                        <option value="ENTREGUE">Entregue</option>
-                                                                        <option value="CANCELADO">Cancelado</option>
+                                                                        <c:choose>
+                                                                            <c:when test="${st == 'PENDENTE'}">
+                                                                                <option value="PENDENTE" selected>Pendente</option>
+                                                                                <option value="EM ROTA">Em rota</option>
+                                                                                <option value="CANCELADO">Cancelado</option>
+                                                                            </c:when>
+                                                                        
+                                                                            <c:otherwise>
+                                                                                <option value="EM ROTA">EM rota</option>
+                                                                                <option value="ENTREGUE">Entregue</option>
+                                                                                <option value="CANCELADO">Cancelado</option>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </select>
                                                                     <button type="submit" class="btn-secundario btn-compacto" onclick="return confirm('Salvar o novo status? Entregue e Cancelado não podem ser alterados depois.')">Salvar status</button>
                                                                 </form>

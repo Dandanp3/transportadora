@@ -16,7 +16,6 @@ public class ConnectionFactory {
             Class.forName("org.postgresql.Driver");
             
             Connection conn = DriverManager.getConnection(URL, USUARIO, SENHA);
-            System.out.println("Conexão com o PostgreSQL realizada com sucesso!");
             return conn;
 
         } catch (ClassNotFoundException e) {

@@ -46,8 +46,20 @@ public class EntregaServlet extends HttpServlet {
 
         if ("atualizarStatus".equals(acaoForm)) {
             int id = Integer.parseInt(req.getParameter("id"));
-            String novoStatus = req.getParameter("novoStatus");
-            
+            String novoStatus = normalizarStatus(req.getParameter("novoStatus"));
+            String statusAtual = normalizarStatus(entregaDAO.buscarStatusPorId(id));
+
+            // clicou em salvar sem mudar nd
+            if (novoStatus.equals(statusAtual)) {
+                resp.sendRedirect(req.getContextPath() + "/entregas");
+                return;
+            }
+
+            if (!transicaoPermitida(statusAtual, novoStatus)) {
+                resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_transicao");
+                return;
+            }
+
             entregaDAO.atualizarStatus(id, novoStatus);
             resp.sendRedirect(req.getContextPath() + "/entregas?status=status_atualizado");
             return;
@@ -101,7 +113,7 @@ public class EntregaServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
-            System.out.println("Deu merda ao salvar a entrega");
+            System.out.println("Deu erro ao salvar a entrega");
             e.printStackTrace();
             resp.sendRedirect(req.getContextPath() + "/entregas?status=erro_excecao");
         }
@@ -188,5 +200,21 @@ public class EntregaServlet extends HttpServlet {
     private String normalizar(String s) {
         if (s == null) return "";
         return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+    }
+
+    // apenas para status
+    private String normalizarStatus(String s) {
+        return s == null ? "" : s.trim().toUpperCase().replace('_', ' ');
+    }
+
+    private boolean transicaoPermitida(String atual, String novo) {
+        switch (atual) {
+            case "PENDENTE":
+                return novo.equals("EM ROTA") || novo.equals("CANCELADO");
+            case "EM ROTA":
+                return novo.equals("ENTREGUE") || novo.equals("CANCELADO");
+            default:
+                return false;
+        }
     }
 }
