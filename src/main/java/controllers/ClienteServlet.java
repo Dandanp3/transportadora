@@ -56,7 +56,7 @@ public class ClienteServlet extends HttpServlet {
                     // 1 ou 0 n excluir
                     if (enderecosDoCliente.size() <= 1) {
                         resp.sendRedirect(req.getContextPath() + "/enderecos?status=erro_unico_endereco");
-                        return; // Trava o código aqui
+                        return; 
                     }
                 }
 

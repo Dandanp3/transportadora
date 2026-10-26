@@ -96,6 +96,15 @@
                                        inputmode="decimal" autocomplete="off"
                                        oninput="mascaraPeso(this)" required>
                             </div>
+
+                            <div class="campo span-3">
+                                <label class="campo-rotulo" for="unidade">Unidade de Medida</label>
+                                <select name="unidadeMedida" id="unidadeMedida-${produto.id}" style="cursor: pointer;">
+                                    <option value="KG" ${produto.unidadeMedida == 'KG' || empty produto ? 'selectec' : ''}>Kg</option>
+                                    <option value="L" ${produto.unidadeMedida == 'L' ? 'selected' : ''}>Litros</option>
+                                    <option value="UN" ${produto.unidadeMedida == 'UN' ? 'selected' : ''}>Unidade</option>
+                                </select>
+                            </div>
                         </div>
                     </section>
 

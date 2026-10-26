@@ -14,14 +14,16 @@ public class ProdutoDAO {
 
     // salvar 
     public boolean salvar(Produto produto) {
-        String sql = "INSERT INTO transportadora.produto (descricao, valor_padrao, peso_padrao) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO transportadora.produto (descricao, valor_padrao, peso_padrao, unidade_medida) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = ConnectionFactory.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, produto.getDescricao());
-            stmt.setDouble(2, produto.getValorPadrao());
-            stmt.setDouble(3, produto.getPesoPadrao());
+            int index = 0;
+            stmt.setString(++index, produto.getDescricao());
+            stmt.setDouble(++index, produto.getValorPadrao());
+            stmt.setDouble(++index, produto.getPesoPadrao());
+            stmt.setString(++index, produto.getUnidadeMedida());
 
             stmt.executeUpdate();
             return true;

@@ -5,13 +5,15 @@ public class Produto {
     private String descricao;
     private double valorPadrao;
     private double pesoPadrao; 
+    private String unidadeMedida;
 
     public Produto() {}
 
-    public Produto(String descricao, double valorPadrao, double pesoPadrao) {
+    public Produto(String descricao, double valorPadrao, double pesoPadrao, String unidadeMedida) {
         this.descricao = descricao;
         this.valorPadrao = valorPadrao;
         this.pesoPadrao = pesoPadrao;
+        this.unidadeMedida = unidadeMedida;
     }
 
     public int getId() { return id; }
@@ -25,4 +27,7 @@ public class Produto {
 
     public double getPesoPadrao() { return pesoPadrao; }
     public void setPesoPadrao(double pesoPadrao) { this.pesoPadrao = pesoPadrao; }
+
+    public String getUnidadeMedida() { return unidadeMedida; }
+    public void setUnidadeMedida(String unidadeMedida) { this.unidadeMedida = unidadeMedida; }
 }

@@ -40,6 +40,7 @@ public class ProdutoServlet extends HttpServlet {
         String descricao = req.getParameter("descricao");
         String valorStr = req.getParameter("valorPadrao");
         String pesoStr = req.getParameter("pesoPadrao");
+        String unidadeMedida = req.getParameter("unidadeMedida");
 
         // verificando se esta vazio
         FieldUtils validador = new FieldUtils();
@@ -61,9 +62,6 @@ public class ProdutoServlet extends HttpServlet {
         // converte pra double e ja troca virgula por ponto
         double valorPadrao = 0.0;
         double pesoPadrao = 0.0;
-
-        System.out.println("Valor recebido: [" + valorStr + "]");
-        System.out.println("Peso recebido: [" + pesoStr + "]");
 
         try {
             if (valorStr != null && !valorStr.isBlank()) {
@@ -95,7 +93,7 @@ public class ProdutoServlet extends HttpServlet {
             return;
         }
         // cria objeto
-        Produto novoProduto = new Produto(descricao, valorPadrao, pesoPadrao);
+        Produto novoProduto = new Produto(descricao, valorPadrao, pesoPadrao, unidadeMedida);
 
         // atualiza dados do produto
         if ("atualizarProduto".equals(acaoForm)) {

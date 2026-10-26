@@ -1,6 +1,6 @@
 CREATE SCHEMA transportadora;
 
--- 1. CLIENTE
+-- CLIENTE
 CREATE TABLE transportadora.cliente (
     id SERIAL PRIMARY KEY,
     tipo_pessoa CHAR(1) NOT NULL, -- 'F' ou 'J'
@@ -12,7 +12,7 @@ CREATE TABLE transportadora.cliente (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
--- 2. ENDEREÇO
+-- ENDEREÇO
 CREATE TABLE transportadora.endereco (
     id SERIAL PRIMARY KEY,
     cliente_id INTEGER NOT NULL,
@@ -27,15 +27,17 @@ CREATE TABLE transportadora.endereco (
     CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES transportadora.cliente(id)
 );
 
--- 3. PRODUTO (Catálogo de cargas)
+-- PRODUTO
 CREATE TABLE transportadora.produto (
     id SERIAL PRIMARY KEY,
     descricao VARCHAR(150) NOT NULL,
     valor_padrao DECIMAL(10,2) NOT NULL,
-    peso_padrao DECIMAL(8,3) NOT NULL 
+    peso_padrao DECIMAL(8,3) NOT NULL,
+    unidade_medida VARCHAR(5) NOT NULL DEFAULT 'UN',
+    CONSTRAINT ck_unidade CHECK (unidade_medida IN ('UN', 'KG', 'L', 'CX')) 
 );
 
--- 4. ENTREGA 
+-- ENTREGA 
 CREATE TABLE transportadora.entrega (
     id SERIAL PRIMARY KEY,
     remetente_id INTEGER NOT NULL,
