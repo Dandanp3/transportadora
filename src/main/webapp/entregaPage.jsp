@@ -97,17 +97,19 @@
                 <section class="painel" aria-labelledby="titulo-lista-entregas">
                     <h2 id="titulo-lista-entregas" class="sr-only">Lista de entregas</h2>
 
-                    <form class="busca" method="get" role="search" action="${pageContext.request.contextPath}/entregas">
+                    <!-- busca -->
+                    <form class="busca" action="${pageContext.request.contextPath}/produtos" method="get" role="search">
                         <div class="busca-campo">
-                            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
-                            <label class="sr-only" for="busca-entregas">Buscar entregas por código, cidade, estado, CEP ou documento</label>
-                            <input type="search" id="busca-entregas" name="q" value="<c:out value='${param.q}'/>"
-                                   placeholder="Código, cidade, UF, CEP ou documento" autocomplete="off">
+                            <i class="ph ph-magnifying-glass"></i>
+                            <input type="search"
+                                   name="q"
+                                   placeholder="Buscar pela NF-e"
+                                   aria-label="Buscar entregas"
+                                   data-busca-tabela="tabela-entregas"
+                                   data-busca-colunas="0"
+                                   data-busca-modo="texto"
+                                   data-busca-vazio="Nenhuma ehntrega encontrada para essa busca.">
                         </div>
-                        <button type="submit" class="btn-secundario btn-compacto">Buscar</button>
-                        <c:if test="${not empty param.q}">
-                            <a href="${pageContext.request.contextPath}/entregas" class="btn-secundario btn-compacto">Limpar busca</a>
-                        </c:if>
                     </form>
 
                     <c:if test="${not empty param.q}">
@@ -118,7 +120,7 @@
 
                     <div class="lista">
                         <div class="tabela-wrapper" role="region" aria-label="Tabela de entregas (role a tabela horizontalmente se necessário)" tabindex="0">
-                            <table class="tabela-entregas">
+                            <table class="tabela-entregas" id="tabela-entregas">
                                 <caption class="sr-only">Lista de entregas cadastradas</caption>
                                 <thead>
                                     <tr>
@@ -263,4 +265,5 @@
         }
     </script>
 </body>
+<script src="./assets/js/busca.js"></script>
 </html>

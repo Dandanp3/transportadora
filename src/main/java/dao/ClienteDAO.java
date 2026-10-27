@@ -212,4 +212,5 @@ public class ClienteDAO {
         cliente.setTelefone(rs.getString("telefone"));
         return cliente;
     }
+
 }

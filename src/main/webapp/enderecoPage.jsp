@@ -53,6 +53,8 @@
                     </c:when>
                 </c:choose>
 
+                
+
                 <!-- cards -->
                 <section class="resumo" aria-label="Resumo de endereços">
                     <div class="resumo-card">
@@ -66,6 +68,23 @@
 
                     <div class="lista">
                         <div class="tabela-wrapper" role="region" aria-label="Tabela de endereços (role a tabela horizontalmente se necessário)" tabindex="0">
+                            
+                            <!-- busca -->
+                        <form class="busca" action="${pageContext.request.contextPath}/produtos" method="get" role="search">
+                            <div class="busca-campo">
+                                <i class="ph ph-magnifying-glass"></i>
+                                <input type="search"
+                                    name="q"
+                                    placeholder="Buscar pela NF-e"
+                                    aria-label="Buscar enderecos"
+                                    data-busca-tabela="tabela-enderecos"
+                                    data-busca-colunas="0, 2"
+                                    data-busca-modo="texto"
+                                    data-busca-vazio="Nenhum endereço encontrado para essa busca.">
+                            </div>
+                        </form>
+
+
                             <table class="tabela-dados" id="tabela-enderecos">
                                 <caption class="sr-only">Endereços cadastrados</caption>
                                 <thead>
@@ -142,4 +161,5 @@
         </main>
     </div>
 </body>
+<script src="./assets/js/busca.js"></script>
 </html>

@@ -77,10 +77,14 @@
                         <div class="busca-campo">
                             <i class="ph ph-magnifying-glass"></i>
                             <input type="search"
-                                   name="q"
-                                   placeholder="Buscar por CPF / CNPJ"
-                                   aria-label="Buscar Clientes"
-                                   autocomplete="off">
+                                name="q"
+                                placeholder="Buscar por CPF / CNPJ"
+                                aria-label="Buscar Clientes"
+                                autocomplete="off"
+                                data-busca-tabela="tabela-clientes"
+                                data-busca-colunas="1"
+                                data-busca-modo="numerico"
+                                data-busca-vazio="Nenhum cliente encontrado para essa busca.">
                         </div>
                     </form>
 
@@ -154,4 +158,5 @@
         </main>
     </div>
 </body>
+<script src="./assets/js/busca.js"></script>
 </html>

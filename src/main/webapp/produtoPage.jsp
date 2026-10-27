@@ -38,14 +38,18 @@
                             <input type="search"
                                    name="q"
                                    placeholder="Buscar por descrição ou ID..."
-                                   aria-label="Buscar produtos">
+                                   aria-label="Buscar produtos"
+                                   data-busca-tabela="tabela-produtos"
+                                   data-busca-colunas="0"
+                                   data-busca-modo="texto"
+                                   data-busca-vazio="Nenhum produto encontrado para essa busca.">
                         </div>
                     </form>
 
                     <!-- lista -->
                     <div class="lista">
                         <div class="tabela-wrapper">
-                            <table class="tabela-dados">
+                            <table class="tabela-dados" id="tabela-produtos">
                                 <thead>
                                     <tr>
                                         <th>Descrição do Produto</th>
@@ -102,4 +106,5 @@
         </main>
     </div>
 </body>
+<script src="./assets/js/busca.js"></script>
 </html>
