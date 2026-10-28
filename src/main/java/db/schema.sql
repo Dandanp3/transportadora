@@ -34,7 +34,7 @@ CREATE TABLE transportadora.produto (
     valor_padrao DECIMAL(10,2) NOT NULL,
     peso_padrao DECIMAL(8,3) NOT NULL,
     unidade_medida VARCHAR(5) NOT NULL DEFAULT 'UN',
-    CONSTRAINT ck_unidade CHECK (unidade_medida IN ('UN', 'KG', 'L', 'CX')) 
+    CONSTRAINT ck_unidade CHECK (unidade_medida IN ('UN', 'KG', 'L')) 
 );
 
 -- ENTREGA 
